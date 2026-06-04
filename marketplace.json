@@ -1,0 +1,104 @@
+{
+  "name": "dcc-mcp-official",
+  "version": "1.0.0",
+  "interface": {
+    "displayName": "DCC-MCP Official Marketplace",
+    "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
+  },
+  "installRoot": "~/.dcc-mcp/marketplace/{dcc}/{name}",
+  "skills": [
+    {
+      "name": "dcc-mcp-maya-skills",
+      "description": "Official Maya skill pack for DCC-MCP — scene, render, and rigging tools",
+      "version": "1.0.0",
+      "dcc": ["maya"],
+      "tags": ["skills", "maya", "official", "domain"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/loonghao/dcc-mcp-maya-skills",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-mcp-blender-skills",
+      "description": "Official Blender skill pack for DCC-MCP — modeling, shading, and render tools",
+      "version": "1.0.0",
+      "dcc": ["blender"],
+      "tags": ["skills", "blender", "official", "domain"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/loonghao/dcc-mcp-blender-skills",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-mcp-houdini-skills",
+      "description": "Official Houdini skill pack for DCC-MCP — VFX, procedural, and simulation tools",
+      "version": "1.0.0",
+      "dcc": ["houdini"],
+      "tags": ["skills", "houdini", "official", "domain"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/loonghao/dcc-mcp-houdini-skills",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-hunyuan-download",
+      "description": "Search and download Hunyuan 3D models into the active DCC session",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini"],
+      "tags": ["asset", "hunyuan", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-hunyuan-download",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["HUNYUAN_API_KEY"]
+      }
+    },
+    {
+      "name": "dcc-asset-polyhaven",
+      "description": "Browse and download CC0 assets from Poly Haven (models, HDRIs, textures)",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "photoshop"],
+      "tags": ["asset", "polyhaven", "cc0", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    }
+  ]
+}

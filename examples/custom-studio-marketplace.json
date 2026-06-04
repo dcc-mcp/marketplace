@@ -1,0 +1,29 @@
+{
+  "name": "my-studio-private",
+  "version": "1.0.0",
+  "interface": {
+    "displayName": "My Studio DCC Skills",
+    "description": "Internal skill packs for pipeline TDs"
+  },
+  "installRoot": "~/.dcc-mcp/marketplace/{dcc}/{name}",
+  "skills": [
+    {
+      "name": "studio-maya-rig-tools",
+      "description": "Internal rigging helpers for Maya shots",
+      "version": "0.2.0",
+      "dcc": ["maya"],
+      "tags": ["studio", "rigging", "domain"],
+      "category": "Studio",
+      "maintainer": "my-studio",
+      "minCoreVersion": "0.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/my-studio/maya-rig-tools-skill",
+        "ref": "v0.2.0"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dcc-mcp/marketplace/schemas/marketplace-v1.schema.json",
+  "title": "DCC-MCP Marketplace Catalog v1",
+  "type": "object",
+  "required": ["name", "version", "skills"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Marketplace identifier (e.g. dcc-mcp-official)"
+    },
+    "version": {
+      "type": "string",
+      "description": "Catalog document version"
+    },
+    "interface": {
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "installRoot": {
+      "type": "string",
+      "default": "~/.dcc-mcp/marketplace/{dcc}/{name}",
+      "description": "Template for local install paths"
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skillEntry" }
+    }
+  },
+  "$defs": {
+    "skillEntry": {
+      "type": "object",
+      "required": ["name", "description", "version", "source", "policy"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "description": { "type": "string" },
+        "version": { "type": "string" },
+        "dcc": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "category": { "type": "string" },
+        "maintainer": { "type": "string" },
+        "minCoreVersion": { "type": "string" },
+        "source": {
+          "type": "object",
+          "required": ["type", "url"],
+          "properties": {
+            "type": { "enum": ["git", "zip"] },
+            "url": { "type": "string", "format": "uri" },
+            "ref": { "type": "string" },
+            "sha256": { "type": "string" }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "required": ["installation"],
+          "properties": {
+            "installation": {
+              "enum": ["available", "installed_by_default", "not_available"]
+            }
+          }
+        },
+        "requires": {
+          "type": "object",
+          "properties": {
+            "env": { "type": "array", "items": { "type": "string" } },
+            "bins": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}
