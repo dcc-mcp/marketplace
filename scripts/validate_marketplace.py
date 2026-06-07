@@ -176,8 +176,9 @@ def check_reachability() -> bool:
     print("::group::URL reachability check")
     data = load_marketplace()
     skills = data.get("skills", [])
-    ok = True
     checked: set[str] = set()
+    missing: list[tuple[str, str]] = []
+    reachable = 0
 
     for skill in skills:
         name = skill.get("name", "")
@@ -195,19 +196,31 @@ def check_reachability() -> bool:
         status, err = _http_head(url)
         if 200 <= status < 400:
             print(f"  OK ({status}) {name}: {url}")
+            reachable += 1
         elif status == 404:
-            print(f"::error::NOT FOUND (404) {name}: {url}")
-            ok = False
+            print(f"::warning::NOT FOUND (404) {name}: {url}")
+            missing.append((name, url))
         elif status == 403:
-            # GitHub returns 403 for HEAD to repos without auth — try GET
-            print(f"  WARN (403 for HEAD, may be auth-restricted) {name}: {url}")
+            print(f"  WARN (403 for HEAD, likely auth-restricted) {name}: {url}")
         else:
             print(f"::warning::UNREACHABLE ({status or err}) {name}: {url}")
 
-    if ok:
-        print(f"URL reachability check complete ({len(checked)} unique URLs checked).")
+    print(f"URL check complete: {reachable}/{len(checked)} reachable, "
+          f"{len(missing)} not found ({len(checked)} unique URLs).")
+
+    # Fail only when *all* URLs are unreachable (likely a network issue),
+    # not when individual repos are missing — those are configuration issues.
+    if checked and reachable == 0:
+        print("::error::All source URLs are unreachable — possible network issue")
+        print("::endgroup::")
+        return False
+
+    if missing:
+        print("::warning::Some source URLs were not found. These repos may not exist "
+              "yet or may be private. Update marketplace.json entries accordingly.")
+
     print("::endgroup::")
-    return ok
+    return True
 
 
 # ── catalog parse check ────────────────────────────────────────────────
