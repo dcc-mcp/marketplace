@@ -177,8 +177,7 @@ def check_reachability() -> bool:
     data = load_marketplace()
     skills = data.get("skills", [])
     checked: set[str] = set()
-    missing: list[tuple[str, str]] = []
-    reachable = 0
+    errors: list[tuple[str, str, str]] = []  # (name, url, reason)
 
     for skill in skills:
         name = skill.get("name", "")
@@ -196,28 +195,34 @@ def check_reachability() -> bool:
         status, err = _http_head(url)
         if 200 <= status < 400:
             print(f"  OK ({status}) {name}: {url}")
-            reachable += 1
         elif status == 404:
-            print(f"::warning::NOT FOUND (404) {name}: {url}")
-            missing.append((name, url))
+            print(f"::warning::NOT FOUND (404) {name}: {url} — repo may not exist yet")
         elif status == 403:
+            # GitHub returns 403 for HEAD to repos without auth — not an error
             print(f"  WARN (403 for HEAD, likely auth-restricted) {name}: {url}")
+        elif status > 0:
+            # Unexpected HTTP status (5xx, etc.)
+            print(f"::error::UNEXPECTED STATUS ({status}) {name}: {url}")
+            errors.append((name, url, f"HTTP {status}"))
         else:
-            print(f"::warning::UNREACHABLE ({status or err}) {name}: {url}")
+            # Network-level failure (timeout, DNS, connection refused)
+            print(f"::error::NETWORK ERROR ({err}) {name}: {url}")
+            errors.append((name, url, err))
 
-    print(f"URL check complete: {reachable}/{len(checked)} reachable, "
-          f"{len(missing)} not found ({len(checked)} unique URLs).")
+    if not checked:
+        print("No source URLs to check.")
+        print("::endgroup::")
+        return True
 
-    # Fail only when *all* URLs are unreachable (likely a network issue),
-    # not when individual repos are missing — those are configuration issues.
-    if checked and reachable == 0:
-        print("::error::All source URLs are unreachable — possible network issue")
+    ok_count = len(checked) - len(errors)
+    print(f"URL check complete: {ok_count}/{len(checked)} reachable "
+          f"({len(checked)} unique URLs).")
+
+    if errors:
+        print("::error::Some URLs are unreachable due to network errors "
+              "(not 404). Check connectivity or repo availability.")
         print("::endgroup::")
         return False
-
-    if missing:
-        print("::warning::Some source URLs were not found. These repos may not exist "
-              "yet or may be private. Update marketplace.json entries accordingly.")
 
     print("::endgroup::")
     return True
