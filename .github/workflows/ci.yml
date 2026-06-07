@@ -1,0 +1,80 @@
+name: marketplace-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "marketplace.json"
+      - "schemas/**"
+      - "examples/**"
+      - ".github/workflows/ci.yml"
+      - "scripts/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "marketplace.json"
+      - "schemas/**"
+      - "examples/**"
+      - ".github/workflows/ci.yml"
+      - "scripts/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-schema:
+    name: Schema validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install check-jsonschema
+        run: pip install check-jsonschema
+
+      - name: Validate marketplace.json against schema
+        run: >
+          check-jsonschema
+          --schemafile schemas/marketplace-v1.schema.json
+          marketplace.json
+
+      - name: Validate example files against schema
+        run: |
+          for f in examples/*.json; do
+            echo "::group::Validating $f"
+            check-jsonschema --schemafile schemas/marketplace-v1.schema.json "$f"
+            echo "::endgroup::"
+          done
+
+  check-uniqueness:
+    name: Name uniqueness check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run uniqueness check
+        run: python scripts/validate_marketplace.py uniqueness
+
+  smoke-test:
+    name: Dry-run smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run URL reachability check
+        run: python scripts/validate_marketplace.py reachability
+
+      - name: Validate with dcc-mcp-catalog (if available)
+        run: python scripts/validate_marketplace.py catalog-parse
