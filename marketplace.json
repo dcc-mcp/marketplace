@@ -18,7 +18,7 @@
       "minCoreVersion": "0.15.0",
       "source": {
         "type": "git",
-        "url": "https://github.com/loonghao/dcc-mcp-maya-skills",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-maya",
         "ref": "main"
       },
       "policy": {
@@ -36,7 +36,7 @@
       "minCoreVersion": "0.15.0",
       "source": {
         "type": "git",
-        "url": "https://github.com/loonghao/dcc-mcp-blender-skills",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-blender",
         "ref": "main"
       },
       "policy": {
@@ -54,7 +54,7 @@
       "minCoreVersion": "0.15.0",
       "source": {
         "type": "git",
-        "url": "https://github.com/loonghao/dcc-mcp-houdini-skills",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-houdini",
         "ref": "main"
       },
       "policy": {
@@ -76,7 +76,7 @@
         "ref": "main"
       },
       "policy": {
-        "installation": "available"
+        "installation": "not_available"
       },
       "requires": {
         "env": ["HUNYUAN_API_KEY"]
@@ -97,7 +97,7 @@
         "ref": "main"
       },
       "policy": {
-        "installation": "available"
+        "installation": "not_available"
       }
     }
   ]
