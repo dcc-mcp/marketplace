@@ -26,6 +26,24 @@
       }
     },
     {
+      "name": "dcc-mcp-maya-mgear",
+      "description": "mGear Shifter rigging integration for DCC-MCP — inspect, build, and manage mGear rigs",
+      "version": "0.2.0",
+      "dcc": ["maya"],
+      "tags": ["skills", "maya", "rigging", "mgear"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
       "name": "dcc-mcp-blender-skills",
       "description": "Official Blender skill pack for DCC-MCP — modeling, shading, and render tools",
       "version": "1.0.0",
