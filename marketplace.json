@@ -28,7 +28,7 @@
     {
       "name": "dcc-mcp-maya-mgear",
       "description": "mGear Shifter rigging integration for DCC-MCP — inspect, build, and manage mGear rigs",
-      "version": "0.2.0",
+      "version": "0.4.3",
       "dcc": ["maya"],
       "tags": ["skills", "maya", "rigging", "mgear"],
       "category": "Skills",
