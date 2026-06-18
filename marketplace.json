@@ -156,6 +156,78 @@
       "policy": {
         "installation": "available"
       }
+    },
+    {
+      "name": "dcc-asset-nasa3d",
+      "description": "Search and download free NASA 3D Resources files with NASA usage notices",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "nasa", "space", "download", "free", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-smithsonian3d",
+      "description": "Search and download Smithsonian Open Access CC0 3D files",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "smithsonian", "cc0", "download", "3d"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-kenney",
+      "description": "Search and download CC0 Kenney game asset packs",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "kenney", "cc0", "game-assets", "download"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-quaternius",
+      "description": "Search and inspect CC0 Quaternius game asset packs",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "quaternius", "cc0", "game-assets"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
     }
   ]
 }
