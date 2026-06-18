@@ -228,6 +228,81 @@
       "policy": {
         "installation": "available"
       }
+    },
+    {
+      "name": "dcc-asset-objaverse",
+      "description": "Browse Objaverse annotations and download Creative Commons GLB objects",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "objaverse", "huggingface", "creative-commons", "glb"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-gltf-sample-assets",
+      "description": "Search and download Khronos glTF Sample Assets for testing and validation",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "gltf", "khronos", "sample-assets", "download"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-sketchfab",
+      "description": "Search and download downloadable Sketchfab models with attribution metadata",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "sketchfab", "creative-commons", "download", "gltf", "glb"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-sketchfab",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["SKETCHFAB_TOKEN"]
+      }
+    },
+    {
+      "name": "dcc-asset-google-scanned-objects",
+      "description": "Search and download Google Scanned Objects from Gazebo Fuel",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "google", "scanned-objects", "gazebo", "cc-by", "obj"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
     }
   ]
 }
