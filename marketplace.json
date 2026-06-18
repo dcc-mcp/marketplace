@@ -80,42 +80,81 @@
       }
     },
     {
-      "name": "dcc-asset-hunyuan-download",
-      "description": "Search and download Hunyuan 3D models into the active DCC session",
+      "name": "dcc-ai-hunyuan3d",
+      "description": "Tencent Cloud Hunyuan 3D generation for DCC-MCP — submit and query text/image-to-3D jobs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini"],
-      "tags": ["asset", "hunyuan", "download", "domain"],
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["skills", "ai", "hunyuan", "3d-generation"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.15.0",
+      "minCoreVersion": "0.18.0",
       "source": {
         "type": "git",
-        "url": "https://github.com/dcc-mcp/dcc-asset-hunyuan-download",
+        "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
         "ref": "main"
       },
       "policy": {
-        "installation": "not_available"
+        "installation": "available"
       },
       "requires": {
-        "env": ["HUNYUAN_API_KEY"]
+        "bins": ["tccli"]
+      }
+    },
+    {
+      "name": "dcc-ai-tripo3d",
+      "description": "Tripo 3D generation for DCC-MCP — create, inspect, and download text/image/multiview tasks",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["skills", "ai", "tripo", "3d-generation"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["TRIPO_API_KEY"]
       }
     },
     {
       "name": "dcc-asset-polyhaven",
       "description": "Browse and download CC0 assets from Poly Haven (models, HDRIs, textures)",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "photoshop"],
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "photoshop"],
       "tags": ["asset", "polyhaven", "cc0", "download", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.15.0",
+      "minCoreVersion": "0.18.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
         "ref": "main"
       },
       "policy": {
-        "installation": "not_available"
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-asset-ambientcg",
+      "description": "Search and download free ambientCG materials, HDRIs, and models",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "ambientcg", "download", "pbr", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
       }
     }
   ]
