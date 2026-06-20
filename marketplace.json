@@ -80,6 +80,60 @@
       }
     },
     {
+      "name": "dcc-ui-qt-inspector",
+      "description": "Reusable Qt UI inspection for DCC-MCP — discover windows, widgets, and selector state across PySide/PyQt hosts",
+      "version": "0.1.0",
+      "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
+      "tags": ["skills", "ui", "qt", "pyside", "pyqt", "inspection", "infrastructure"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-ui-qt-actions",
+      "description": "Reusable Qt UI actions for DCC-MCP — click widgets, trigger actions, set values, and drive legacy UI workflows",
+      "version": "0.1.0",
+      "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
+      "tags": ["skills", "ui", "qt", "pyside", "pyqt", "automation", "infrastructure"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-ui-workflow-memory",
+      "description": "Structured workflow memory for DCC-MCP UI automation — remember selectors, recipes, and verified failures",
+      "version": "0.1.0",
+      "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
+      "tags": ["skills", "ui", "workflow", "memory", "automation", "selectors", "infrastructure"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
       "name": "dcc-ai-hunyuan3d",
       "description": "Tencent Cloud Hunyuan 3D generation for DCC-MCP — submit and query text/image-to-3D jobs",
       "version": "0.1.0",
