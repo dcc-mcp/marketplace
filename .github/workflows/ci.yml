@@ -63,6 +63,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install validator test dependency
+        run: pip install jsonschema
+
       - name: Run metadata and uniqueness checks
         run: |
           python scripts/validate_marketplace.py uniqueness
