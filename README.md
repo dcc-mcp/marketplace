@@ -74,11 +74,17 @@ Each skill entry includes:
 - Policy: `policy.installation` (`available` | `installed_by_default` | `not_available`)
 - Optional runtime hints: `requires.env`, `requires.bins` (ClawHub-style)
 
+Official entries use a full 40-character Git commit in `source.ref`. The CLI records that
+resolved commit in local install state, so an update can be detected even when an entry's
+semantic version is unchanged. Branch names such as `main` are intentionally not accepted
+in the official catalog; use an immutable commit pin and publish a new catalog version to
+roll out a newer package revision.
+
 ## Publishing a skill
 
 1. Create a standalone skill repo with a valid `SKILL.md` + `tools.yaml`.
 2. Open a PR adding an entry to `marketplace.json`.
-3. CI validates JSON schema + skill name uniqueness.
+3. CI validates the JSON schema, metadata policy, source URL, and immutable Git pin.
 4. After merge, users can `marketplace install <name>`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
