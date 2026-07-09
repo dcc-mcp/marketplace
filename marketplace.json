@@ -1,6 +1,7 @@
 {
   "name": "dcc-mcp-official",
-  "version": "1.0.0",
+  "schemaVersion": "1",
+  "version": "1.0.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -19,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya",
-        "ref": "main"
+        "ref": "e1f53d8e1def4c02c1fff58c3acea015e47cf902"
       },
       "policy": {
         "installation": "available"
@@ -37,7 +38,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "main"
+        "ref": "4eae1598495053df50a862faaa7b63866dd00b1c"
       },
       "policy": {
         "installation": "available"
@@ -55,7 +56,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-blender",
-        "ref": "main"
+        "ref": "f3abe8ab11a9fc69d02ba4525c6f0bed5c1c3906"
       },
       "policy": {
         "installation": "available"
@@ -73,7 +74,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-houdini",
-        "ref": "main"
+        "ref": "37c84b1adc7da2912c6d19df857881b30b6ecb21"
       },
       "policy": {
         "installation": "available"
@@ -91,7 +92,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
-        "ref": "main"
+        "ref": "3f64b05ee52877571377e93797ebabcb025fc01a"
       },
       "policy": {
         "installation": "available"
@@ -109,7 +110,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "main"
+        "ref": "e170fd1c35bcd3e6f5d8d536640f80c907fc3248"
       },
       "policy": {
         "installation": "available"
@@ -127,7 +128,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "main"
+        "ref": "53361c77de9265d48078cf44450eaba875056521"
       },
       "policy": {
         "installation": "available"
@@ -145,7 +146,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
-        "ref": "main"
+        "ref": "941e336e176c17f1ecc0bc15516b2c907f06fa8b"
       },
       "policy": {
         "installation": "available"
@@ -166,7 +167,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
-        "ref": "main"
+        "ref": "f8c2bd7b4338a3a415e18b0cfb9c707671b4a9eb"
       },
       "policy": {
         "installation": "available"
@@ -187,7 +188,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
-        "ref": "main"
+        "ref": "7365792398dd24c93919a319347c02d9df483b17"
       },
       "policy": {
         "installation": "available"
@@ -205,7 +206,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
-        "ref": "main"
+        "ref": "7bcf79db5e1f3153ac36c7b22066e0ed21a0e0e2"
       },
       "policy": {
         "installation": "available"
@@ -223,7 +224,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
-        "ref": "main"
+        "ref": "f287f3f160ef407be34bfc650e3411bfdc9c3253"
       },
       "policy": {
         "installation": "available"
@@ -241,7 +242,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
-        "ref": "main"
+        "ref": "e7998cee1a490523eda82dd9c76055e23deab1f1"
       },
       "policy": {
         "installation": "available"
@@ -259,7 +260,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "main"
+        "ref": "1b80782197c95acc7694827bfad2c355fcc9890a"
       },
       "policy": {
         "installation": "available"
@@ -277,7 +278,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
-        "ref": "main"
+        "ref": "99d725aead0b9f70c2e5c6e42e30e716252d9489"
       },
       "policy": {
         "installation": "available"
@@ -295,7 +296,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
-        "ref": "main"
+        "ref": "1175707f7480cb40320d553854fd79beaa11f405"
       },
       "policy": {
         "installation": "available"
@@ -313,7 +314,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
-        "ref": "main"
+        "ref": "a700e39dacd2484d723497791e5f6d543fd3bb00"
       },
       "policy": {
         "installation": "available"
@@ -331,7 +332,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-sketchfab",
-        "ref": "main"
+        "ref": "dcead998ee8788e69f4d7cab2d5b767cfdd116af"
       },
       "policy": {
         "installation": "available"
@@ -352,7 +353,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects",
-        "ref": "main"
+        "ref": "9db9604052db08f8ef74cc2eccd2edc79da0df36"
       },
       "policy": {
         "installation": "available"

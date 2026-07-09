@@ -1,5 +1,8 @@
 name: marketplace-ci
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
@@ -51,7 +54,7 @@ jobs:
           done
 
   check-uniqueness:
-    name: Name uniqueness check
+    name: Metadata policy checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,8 +63,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run uniqueness check
-        run: python scripts/validate_marketplace.py uniqueness
+      - name: Run metadata and uniqueness checks
+        run: |
+          python scripts/validate_marketplace.py uniqueness
+          python scripts/validate_marketplace.py metadata
+
+      - name: Run validator unit tests
+        run: python -m unittest discover -s tests -p "test_*.py"
 
   smoke-test:
     name: Dry-run smoke test
@@ -73,8 +81,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run URL reachability check
+      - name: Verify source URLs are reachable
         run: python scripts/validate_marketplace.py reachability
+
+      - name: Verify pinned git revisions remain reachable
+        run: python scripts/validate_marketplace.py source-revisions
 
       - name: Validate with dcc-mcp-catalog (if available)
         run: python scripts/validate_marketplace.py catalog-parse

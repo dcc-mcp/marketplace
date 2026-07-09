@@ -4,7 +4,9 @@
 Usage:
     python scripts/validate_marketplace.py schema        # JSON Schema validation
     python scripts/validate_marketplace.py uniqueness    # Duplicate name check
+    python scripts/validate_marketplace.py metadata      # Required metadata and immutable refs
     python scripts/validate_marketplace.py reachability  # URL existence check
+    python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
     python scripts/validate_marketplace.py catalog-parse # Validate via dcc-mcp-catalog
     python scripts/validate_marketplace.py all           # Run all checks (default)
 """
@@ -12,8 +14,8 @@ Usage:
 from __future__ import annotations
 
 import json
-import os
 import re
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -41,7 +43,7 @@ def load_schema() -> dict:
 def validate_schema() -> bool:
     print("::group::Schema validation")
     try:
-        from jsonschema import validate, ValidationError
+        from jsonschema import Draft202012Validator, FormatChecker
     except ImportError:
         print("jsonschema not installed, trying check-jsonschema CLI...")
         import subprocess
@@ -64,9 +66,12 @@ def validate_schema() -> bool:
     else:
         instance = load_marketplace()
         schema = load_schema()
-        try:
-            validate(instance=instance, schema=schema)
-        except ValidationError as exc:
+        errors = sorted(
+            Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(instance),
+            key=lambda error: list(error.absolute_path),
+        )
+        if errors:
+            exc = errors[0]
             print(f"::error::Schema validation failed: {exc.message}")
             print(f"  at path: {' -> '.join(str(p) for p in exc.absolute_path)}")
             print("::endgroup::")
@@ -115,6 +120,11 @@ _NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 _VALID_CATEGORIES = {"Skills", "Asset Providers", "Studio", "Infrastructure"}
 _VALID_POLICIES = {"available", "installed_by_default", "not_available"}
 _VALID_SOURCE_TYPES = {"git", "zip"}
+_SEMVER_PATTERN = re.compile(
+    r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+    r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
+_GIT_SHA_PATTERN = re.compile(r"^[a-f0-9]{40}$")
 
 
 def check_metadata_quality() -> bool:
@@ -122,6 +132,11 @@ def check_metadata_quality() -> bool:
     data = load_marketplace()
     skills = data.get("skills", [])
     ok = True
+    official_catalog = data.get("name") == "dcc-mcp-official"
+
+    if data.get("schemaVersion") != "1":
+        print("::error::Catalog must declare schemaVersion '1'")
+        ok = False
 
     for skill in skills:
         name = skill.get("name", "")
@@ -132,7 +147,24 @@ def check_metadata_quality() -> bool:
 
         dcc = skill.get("dcc", [])
         if not dcc:
-            print(f"::warning::Skill '{name}' has no dcc targets")
+            print(f"::error::Skill '{name}' has no dcc targets")
+            ok = False
+
+        tags = skill.get("tags", [])
+        if not tags:
+            print(f"::error::Skill '{name}' has no tags")
+            ok = False
+
+        category = skill.get("category", "")
+        if category not in _VALID_CATEGORIES:
+            print(f"::error::Skill '{name}' has invalid category: '{category}'")
+            ok = False
+
+        for field in ("version", "minCoreVersion"):
+            value = skill.get(field, "")
+            if not isinstance(value, str) or not _SEMVER_PATTERN.fullmatch(value):
+                print(f"::error::Skill '{name}' has invalid {field}: '{value}'")
+                ok = False
 
         source = skill.get("source", {})
         source_type = source.get("type", "")
@@ -143,6 +175,18 @@ def check_metadata_quality() -> bool:
         url = source.get("url", "")
         if not url:
             print(f"::error::Skill '{name}' has no source URL")
+            ok = False
+
+        ref = source.get("ref", "")
+        sha256 = source.get("sha256", "")
+        if source_type == "git" and not ref:
+            print(f"::error::Skill '{name}' has no git source ref")
+            ok = False
+        if source_type == "zip" and not sha256:
+            print(f"::error::Skill '{name}' has no zip source sha256")
+            ok = False
+        if official_catalog and source_type == "git" and not _GIT_SHA_PATTERN.fullmatch(ref):
+            print(f"::error::Official skill '{name}' must pin source.ref to a 40-character commit SHA")
             ok = False
 
         policy = skill.get("policy", {})
@@ -196,7 +240,8 @@ def check_reachability() -> bool:
         if 200 <= status < 400:
             print(f"  OK ({status}) {name}: {url}")
         elif status == 404:
-            print(f"::warning::NOT FOUND (404) {name}: {url} — repo may not exist yet")
+            print(f"::error::NOT FOUND (404) {name}: {url}")
+            errors.append((name, url, "HTTP 404"))
         elif status == 403:
             # GitHub returns 403 for HEAD to repos without auth — not an error
             print(f"  WARN (403 for HEAD, likely auth-restricted) {name}: {url}")
@@ -224,6 +269,55 @@ def check_reachability() -> bool:
         print("::endgroup::")
         return False
 
+    print("::endgroup::")
+    return True
+
+
+# ── pinned source revision checks ──────────────────────────────────────
+
+
+def check_source_revisions() -> bool:
+    print("::group::Pinned source revision check")
+    data = load_marketplace()
+    skills = data.get("skills", [])
+    errors: list[tuple[str, str]] = []
+
+    for skill in skills:
+        source = skill.get("source", {})
+        if source.get("type") != "git":
+            continue
+        name = skill.get("name", "?")
+        url = source.get("url", "")
+        ref = source.get("ref", "")
+        if not _GIT_SHA_PATTERN.fullmatch(ref):
+            errors.append((name, "git source ref is not a full commit SHA"))
+            continue
+        try:
+            result = subprocess.run(
+                ["git", "ls-remote", "--heads", "--tags", url],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            errors.append((name, f"could not inspect source: {exc}"))
+            continue
+        if result.returncode != 0:
+            errors.append((name, result.stderr.strip() or "git ls-remote failed"))
+            continue
+        advertised_revisions = {line.split()[0].lower() for line in result.stdout.splitlines() if line}
+        if ref.lower() not in advertised_revisions:
+            errors.append((name, f"pinned commit {ref} is not advertised by a branch or tag"))
+            continue
+        print(f"  OK {name}: {ref}")
+
+    for name, reason in errors:
+        print(f"::error::{name}: {reason}")
+    if errors:
+        print("::endgroup::")
+        return False
+    print(f"Pinned source revision check passed for {len(skills)} skills.")
     print("::endgroup::")
     return True
 
@@ -273,6 +367,7 @@ COMMANDS = {
     "uniqueness": check_uniqueness,
     "metadata": check_metadata_quality,
     "reachability": check_reachability,
+    "source-revisions": check_source_revisions,
     "catalog-parse": check_catalog_parse,
 }
 
