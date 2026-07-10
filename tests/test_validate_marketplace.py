@@ -1,4 +1,5 @@
 import contextlib
+import base64
 import importlib.util
 import io
 import json
@@ -92,6 +93,46 @@ class MarketplaceValidatorTests(unittest.TestCase):
             validate_marketplace.load_marketplace = original_load
             validate_marketplace._github_api_json = original_api
         self.assertIn("2 commit(s) after pinned", output.getvalue())
+
+    def test_asset_contract_requires_descriptor_source_and_license_fields(self) -> None:
+        skill = valid_skill()
+        skill["assetContract"] = "descriptor-v1"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original_load = validate_marketplace.load_marketplace
+        original_api = validate_marketplace._github_api_json
+        tools = "asset_descriptor:\n  source_url: example\n  license_spdx: CC0-1.0\n"
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace._github_api_json = lambda path: {
+            "encoding": "base64",
+            "content": base64.b64encode(tools.encode()).decode(),
+        }
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertTrue(validate_marketplace.check_asset_contract())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace._github_api_json = original_api
+        self.assertIn("descriptor-v1", output.getvalue())
+
+    def test_asset_contract_rejects_missing_license_field(self) -> None:
+        skill = valid_skill()
+        skill["assetContract"] = "descriptor-v1"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original_load = validate_marketplace.load_marketplace
+        original_api = validate_marketplace._github_api_json
+        tools = "asset_descriptor:\n  source_url: example\n"
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace._github_api_json = lambda path: {
+            "encoding": "base64",
+            "content": base64.b64encode(tools.encode()).decode(),
+        }
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_asset_contract())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace._github_api_json = original_api
+        self.assertIn("license_spdx or license_text", output.getvalue())
 
     def test_schema_rejects_unknown_entry_fields(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))

@@ -95,5 +95,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/validate_marketplace.py skill-layout
 
+      - name: Verify asset descriptor contracts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/validate_marketplace.py asset-contract
+
       - name: Validate with dcc-mcp-catalog (if available)
         run: python scripts/validate_marketplace.py catalog-parse

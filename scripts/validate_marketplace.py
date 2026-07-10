@@ -9,6 +9,7 @@ Usage:
     python scripts/validate_marketplace.py reachability  # URL existence check
     python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
     python scripts/validate_marketplace.py skill-layout  # Verify declared skill roots at pinned revisions
+    python scripts/validate_marketplace.py asset-contract # Verify opted-in asset descriptor contracts
     python scripts/validate_marketplace.py source-freshness # Report upstream commits awaiting review
     python scripts/validate_marketplace.py catalog-parse # Validate via dcc-mcp-catalog
     python scripts/validate_marketplace.py all           # Run all checks (default)
@@ -23,6 +24,7 @@ import subprocess
 import sys
 import urllib.error
 import urllib.request
+from base64 import b64decode
 from collections import Counter
 from pathlib import Path
 from urllib.parse import quote, urlparse
@@ -392,6 +394,64 @@ def _github_tree_paths(repo: str, ref: str) -> set[str]:
     }
 
 
+def _github_file_text(repo: str, ref: str, path: str) -> str:
+    body = _github_api_json(
+        f"repos/{repo}/contents/{quote(path, safe='/')}?ref={quote(ref, safe='')}"
+    )
+    if body.get("encoding") != "base64" or not isinstance(body.get("content"), str):
+        raise ValueError(f"GitHub did not return base64 file content for {path}")
+    return b64decode(body["content"]).decode("utf-8")
+
+
+# ── asset descriptor contract checks ─────────────────────────────────
+
+
+def check_asset_contract() -> bool:
+    """Verify opted-in asset sources describe the import handoff contract."""
+    print("::group::Asset descriptor contract check")
+    errors: list[tuple[str, str]] = []
+    checked = 0
+    for skill in load_marketplace().get("skills", []):
+        if skill.get("assetContract") != "descriptor-v1":
+            continue
+        name = skill.get("name", "?")
+        source = skill.get("source", {})
+        repo = _github_repo_slug(source.get("url", ""))
+        ref = source.get("ref", "")
+        roots = source.get("skillRoots", [])
+        if source.get("type") != "git" or not repo or not _GIT_SHA_PATTERN.fullmatch(ref):
+            errors.append((name, "descriptor-v1 requires a pinned HTTPS GitHub git source"))
+            continue
+        if not isinstance(roots, list) or not roots:
+            errors.append((name, "descriptor-v1 requires source.skillRoots"))
+            continue
+        try:
+            tool_specs = [_github_file_text(repo, ref, f"{root}/tools.yaml") for root in roots]
+        except (OSError, ValueError, UnicodeDecodeError, urllib.error.URLError, urllib.error.HTTPError) as exc:
+            errors.append((name, f"could not inspect pinned tools.yaml: {exc}"))
+            continue
+        has_contract = any(
+            "asset_descriptor" in spec
+            and "source_url" in spec
+            and ("license_spdx" in spec or "license_text" in spec)
+            for spec in tool_specs
+        )
+        if not has_contract:
+            errors.append((name, "tools.yaml must declare asset_descriptor with source_url and license_spdx or license_text"))
+            continue
+        checked += 1
+        print(f"  OK {name}: descriptor-v1")
+
+    for name, reason in errors:
+        print(f"::error::{name}: {reason}")
+    if errors:
+        print("::endgroup::")
+        return False
+    print(f"Asset descriptor contract check passed for {checked} skill(s).")
+    print("::endgroup::")
+    return True
+
+
 # ── source freshness checks ───────────────────────────────────────────
 
 
@@ -538,6 +598,7 @@ COMMANDS = {
     "reachability": check_reachability,
     "source-revisions": check_source_revisions,
     "skill-layout": check_skill_layout,
+    "asset-contract": check_asset_contract,
     "source-freshness": check_source_freshness,
     "catalog-parse": check_catalog_parse,
 }

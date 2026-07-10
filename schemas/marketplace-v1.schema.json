@@ -94,6 +94,9 @@
         "lifecycle": {
           "enum": ["active", "deprecated", "experimental"]
         },
+        "assetContract": {
+          "enum": ["descriptor-v1"]
+        },
         "replacedBy": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]*$"
