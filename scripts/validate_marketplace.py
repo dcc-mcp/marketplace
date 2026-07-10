@@ -2,6 +2,7 @@
 """DCC-MCP marketplace validation tool.
 
 Usage:
+    python scripts/validate_marketplace.py all --catalog ./marketplace.json
     python scripts/validate_marketplace.py schema        # JSON Schema validation
     python scripts/validate_marketplace.py uniqueness    # Duplicate name check
     python scripts/validate_marketplace.py metadata      # Required metadata and immutable refs
@@ -487,10 +488,17 @@ COMMANDS = {
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        mode = "all"
-    else:
-        mode = sys.argv[1]
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Validate a DCC-MCP marketplace catalog.")
+    parser.add_argument("mode", nargs="?", default="all")
+    parser.add_argument("--catalog", type=Path, metavar="PATH")
+    args = parser.parse_args()
+
+    global MARKETPLACE_JSON
+    if args.catalog:
+        MARKETPLACE_JSON = args.catalog.resolve()
+    mode = args.mode
 
     modes = list(COMMANDS) if mode == "all" else [mode]
     unknown = [m for m in modes if m not in COMMANDS]
