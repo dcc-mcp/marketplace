@@ -87,11 +87,13 @@ pinned revision.
 
 ## Publishing a skill
 
-1. Create a standalone skill repo with a valid `SKILL.md` + `tools.yaml`.
-2. Open a PR adding an entry to `marketplace.json`.
-3. CI validates the JSON schema, metadata policy, source URL, immutable Git pin, and declared
+1. Copy [`examples/custom-studio-marketplace.json`](examples/custom-studio-marketplace.json) and
+   replace its placeholder identity, source, and `source.skillRoots` values.
+2. Create a skill repo with a valid `SKILL.md` + `tools.yaml` at the declared root.
+3. Open a PR adding the completed entry to `marketplace.json`.
+4. CI validates the JSON schema, metadata policy, source URL, immutable Git pin, and declared
    skill-root layout.
-4. After merge, users can `marketplace install <name>`.
+5. After merge, users can `marketplace install <name>`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 

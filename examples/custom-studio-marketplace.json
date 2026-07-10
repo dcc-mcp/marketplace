@@ -20,7 +20,8 @@
       "source": {
         "type": "git",
         "url": "https://github.com/my-studio/maya-rig-tools-skill",
-        "ref": "v0.2.0"
+        "ref": "v0.2.0",
+        "skillRoots": ["skills/maya-rig-tools"]
       },
       "policy": {
         "installation": "available"

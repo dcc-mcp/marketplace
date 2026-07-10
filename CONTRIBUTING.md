@@ -3,11 +3,12 @@
 ## Adding a skill entry
 
 1. Fork this repository.
-2. Add a JSON object under `skills[]` in `marketplace.json`; preserve `schemaVersion: "1"`.
-3. Pin a Git source to its complete 40-character commit SHA. The pin must still be advertised by a branch or tag in the source repository.
-4. Declare every installable skill directory in `source.skillRoots`.
-5. Run `python scripts/validate_marketplace.py all` locally.
-5. Open a PR with:
+2. Copy the entry from [`examples/custom-studio-marketplace.json`](examples/custom-studio-marketplace.json), then replace every `my-studio` value.
+3. Add the completed object under `skills[]` in `marketplace.json`; preserve `schemaVersion: "1"`.
+4. Pin a Git source to its complete 40-character commit SHA. The pin must still be advertised by a branch or tag in the source repository.
+5. Declare every installable skill directory in `source.skillRoots`.
+6. Run `python scripts/validate_marketplace.py all` locally.
+7. Open a PR with:
    - Entry diff
    - Link to the skill repo
    - One-line test note (`dcc-mcp-cli marketplace install …` expected path)
@@ -32,6 +33,10 @@ Studios can fork this repo or publish a private `marketplace.json` and register 
 ```bash
 dcc-mcp-cli marketplace add https://github.com/my-studio/dcc-marketplace.git --ref main
 ```
+
+Start from [`examples/custom-studio-marketplace.json`](examples/custom-studio-marketplace.json).
+Custom catalogs may use a release tag, but should still declare `source.skillRoots` so the
+installer never discovers unrelated repository content.
 
 Merge rules (implemented in CLI):
 
