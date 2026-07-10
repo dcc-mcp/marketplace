@@ -13,6 +13,10 @@ directory contains a `SKILL.md` at that revision.
 Packages that require credentials or external binaries must declare their variable and binary
 names in `requires`; secrets must never appear in catalog metadata.
 
+Asset-provider submissions must follow the [asset descriptor handoff](asset-descriptor-contract.md)
+guide: download tools return a validated local-file descriptor with source and license attribution,
+while DCC adapters own scene import.
+
 ## Release and rollback
 
 Changing package content requires a new package version and a new `source.ref` commit pin.
