@@ -5,9 +5,10 @@ The official catalog is a curated installation contract, not a list of mutable r
 ## Admission gate
 
 Every official entry must provide a valid skill package, a supported DCC target, a minimum
-Core version, an immutable Git commit pin, a maintainer, category, and install policy. CI
-checks schema conformance, unique names, source reachability, and that the pinned commit is
-still advertised by the source repository.
+Core version, an immutable Git commit pin, explicit skill roots, a maintainer, category, and
+install policy. CI checks schema conformance, unique names, source reachability, that the
+pinned commit is still advertised by the source repository, and that every `source.skillRoots`
+directory contains a `SKILL.md` at that revision.
 
 Packages that require credentials or external binaries must declare their variable and binary
 names in `requires`; secrets must never appear in catalog metadata.

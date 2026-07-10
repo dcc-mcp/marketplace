@@ -90,5 +90,10 @@ jobs:
       - name: Verify pinned git revisions remain reachable
         run: python scripts/validate_marketplace.py source-revisions
 
+      - name: Verify declared skill roots at pinned revisions
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/validate_marketplace.py skill-layout
+
       - name: Validate with dcc-mcp-catalog (if available)
         run: python scripts/validate_marketplace.py catalog-parse

@@ -28,6 +28,7 @@ def valid_skill(ref: str = "a" * 40) -> dict:
             "type": "git",
             "url": "https://github.com/dcc-mcp/maya-rig-tools",
             "ref": ref,
+            "skillRoots": ["skill/maya-rig-tools"],
         },
         "policy": {"installation": "available"},
     }
@@ -54,6 +55,24 @@ class MarketplaceValidatorTests(unittest.TestCase):
                 self.assertTrue(validate_marketplace.check_metadata_quality())
         finally:
             validate_marketplace.load_marketplace = original
+
+    def test_official_catalog_requires_skill_roots(self) -> None:
+        skill = valid_skill()
+        del skill["source"]["skillRoots"]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_metadata_quality())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("must declare non-empty source.skillRoots", output.getvalue())
+
+    def test_skill_root_must_contain_a_skill_file(self) -> None:
+        paths = {"skill/release/SKILL.md", "examples/demo/SKILL.md"}
+        self.assertTrue(validate_marketplace._skill_root_contains_skill(paths, "skill/release"))
+        self.assertFalse(validate_marketplace._skill_root_contains_skill(paths, "skill/missing"))
 
     def test_schema_rejects_unknown_entry_fields(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))

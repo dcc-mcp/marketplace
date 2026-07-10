@@ -5,7 +5,8 @@
 1. Fork this repository.
 2. Add a JSON object under `skills[]` in `marketplace.json`; preserve `schemaVersion: "1"`.
 3. Pin a Git source to its complete 40-character commit SHA. The pin must still be advertised by a branch or tag in the source repository.
-4. Run `python scripts/validate_marketplace.py all` locally.
+4. Declare every installable skill directory in `source.skillRoots`.
+5. Run `python scripts/validate_marketplace.py all` locally.
 5. Open a PR with:
    - Entry diff
    - Link to the skill repo
@@ -20,8 +21,9 @@
 - [ ] `minCoreVersion` matches the lowest tested dcc-mcp-core release
 - [ ] `source.url` points to the canonical Git repo
 - [ ] Official `source.ref` is a complete immutable commit SHA, never a branch name
+- [ ] Official `source.skillRoots` lists only relative directories containing the intended `SKILL.md` files
 - [ ] `requires.env` / `requires.bins` declared when the skill needs secrets or binaries
-- [ ] The pinned repository revision contains a valid `SKILL.md` and any referenced `tools.yaml`
+- [ ] Every declared `source.skillRoots` directory contains a valid `SKILL.md` and any referenced `tools.yaml`
 
 ## Custom marketplace sources
 

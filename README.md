@@ -70,7 +70,7 @@ Each skill entry includes:
 
 - Identity: `name`, `description`, `version`, `maintainer`
 - Targeting: `dcc[]`, `tags[]`, `category`, `minCoreVersion`
-- Source: `source.type` (`git` | `zip`), `source.url`, `source.ref` or `source.sha256`
+- Source: `source.type` (`git` | `zip`), `source.url`, `source.ref` or `source.sha256`, and `source.skillRoots`
 - Policy: `policy.installation` (`available` | `installed_by_default` | `not_available`)
 - Optional runtime hints: `requires.env`, `requires.bins` (ClawHub-style)
 
@@ -80,11 +80,17 @@ semantic version is unchanged. Branch names such as `main` are intentionally not
 in the official catalog; use an immutable commit pin and publish a new catalog version to
 roll out a newer package revision.
 
+Official entries also declare every installable directory in `source.skillRoots`. The CLI
+installs only those directories, keeping repository examples and development-only skills out
+of users' local skill paths. CI verifies that each declared root contains a `SKILL.md` at the
+pinned revision.
+
 ## Publishing a skill
 
 1. Create a standalone skill repo with a valid `SKILL.md` + `tools.yaml`.
 2. Open a PR adding an entry to `marketplace.json`.
-3. CI validates the JSON schema, metadata policy, source URL, and immutable Git pin.
+3. CI validates the JSON schema, metadata policy, source URL, immutable Git pin, and declared
+   skill-root layout.
 4. After merge, users can `marketplace install <name>`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
