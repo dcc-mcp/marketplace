@@ -111,6 +111,15 @@
         "sha256": {
           "type": "string",
           "pattern": "^(?:sha256:)?[a-fA-F0-9]{64}$"
+        },
+        "skillRoots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+          }
         }
       },
       "allOf": [

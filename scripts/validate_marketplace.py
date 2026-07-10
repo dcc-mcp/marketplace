@@ -7,6 +7,7 @@ Usage:
     python scripts/validate_marketplace.py metadata      # Required metadata and immutable refs
     python scripts/validate_marketplace.py reachability  # URL existence check
     python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
+    python scripts/validate_marketplace.py skill-layout  # Verify declared skill roots at pinned revisions
     python scripts/validate_marketplace.py catalog-parse # Validate via dcc-mcp-catalog
     python scripts/validate_marketplace.py all           # Run all checks (default)
 """
@@ -14,6 +15,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -21,6 +23,7 @@ import urllib.error
 import urllib.request
 from collections import Counter
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 MARKETPLACE_JSON = ROOT / "marketplace.json"
@@ -189,6 +192,16 @@ def check_metadata_quality() -> bool:
             print(f"::error::Official skill '{name}' must pin source.ref to a 40-character commit SHA")
             ok = False
 
+        skill_roots = source.get("skillRoots")
+        if official_catalog and (not isinstance(skill_roots, list) or not skill_roots):
+            print(f"::error::Official skill '{name}' must declare non-empty source.skillRoots")
+            ok = False
+        elif skill_roots is not None:
+            for root in skill_roots:
+                if not _is_safe_skill_root(root):
+                    print(f"::error::Skill '{name}' has unsafe source.skillRoots entry: {root!r}")
+                    ok = False
+
         policy = skill.get("policy", {})
         installation = policy.get("installation", "")
         if installation not in _VALID_POLICIES:
@@ -199,6 +212,13 @@ def check_metadata_quality() -> bool:
         print(f"Metadata quality check passed for {len(skills)} skills.")
     print("::endgroup::")
     return ok
+
+
+def _is_safe_skill_root(value: object) -> bool:
+    if not isinstance(value, str) or not value or value.startswith(("/", "\\")):
+        return False
+    parts = value.split("/")
+    return all(part not in {"", ".", ".."} for part in parts)
 
 
 # ── URL reachability ───────────────────────────────────────────────────
@@ -322,6 +342,99 @@ def check_source_revisions() -> bool:
     return True
 
 
+# ── skill layout checks ────────────────────────────────────────────────
+
+
+def _github_repo_slug(url: str) -> str | None:
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.netloc.lower() != "github.com":
+        return None
+    parts = [part for part in parsed.path.strip("/").split("/") if part]
+    if len(parts) != 2:
+        return None
+    owner, repo = parts
+    if repo.endswith(".git"):
+        repo = repo[:-4]
+    return f"{owner}/{repo}" if owner and repo else None
+
+
+def _skill_root_contains_skill(tree_paths: set[str], skill_root: str) -> bool:
+    prefix = skill_root.rstrip("/") + "/"
+    return any(
+        path.startswith(prefix) and path.endswith("/SKILL.md")
+        for path in tree_paths
+    )
+
+
+def _github_tree_paths(repo: str, ref: str) -> set[str]:
+    request = urllib.request.Request(
+        f"https://api.github.com/repos/{repo}/git/trees/{ref}?recursive=1"
+    )
+    request.add_header("Accept", "application/vnd.github+json")
+    request.add_header("User-Agent", "dcc-mcp-marketplace-ci/1.0")
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        request.add_header("Authorization", f"Bearer {token}")
+    with urllib.request.urlopen(request, timeout=30) as response:
+        body = json.load(response)
+    if body.get("truncated"):
+        raise ValueError("GitHub tree response was truncated")
+    return {
+        item["path"]
+        for item in body.get("tree", [])
+        if item.get("type") == "blob" and isinstance(item.get("path"), str)
+    }
+
+
+def check_skill_layout() -> bool:
+    print("::group::Declared skill root layout check")
+    data = load_marketplace()
+    if data.get("name") != "dcc-mcp-official":
+        print("Catalog is not official; skipping official GitHub skill layout checks.")
+        print("::endgroup::")
+        return True
+
+    errors: list[tuple[str, str]] = []
+    checked = 0
+    for skill in data.get("skills", []):
+        source = skill.get("source", {})
+        if source.get("type") != "git":
+            continue
+        name = skill.get("name", "?")
+        ref = source.get("ref", "")
+        skill_roots = source.get("skillRoots", [])
+        repo = _github_repo_slug(source.get("url", ""))
+        if not repo:
+            errors.append((name, "official git source must be an HTTPS GitHub repository URL"))
+            continue
+        if not _GIT_SHA_PATTERN.fullmatch(ref):
+            errors.append((name, "source.ref is not a full commit SHA"))
+            continue
+        if not isinstance(skill_roots, list) or not skill_roots:
+            errors.append((name, "source.skillRoots is missing"))
+            continue
+        try:
+            paths = _github_tree_paths(repo, ref)
+        except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError) as exc:
+            errors.append((name, f"could not inspect GitHub tree: {exc}"))
+            continue
+        missing = [root for root in skill_roots if not _skill_root_contains_skill(paths, root)]
+        if missing:
+            errors.append((name, f"declared skill roots contain no SKILL.md: {', '.join(missing)}"))
+            continue
+        checked += 1
+        print(f"  OK {name}: {', '.join(skill_roots)}")
+
+    for name, reason in errors:
+        print(f"::error::{name}: {reason}")
+    if errors:
+        print("::endgroup::")
+        return False
+    print(f"Declared skill root layout check passed for {checked} git skills.")
+    print("::endgroup::")
+    return True
+
+
 # ── catalog parse check ────────────────────────────────────────────────
 
 
@@ -368,6 +481,7 @@ COMMANDS = {
     "metadata": check_metadata_quality,
     "reachability": check_reachability,
     "source-revisions": check_source_revisions,
+    "skill-layout": check_skill_layout,
     "catalog-parse": check_catalog_parse,
 }
 
