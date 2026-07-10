@@ -9,6 +9,7 @@ Usage:
     python scripts/validate_marketplace.py reachability  # URL existence check
     python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
     python scripts/validate_marketplace.py skill-layout  # Verify declared skill roots at pinned revisions
+    python scripts/validate_marketplace.py source-freshness # Report upstream commits awaiting review
     python scripts/validate_marketplace.py catalog-parse # Validate via dcc-mcp-catalog
     python scripts/validate_marketplace.py all           # Run all checks (default)
 """
@@ -24,7 +25,7 @@ import urllib.error
 import urllib.request
 from collections import Counter
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 MARKETPLACE_JSON = ROOT / "marketplace.json"
@@ -367,9 +368,9 @@ def _skill_root_contains_skill(tree_paths: set[str], skill_root: str) -> bool:
     )
 
 
-def _github_tree_paths(repo: str, ref: str) -> set[str]:
+def _github_api_json(path: str) -> dict:
     request = urllib.request.Request(
-        f"https://api.github.com/repos/{repo}/git/trees/{ref}?recursive=1"
+        f"https://api.github.com/{path.lstrip('/')}"
     )
     request.add_header("Accept", "application/vnd.github+json")
     request.add_header("User-Agent", "dcc-mcp-marketplace-ci/1.0")
@@ -377,7 +378,11 @@ def _github_tree_paths(repo: str, ref: str) -> set[str]:
     if token:
         request.add_header("Authorization", f"Bearer {token}")
     with urllib.request.urlopen(request, timeout=30) as response:
-        body = json.load(response)
+        return json.load(response)
+
+
+def _github_tree_paths(repo: str, ref: str) -> set[str]:
+    body = _github_api_json(f"repos/{repo}/git/trees/{ref}?recursive=1")
     if body.get("truncated"):
         raise ValueError("GitHub tree response was truncated")
     return {
@@ -385,6 +390,56 @@ def _github_tree_paths(repo: str, ref: str) -> set[str]:
         for item in body.get("tree", [])
         if item.get("type") == "blob" and isinstance(item.get("path"), str)
     }
+
+
+# ── source freshness checks ───────────────────────────────────────────
+
+
+def check_source_freshness() -> bool:
+    """Report newer commits on official source default branches without changing pins."""
+    print("::group::Official source freshness audit")
+    data = load_marketplace()
+    if data.get("name") != "dcc-mcp-official":
+        print("Catalog is not official; skipping upstream freshness audit.")
+        print("::endgroup::")
+        return True
+
+    errors: list[tuple[str, str]] = []
+    fresh = 0
+    stale = 0
+    for skill in data.get("skills", []):
+        source = skill.get("source", {})
+        if source.get("type") != "git":
+            continue
+        name = skill.get("name", "?")
+        ref = source.get("ref", "")
+        repo = _github_repo_slug(source.get("url", ""))
+        if not repo or not _GIT_SHA_PATTERN.fullmatch(ref):
+            errors.append((name, "requires an HTTPS GitHub URL and full commit SHA"))
+            continue
+        try:
+            default_branch = _github_api_json(f"repos/{repo}")["default_branch"]
+            comparison = _github_api_json(
+                f"repos/{repo}/compare/{ref}...{quote(default_branch, safe='')}"
+            )
+            ahead_by = comparison.get("ahead_by", 0)
+        except (KeyError, OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError) as exc:
+            errors.append((name, f"could not compare pinned source with upstream: {exc}"))
+            continue
+        if ahead_by:
+            stale += 1
+            print(
+                f"::warning::{name}: {default_branch} has {ahead_by} commit(s) after pinned {ref}"
+            )
+        else:
+            fresh += 1
+            print(f"  OK {name}: pinned revision matches {default_branch}")
+
+    for name, reason in errors:
+        print(f"::error::{name}: {reason}")
+    print(f"Freshness audit: {fresh} current, {stale} awaiting review.")
+    print("::endgroup::")
+    return not errors
 
 
 def check_skill_layout() -> bool:
@@ -483,6 +538,7 @@ COMMANDS = {
     "reachability": check_reachability,
     "source-revisions": check_source_revisions,
     "skill-layout": check_skill_layout,
+    "source-freshness": check_source_freshness,
     "catalog-parse": check_catalog_parse,
 }
 

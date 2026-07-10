@@ -85,6 +85,10 @@ installs only those directories, keeping repository examples and development-onl
 of users' local skill paths. CI verifies that each declared root contains a `SKILL.md` at the
 pinned revision.
 
+Every Monday, the `marketplace-freshness` workflow reports official source branches with newer
+commits. It never changes a pin automatically; maintainers review the source, then publish a new
+catalog version and immutable commit pin.
+
 ## Publishing a skill
 
 1. Copy [`examples/custom-studio-marketplace.json`](examples/custom-studio-marketplace.json) and

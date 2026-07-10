@@ -77,6 +77,22 @@ class MarketplaceValidatorTests(unittest.TestCase):
         self.assertTrue(validate_marketplace._skill_root_contains_skill(paths, "skill/release"))
         self.assertFalse(validate_marketplace._skill_root_contains_skill(paths, "skill/missing"))
 
+    def test_source_freshness_reports_newer_upstream_commits_without_failing(self) -> None:
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [valid_skill()]}
+        original_load = validate_marketplace.load_marketplace
+        original_api = validate_marketplace._github_api_json
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace._github_api_json = lambda path: (
+            {"default_branch": "main"} if path.endswith("maya-rig-tools") else {"ahead_by": 2}
+        )
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertTrue(validate_marketplace.check_source_freshness())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace._github_api_json = original_api
+        self.assertIn("2 commit(s) after pinned", output.getvalue())
+
     def test_schema_rejects_unknown_entry_fields(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
         catalog = {
