@@ -193,11 +193,12 @@
       "tags": ["asset", "polyhaven", "cc0", "download", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
-        "ref": "7365792398dd24c93919a319347c02d9df483b17",
+        "ref": "662428270eb452df558591ae44d4d0d7a44c60f2",
         "skillRoots": ["skill/polyhaven-assets"]
       },
       "policy": {
@@ -212,11 +213,12 @@
       "tags": ["asset", "ambientcg", "download", "pbr", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
-        "ref": "7bcf79db5e1f3153ac36c7b22066e0ed21a0e0e2",
+        "ref": "027107cdcb9d38f3c5e3a799b05a5a3c827b6221",
         "skillRoots": ["skill/ambientcg-assets"]
       },
       "policy": {
@@ -231,11 +233,12 @@
       "tags": ["asset", "nasa", "space", "download", "free", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
-        "ref": "f287f3f160ef407be34bfc650e3411bfdc9c3253",
+        "ref": "899b7e2cb67aa6ba4cff1ce4d0907f4d5bfbc453",
         "skillRoots": ["skill/nasa3d-assets"]
       },
       "policy": {
@@ -250,11 +253,12 @@
       "tags": ["asset", "smithsonian", "cc0", "download", "3d"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
-        "ref": "e7998cee1a490523eda82dd9c76055e23deab1f1",
+        "ref": "7835f819beb9b28fb2601e843c1ab3e7c5c485ea",
         "skillRoots": ["skill/smithsonian3d-assets"]
       },
       "policy": {
@@ -269,11 +273,12 @@
       "tags": ["asset", "kenney", "cc0", "game-assets", "download"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "1b80782197c95acc7694827bfad2c355fcc9890a",
+        "ref": "cdc963b71cbd946398570c7395f38f8c032637fd",
         "skillRoots": ["skill/kenney-assets"]
       },
       "policy": {
@@ -288,11 +293,12 @@
       "tags": ["asset", "quaternius", "cc0", "game-assets"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
-        "ref": "99d725aead0b9f70c2e5c6e42e30e716252d9489",
+        "ref": "aaa42cb5e5911801f26d958f88b43458988a1d71",
         "skillRoots": ["skill/quaternius-assets"]
       },
       "policy": {

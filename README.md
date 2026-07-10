@@ -102,7 +102,8 @@ catalog version and immutable commit pin.
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Asset-provider authors: follow the [asset descriptor handoff guide](docs/asset-descriptor-contract.md)
-to keep download, licensing, attribution, and DCC import responsibilities separate.
+to keep download, licensing, attribution, and DCC import responsibilities separate. For original,
+license-safe README renders, use the [showcase guide](docs/readme-showcase-guide.md).
 
 ## Relationship to dcc-mcp-core
 
