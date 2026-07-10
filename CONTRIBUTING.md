@@ -38,6 +38,12 @@ Start from [`examples/custom-studio-marketplace.json`](examples/custom-studio-ma
 Custom catalogs may use a release tag, but should still declare `source.skillRoots` so the
 installer never discovers unrelated repository content.
 
+Validate a custom catalog with the same checker used by this repository:
+
+```bash
+python scripts/validate_marketplace.py all --catalog ./marketplace.json
+```
+
 Merge rules (implemented in CLI):
 
 1. Official `dcc-mcp/marketplace` is always registered unless explicitly disabled.

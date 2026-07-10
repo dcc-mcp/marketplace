@@ -2,6 +2,9 @@ import contextlib
 import importlib.util
 import io
 import json
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -88,6 +91,26 @@ class MarketplaceValidatorTests(unittest.TestCase):
         errors = list(Draft202012Validator(schema).iter_errors(catalog))
         self.assertTrue(errors)
         self.assertIn("Additional properties", errors[0].message)
+
+    def test_catalog_option_validates_custom_catalog(self) -> None:
+        catalog = {
+            "name": "my-studio-private",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [valid_skill("v1.2.3")],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            catalog_path = Path(tmp) / "marketplace.json"
+            catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT_PATH), "schema", "--catalog", str(catalog_path)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Schema validation passed.", result.stdout)
 
 
 if __name__ == "__main__":
