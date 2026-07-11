@@ -140,6 +140,7 @@ def check_metadata_quality() -> bool:
     skills = data.get("skills", [])
     ok = True
     official_catalog = data.get("name") == "dcc-mcp-official"
+    skill_names = {skill.get("name", "") for skill in skills}
 
     if data.get("schemaVersion") != "1":
         print("::error::Catalog must declare schemaVersion '1'")
@@ -210,6 +211,18 @@ def check_metadata_quality() -> bool:
         installation = policy.get("installation", "")
         if installation not in _VALID_POLICIES:
             print(f"::error::Skill '{name}' has invalid policy.installation: '{installation}'")
+            ok = False
+
+        lifecycle = skill.get("lifecycle", "active")
+        replaced_by = skill.get("replacedBy")
+        if lifecycle == "deprecated" and not replaced_by:
+            print(f"::error::Deprecated skill '{name}' must declare replacedBy")
+            ok = False
+        elif replaced_by == name:
+            print(f"::error::Skill '{name}' cannot replace itself")
+            ok = False
+        elif replaced_by and replaced_by not in skill_names:
+            print(f"::error::Skill '{name}' replaces unknown skill '{replaced_by}'")
             ok = False
 
     if ok:
