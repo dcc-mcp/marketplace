@@ -17,6 +17,10 @@ Asset-provider submissions must follow the [asset descriptor handoff](asset-desc
 guide: download tools return a validated local-file descriptor with source and license attribution,
 while DCC adapters own scene import.
 
+Adapter-owned base skills are shipped and updated with their DCC adapter. Do not publish a
+marketplace entry that duplicates an adapter's bundled skill directory; publish optional
+extensions, asset providers, or studio tools instead.
+
 ## Release and rollback
 
 Changing package content requires a new package version and a new `source.ref` commit pin.

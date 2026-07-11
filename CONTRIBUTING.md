@@ -23,6 +23,7 @@
 - [ ] `source.url` points to the canonical Git repo
 - [ ] Official `source.ref` is a complete immutable commit SHA, never a branch name
 - [ ] Official `source.skillRoots` lists only relative directories containing the intended `SKILL.md` files
+- [ ] Entry is an optional extension, not a skill already bundled with its DCC adapter
 - [ ] `assetContract: "descriptor-v1"` entries declare `asset_descriptor`, `source_url`, and a license field in pinned `tools.yaml`
 - [ ] `requires.env` / `requires.bins` declared when the skill needs secrets or binaries
 - [ ] Every declared `source.skillRoots` directory contains a valid `SKILL.md` and any referenced `tools.yaml`
@@ -54,5 +55,5 @@ Merge rules (implemented in CLI):
 ## Version bumps
 
 - Patch: fix metadata typos, update `source.ref` pin
-- Minor: new skill entry
+- Minor: add or remove an installable skill entry
 - Major: breaking schema changes (coordinate with dcc-mcp-core release)

@@ -25,6 +25,9 @@ Example:
 ```
 
 After install, `dcc-mcp-cli` registers the path with the running adapter and triggers a skill reload.
+Base skills bundled with a DCC adapter are already available; the marketplace is for optional
+extensions, asset providers, and studio tools. See the [migration guide](docs/bundled-skill-migration.md)
+if an older marketplace copy of a bundled skill is installed.
 
 ## CLI
 
