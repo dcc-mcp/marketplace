@@ -78,6 +78,19 @@ class MarketplaceValidatorTests(unittest.TestCase):
         self.assertTrue(validate_marketplace._skill_root_contains_skill(paths, "skill/release"))
         self.assertFalse(validate_marketplace._skill_root_contains_skill(paths, "skill/missing"))
 
+    def test_custom_github_catalog_checks_declared_skill_roots(self) -> None:
+        catalog = {"name": "my-studio-private", "schemaVersion": "1", "skills": [valid_skill("v1.2.3")]}
+        original_load = validate_marketplace.load_marketplace
+        original_tree_paths = validate_marketplace._github_tree_paths
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace._github_tree_paths = lambda repo, ref: {"skill/maya-rig-tools/SKILL.md"}
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertTrue(validate_marketplace.check_skill_layout())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace._github_tree_paths = original_tree_paths
+
     def test_source_freshness_reports_newer_upstream_commits_without_failing(self) -> None:
         catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [valid_skill()]}
         original_load = validate_marketplace.load_marketplace
