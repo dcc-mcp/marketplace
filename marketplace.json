@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -49,7 +49,7 @@
     {
       "name": "dcc-mcp-blender-skills",
       "description": "Official Blender skill pack for DCC-MCP — modeling, shading, and render tools",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "dcc": ["blender"],
       "tags": ["skills", "blender", "official", "domain"],
       "category": "Skills",
@@ -58,7 +58,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-blender",
-        "ref": "bc1f91b2aa954891599a4fba1b9b09185c1547c2",
+        "ref": "982bcdd808c4f2de250ddc61d9620bdf6a7fbfee",
         "skillRoots": ["src/dcc_mcp_blender/skills", "skills/dcc-mcp-blender-setup"]
       },
       "policy": {
