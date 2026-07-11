@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +60,23 @@ class MarketplaceValidatorTests(unittest.TestCase):
                 self.assertTrue(validate_marketplace.check_metadata_quality())
         finally:
             validate_marketplace.load_marketplace = original
+
+    def test_custom_catalog_release_tag_passes_source_revision_check(self) -> None:
+        catalog = {"name": "my-studio-private", "schemaVersion": "1", "skills": [valid_skill("v1.2.3")]}
+        original_load = validate_marketplace.load_marketplace
+        original_run = validate_marketplace.subprocess.run
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=0,
+            stdout="a" * 40 + "\trefs/tags/v1.2.3\n",
+            stderr="",
+        )
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertTrue(validate_marketplace.check_source_revisions())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace.subprocess.run = original_run
 
     def test_official_catalog_requires_skill_roots(self) -> None:
         skill = valid_skill()
