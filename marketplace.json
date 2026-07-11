@@ -1,32 +1,13 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
   },
   "installRoot": "~/.dcc-mcp/marketplace/{dcc}/{name}",
   "skills": [
-    {
-      "name": "dcc-mcp-maya-skills",
-      "description": "Official Maya skill pack for DCC-MCP — scene, render, and rigging tools",
-      "version": "1.0.0",
-      "dcc": ["maya"],
-      "tags": ["skills", "maya", "official", "domain"],
-      "category": "Skills",
-      "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.15.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/dcc-mcp/dcc-mcp-maya",
-        "ref": "e1f53d8e1def4c02c1fff58c3acea015e47cf902",
-        "skillRoots": ["src/dcc_mcp_maya/skills", "skills/dcc-mcp-maya-setup"]
-      },
-      "policy": {
-        "installation": "available"
-      }
-    },
     {
       "name": "dcc-mcp-maya-mgear",
       "description": "mGear Shifter rigging integration for DCC-MCP — inspect, build, and manage mGear rigs",
@@ -41,44 +22,6 @@
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
         "ref": "4eae1598495053df50a862faaa7b63866dd00b1c",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
-      },
-      "policy": {
-        "installation": "available"
-      }
-    },
-    {
-      "name": "dcc-mcp-blender-skills",
-      "description": "Official Blender skill pack for DCC-MCP — modeling, shading, and render tools",
-      "version": "1.0.2",
-      "dcc": ["blender"],
-      "tags": ["skills", "blender", "official", "domain"],
-      "category": "Skills",
-      "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.19.17",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/dcc-mcp/dcc-mcp-blender",
-        "ref": "982bcdd808c4f2de250ddc61d9620bdf6a7fbfee",
-        "skillRoots": ["src/dcc_mcp_blender/skills", "skills/dcc-mcp-blender-setup"]
-      },
-      "policy": {
-        "installation": "available"
-      }
-    },
-    {
-      "name": "dcc-mcp-houdini-skills",
-      "description": "Official Houdini skill pack for DCC-MCP — VFX, procedural, and simulation tools",
-      "version": "1.0.0",
-      "dcc": ["houdini"],
-      "tags": ["skills", "houdini", "official", "domain"],
-      "category": "Skills",
-      "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.15.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/dcc-mcp/dcc-mcp-houdini",
-        "ref": "37c84b1adc7da2912c6d19df857881b30b6ecb21",
-        "skillRoots": ["src/dcc_mcp_houdini/skills", "skills/dcc-mcp-houdini-setup"]
       },
       "policy": {
         "installation": "available"
