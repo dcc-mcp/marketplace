@@ -102,6 +102,15 @@
           "pattern": "^[a-z0-9][a-z0-9-]*$"
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "lifecycle": { "const": "deprecated" } },
+            "required": ["lifecycle"]
+          },
+          "then": { "required": ["replacedBy"] }
+        }
+      ],
       "additionalProperties": false
     },
     "source": {

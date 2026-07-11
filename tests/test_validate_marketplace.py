@@ -91,6 +91,30 @@ class MarketplaceValidatorTests(unittest.TestCase):
             validate_marketplace.load_marketplace = original
         self.assertIn("must declare non-empty source.skillRoots", output.getvalue())
 
+    def test_deprecated_skill_requires_a_known_successor(self) -> None:
+        deprecated = valid_skill()
+        deprecated["lifecycle"] = "deprecated"
+        successor = valid_skill()
+        successor["name"] = "maya-rig-tools-v2"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [deprecated, successor]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_metadata_quality())
+            self.assertIn("must declare replacedBy", output.getvalue())
+
+            deprecated["replacedBy"] = "missing-skill"
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_metadata_quality())
+            self.assertIn("replaces unknown skill", output.getvalue())
+
+            deprecated["replacedBy"] = successor["name"]
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertTrue(validate_marketplace.check_metadata_quality())
+        finally:
+            validate_marketplace.load_marketplace = original
+
     def test_skill_root_must_contain_a_skill_file(self) -> None:
         paths = {"skill/release/SKILL.md", "examples/demo/SKILL.md"}
         self.assertTrue(validate_marketplace._skill_root_contains_skill(paths, "skill/release"))
@@ -179,6 +203,20 @@ class MarketplaceValidatorTests(unittest.TestCase):
         errors = list(Draft202012Validator(schema).iter_errors(catalog))
         self.assertTrue(errors)
         self.assertIn("Additional properties", errors[0].message)
+
+    def test_schema_requires_replacement_for_deprecated_skill(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [dict(valid_skill(), lifecycle="deprecated")],
+        }
+        from jsonschema import Draft202012Validator
+
+        errors = list(Draft202012Validator(schema).iter_errors(catalog))
+        self.assertTrue(errors)
+        self.assertIn("replacedBy", errors[0].message)
 
     def test_catalog_option_validates_custom_catalog(self) -> None:
         catalog = {
