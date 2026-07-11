@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -49,16 +49,16 @@
     {
       "name": "dcc-mcp-blender-skills",
       "description": "Official Blender skill pack for DCC-MCP — modeling, shading, and render tools",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "dcc": ["blender"],
       "tags": ["skills", "blender", "official", "domain"],
       "category": "Skills",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.15.0",
+      "minCoreVersion": "0.19.17",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-blender",
-        "ref": "f3abe8ab11a9fc69d02ba4525c6f0bed5c1c3906",
+        "ref": "bc1f91b2aa954891599a4fba1b9b09185c1547c2",
         "skillRoots": ["src/dcc_mcp_blender/skills", "skills/dcc-mcp-blender-setup"]
       },
       "policy": {
@@ -188,7 +188,7 @@
     {
       "name": "dcc-asset-polyhaven",
       "description": "Browse and download CC0 assets from Poly Haven (models, HDRIs, textures)",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "photoshop"],
       "tags": ["asset", "polyhaven", "cc0", "download", "domain"],
       "category": "Asset Providers",
@@ -198,7 +198,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
-        "ref": "662428270eb452df558591ae44d4d0d7a44c60f2",
+        "ref": "dd6f313dc736925f8519e0034119d738409c457e",
         "skillRoots": ["skill/polyhaven-assets"]
       },
       "policy": {
