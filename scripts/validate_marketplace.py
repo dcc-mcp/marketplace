@@ -561,8 +561,13 @@ def check_skill_layout() -> bool:
         if missing:
             errors.append((name, f"declared skill roots contain no SKILL.md: {', '.join(missing)}"))
             continue
+        showcase = skill.get("showcase")
+        if showcase and showcase not in paths:
+            errors.append((name, f"declared showcase does not exist at source.ref: {showcase}"))
+            continue
         checked += 1
-        print(f"  OK {name}: {', '.join(skill_roots)}")
+        suffix = f"; showcase: {showcase}" if showcase else ""
+        print(f"  OK {name}: {', '.join(skill_roots)}{suffix}")
 
     for name, reason in errors:
         print(f"::error::{name}: {reason}")

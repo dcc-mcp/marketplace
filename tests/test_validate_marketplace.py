@@ -204,6 +204,45 @@ class MarketplaceValidatorTests(unittest.TestCase):
         self.assertTrue(errors)
         self.assertIn("Additional properties", errors[0].message)
 
+    def test_schema_accepts_safe_repository_showcase_path(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [dict(valid_skill(), showcase="docs/images/example-showcase.webp")],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(catalog)), [])
+
+    def test_schema_rejects_showcase_parent_traversal(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [dict(valid_skill(), showcase="../outside.png")],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertTrue(list(Draft202012Validator(schema).iter_errors(catalog)))
+
+    def test_skill_layout_rejects_missing_showcase_at_pinned_ref(self) -> None:
+        skill = dict(valid_skill(), showcase="docs/images/missing.webp")
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original_load = validate_marketplace.load_marketplace
+        original_tree_paths = validate_marketplace._github_tree_paths
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace._github_tree_paths = lambda repo, ref: {"skill/maya-rig-tools/SKILL.md"}
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_skill_layout())
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace._github_tree_paths = original_tree_paths
+        self.assertIn("showcase does not exist", output.getvalue())
+
     def test_schema_requires_replacement_for_deprecated_skill(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
         catalog = {

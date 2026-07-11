@@ -13,6 +13,9 @@ directory contains a `SKILL.md` at that revision.
 Packages that require credentials or external binaries must declare their variable and binary
 names in `requires`; secrets must never appear in catalog metadata.
 
+Use `showcase` for a repository-relative 16:9 workflow or result image. The asset must exist at
+the pinned `source.ref`; clients resolve it from the source repository without a separate CDN.
+
 Asset-provider submissions must follow the [asset descriptor handoff](asset-descriptor-contract.md)
 guide: download tools return a validated local-file descriptor with source and license attribution,
 while DCC adapters own scene import.
