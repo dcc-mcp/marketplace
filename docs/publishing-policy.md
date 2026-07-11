@@ -28,6 +28,10 @@ The CLI records the resolved commit alongside the semantic version, allowing it 
 revision-only update. Roll back by restoring the previous catalog commit and pin; never force
 move a published source reference.
 
+The scheduled source-refresh workflow may open a draft PR with newer immutable pins and a
+catalog patch bump. It never merges that PR or changes an individual skill version: maintainers
+review upstream compatibility and choose each skill's semantic version before merge.
+
 ## Lifecycle
 
 Use `lifecycle: experimental` for packages still under evaluation. Mark superseded packages

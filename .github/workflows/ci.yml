@@ -10,7 +10,7 @@ on:
       - "marketplace.json"
       - "schemas/**"
       - "examples/**"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/**"
       - "scripts/**"
   pull_request:
     branches: [main]
@@ -18,7 +18,7 @@ on:
       - "marketplace.json"
       - "schemas/**"
       - "examples/**"
-      - ".github/workflows/ci.yml"
+      - ".github/workflows/**"
       - "scripts/**"
 
 concurrency:
