@@ -505,11 +505,7 @@ def check_source_freshness() -> bool:
 def check_skill_layout() -> bool:
     print("::group::Declared skill root layout check")
     data = load_marketplace()
-    if data.get("name") != "dcc-mcp-official":
-        print("Catalog is not official; skipping official GitHub skill layout checks.")
-        print("::endgroup::")
-        return True
-
+    official_catalog = data.get("name") == "dcc-mcp-official"
     errors: list[tuple[str, str]] = []
     checked = 0
     for skill in data.get("skills", []):
@@ -521,13 +517,17 @@ def check_skill_layout() -> bool:
         skill_roots = source.get("skillRoots", [])
         repo = _github_repo_slug(source.get("url", ""))
         if not repo:
-            errors.append((name, "official git source must be an HTTPS GitHub repository URL"))
+            if official_catalog:
+                errors.append((name, "official git source must be an HTTPS GitHub repository URL"))
+            else:
+                print(f"::warning::Skipping non-GitHub skill root check for '{name}'")
             continue
-        if not _GIT_SHA_PATTERN.fullmatch(ref):
+        if official_catalog and not _GIT_SHA_PATTERN.fullmatch(ref):
             errors.append((name, "source.ref is not a full commit SHA"))
             continue
         if not isinstance(skill_roots, list) or not skill_roots:
-            errors.append((name, "source.skillRoots is missing"))
+            if official_catalog:
+                errors.append((name, "source.skillRoots is missing"))
             continue
         try:
             paths = _github_tree_paths(repo, ref)
