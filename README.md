@@ -77,7 +77,9 @@ Each skill entry includes:
 - Targeting: `dcc[]`, `tags[]`, `category`, `minCoreVersion`
 - Source: `source.type` (`git` | `zip`), `source.url`, `source.ref` or `source.sha256`, and `source.skillRoots`
 - Policy: `policy.installation` (`available` | `installed_by_default` | `not_available`)
-- Optional runtime hints: `requires.env`, `requires.bins` (ClawHub-style)
+- Declarative runtime requirements: `requires.env`, `requires.bins`,
+  `requires.python`, and `requires.skills`. The marketplace reports them but
+  never installs or resolves them.
 
 Official entries use a full 40-character Git commit in `source.ref`. The CLI records that
 resolved commit in local install state, so an update can be detected even when an entry's
