@@ -94,6 +94,9 @@ Every Monday, the `marketplace-freshness` workflow reports official source branc
 commits. It never changes a pin automatically; maintainers review the source, then publish a new
 catalog version and immutable commit pin.
 
+The `marketplace-source-refresh` workflow can prepare that review as a draft PR with refreshed
+pins and one catalog patch bump. It never auto-merges or chooses an individual skill version.
+
 ## Publishing a skill
 
 1. Copy [`examples/custom-studio-marketplace.json`](examples/custom-studio-marketplace.json) and
