@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -326,6 +326,107 @@
       "policy": {
         "installation": "available"
       }
+    },
+    {
+      "name": "dcc-ai-openai-image",
+      "description": "Generate and edit DCC texture source images with OpenAI and return validated AssetDescriptors",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "photoshop"],
+      "tags": ["ai", "openai", "image", "texture", "albedo", "asset-provider"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ai-openai-image",
+        "ref": "6895f3b0e84f47cb17422dc3c140b4828ed126d2",
+        "skillRoots": ["skill/openai-image-textures"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["OPENAI_API_KEY"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-ai-openai-image#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-texture-pipeline",
+      "description": "Inspect, color-convert, and optimize production textures with OpenImageIO and OpenColorIO",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "nuke", "katana", "mari", "substance"],
+      "tags": ["texture", "openimageio", "opencolorio", "ocio", "aces", "mipmap", "pipeline"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
+        "ref": "058c5eb4d376bf616c4109b700187178aea24dd1",
+        "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "bins": ["iinfo", "maketx", "oiiotool", "ociocheck"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-texture-pipeline#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-materialx",
+      "description": "Create, inspect, and validate portable MaterialX look-development documents",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "katana"],
+      "tags": ["materialx", "material", "lookdev", "standard-surface", "usd", "hydra"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-materialx",
+        "ref": "1866190dfbc40e93cba160e5be116662fd9ea5ab",
+        "skillRoots": ["skill/materialx-lookdev"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "python": ["MaterialX"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-materialx#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-pipeline-publish",
+      "description": "Create verified publish manifests connecting DCC exports, OpenUSD, render farms, and ShotGrid/FPT",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "nuke"],
+      "tags": ["publish", "shotgrid", "fpt", "openusd", "deadline", "render-farm", "pipeline"],
+      "category": "Studio",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
+        "ref": "a2c762635a0747b38ec52f6e080de0ccc8e05edc",
+        "skillRoots": ["skill/pipeline-publish"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "skills": ["openusd-validate", "shotgrid-crud", "shotgrid-batch"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
+      "lifecycle": "experimental"
     }
   ]
 }
