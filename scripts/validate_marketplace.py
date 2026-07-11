@@ -305,6 +305,7 @@ def check_source_revisions() -> bool:
     data = load_marketplace()
     skills = data.get("skills", [])
     errors: list[tuple[str, str]] = []
+    official_catalog = data.get("name") == "dcc-mcp-official"
 
     for skill in skills:
         source = skill.get("source", {})
@@ -313,7 +314,8 @@ def check_source_revisions() -> bool:
         name = skill.get("name", "?")
         url = source.get("url", "")
         ref = source.get("ref", "")
-        if not _GIT_SHA_PATTERN.fullmatch(ref):
+        is_commit_pin = bool(_GIT_SHA_PATTERN.fullmatch(ref))
+        if official_catalog and not is_commit_pin:
             errors.append((name, "git source ref is not a full commit SHA"))
             continue
         try:
@@ -330,9 +332,17 @@ def check_source_revisions() -> bool:
         if result.returncode != 0:
             errors.append((name, result.stderr.strip() or "git ls-remote failed"))
             continue
-        advertised_revisions = {line.split()[0].lower() for line in result.stdout.splitlines() if line}
-        if ref.lower() not in advertised_revisions:
+        advertised = [line.split(maxsplit=1) for line in result.stdout.splitlines() if line]
+        advertised_revisions = {entry[0].lower() for entry in advertised}
+        advertised_refs = {entry[1] for entry in advertised if len(entry) == 2}
+        if is_commit_pin and ref.lower() not in advertised_revisions:
             errors.append((name, f"pinned commit {ref} is not advertised by a branch or tag"))
+            continue
+        if not is_commit_pin and not {
+            f"refs/heads/{ref}",
+            f"refs/tags/{ref}",
+        }.intersection(advertised_refs):
+            errors.append((name, f"source ref {ref} is not advertised by a branch or tag"))
             continue
         print(f"  OK {name}: {ref}")
 
