@@ -26,9 +26,11 @@ Example:
 
 After install, `dcc-mcp-cli` registers the path with the running adapter and triggers a skill reload.
 
-## CLI (planned in dcc-mcp-core)
+## CLI
 
-All marketplace operations go through **`dcc-mcp-cli`**, not Admin UI directly. Admin may shell out to the CLI or display its JSON output.
+**`dcc-mcp-cli`** is the primary marketplace interface. The Gateway Admin panel
+uses the same marketplace service, so both surfaces share catalog and install
+behavior.
 
 ```bash
 # Register marketplace sources (official + custom)
