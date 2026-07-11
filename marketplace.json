@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -20,9 +20,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "4eae1598495053df50a862faaa7b63866dd00b1c",
+        "ref": "693c08d9f52c300d1bb55f5bbeb429bf47e06950",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
       "policy": {
         "installation": "available"
       }
@@ -39,9 +40,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
-        "ref": "3f64b05ee52877571377e93797ebabcb025fc01a",
+        "ref": "244e1884726386e05b9ed621c501e8c29e920e2f",
         "skillRoots": ["skill/qt-ui-inspector"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-ui-qt-inspector#readme",
       "policy": {
         "installation": "available"
       }
@@ -58,9 +60,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "e170fd1c35bcd3e6f5d8d536640f80c907fc3248",
+        "ref": "afcfbf32608b219fa7c3afaed4bf96592deddb39",
         "skillRoots": ["skill/qt-ui-actions"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
       "policy": {
         "installation": "available"
       }
@@ -77,9 +80,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "53361c77de9265d48078cf44450eaba875056521",
+        "ref": "6e7b48c80c1f264c9fc2113822cdf1f06db0157e",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
       "policy": {
         "installation": "available"
       }
@@ -96,9 +100,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
-        "ref": "941e336e176c17f1ecc0bc15516b2c907f06fa8b",
+        "ref": "47a5aabfad305ded78333b48960b6beee8fb7d67",
         "skillRoots": ["skill/hunyuan3d"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d#readme",
       "policy": {
         "installation": "available"
       },
@@ -118,9 +123,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
-        "ref": "f8c2bd7b4338a3a415e18b0cfb9c707671b4a9eb",
+        "ref": "d05c40523730b2beeceb408afb79997a2fb59b75",
         "skillRoots": ["skill/tripo3d"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-ai-tripo3d#readme",
       "policy": {
         "installation": "available"
       },
@@ -144,6 +150,7 @@
         "ref": "dd6f313dc736925f8519e0034119d738409c457e",
         "skillRoots": ["skill/polyhaven-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-polyhaven#readme",
       "policy": {
         "installation": "available"
       }
@@ -161,9 +168,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
-        "ref": "027107cdcb9d38f3c5e3a799b05a5a3c827b6221",
+        "ref": "d3137cecc47ae99a61df70f2f8a0710fc9723eb6",
         "skillRoots": ["skill/ambientcg-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-ambientcg#readme",
       "policy": {
         "installation": "available"
       }
@@ -181,9 +189,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
-        "ref": "899b7e2cb67aa6ba4cff1ce4d0907f4d5bfbc453",
+        "ref": "f6db4a34d3cce87c69b2d33fa6fb21605aca7d7e",
         "skillRoots": ["skill/nasa3d-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-nasa3d#readme",
       "policy": {
         "installation": "available"
       }
@@ -201,9 +210,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
-        "ref": "7835f819beb9b28fb2601e843c1ab3e7c5c485ea",
+        "ref": "6ddb08d0b10a68ac022b4644e0576fff2d062a22",
         "skillRoots": ["skill/smithsonian3d-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d#readme",
       "policy": {
         "installation": "available"
       }
@@ -221,9 +231,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "cdc963b71cbd946398570c7395f38f8c032637fd",
+        "ref": "d54c1c571d8f230fb76d1f72e510f8d61d3b5a38",
         "skillRoots": ["skill/kenney-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-kenney#readme",
       "policy": {
         "installation": "available"
       }
@@ -241,9 +252,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
-        "ref": "aaa42cb5e5911801f26d958f88b43458988a1d71",
+        "ref": "350b420c235c0c60922137b430e6be192bf69a39",
         "skillRoots": ["skill/quaternius-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-quaternius#readme",
       "policy": {
         "installation": "available"
       }
@@ -260,9 +272,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
-        "ref": "1175707f7480cb40320d553854fd79beaa11f405",
+        "ref": "995801c1ee861854bf78c3e6f21da1fd7dd6af43",
         "skillRoots": ["skill/objaverse-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-objaverse#readme",
       "policy": {
         "installation": "available"
       }
@@ -279,9 +292,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
-        "ref": "a700e39dacd2484d723497791e5f6d543fd3bb00",
+        "ref": "c8e9dfe405ca284fc1979c4da87d8ff61477bbba",
         "skillRoots": ["skill/gltf-sample-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets#readme",
       "policy": {
         "installation": "available"
       }
@@ -298,9 +312,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-sketchfab",
-        "ref": "dcead998ee8788e69f4d7cab2d5b767cfdd116af",
+        "ref": "b0e2c8ff19e7a234ce4076458a29574587ab0152",
         "skillRoots": ["skill/sketchfab-assets"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-sketchfab#readme",
       "policy": {
         "installation": "available"
       },
@@ -320,9 +335,10 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects",
-        "ref": "9db9604052db08f8ef74cc2eccd2edc79da0df36",
+        "ref": "cfd44396b138722b7858d451acbadb1402982524",
         "skillRoots": ["skill/google-scanned-objects"]
       },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects#readme",
       "policy": {
         "installation": "available"
       }
