@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -40,7 +40,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
-        "ref": "244e1884726386e05b9ed621c501e8c29e920e2f",
+        "ref": "eed94e8b3e224ab1f16e4f40e9ddaa2618bac5d1",
         "skillRoots": ["skill/qt-ui-inspector"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-inspector#readme",
@@ -52,7 +52,7 @@
     {
       "name": "dcc-ui-qt-actions",
       "description": "Reusable Qt UI actions for DCC-MCP — click widgets, trigger actions, set values, and drive legacy UI workflows",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
       "tags": ["skills", "ui", "qt", "pyside", "pyqt", "automation", "infrastructure"],
       "category": "Infrastructure",
@@ -61,7 +61,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "afcfbf32608b219fa7c3afaed4bf96592deddb39",
+        "ref": "04a6a207598d810db1beee1a87b0abd78723d4ae",
         "skillRoots": ["skill/qt-ui-actions"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
@@ -73,7 +73,7 @@
     {
       "name": "dcc-ui-workflow-memory",
       "description": "Structured workflow memory for DCC-MCP UI automation — remember selectors, recipes, and verified failures",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
       "tags": ["skills", "ui", "workflow", "memory", "automation", "selectors", "infrastructure"],
       "category": "Infrastructure",
@@ -82,7 +82,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "6e7b48c80c1f264c9fc2113822cdf1f06db0157e",
+        "ref": "3878dcf2d37d6287e75c59e94b9f5ec159f9d9f3",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
@@ -103,7 +103,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
-        "ref": "47a5aabfad305ded78333b48960b6beee8fb7d67",
+        "ref": "21b4e53f5a5ede0fc1565b772de16ae8871d31cd",
         "skillRoots": ["skill/hunyuan3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d#readme",
@@ -127,7 +127,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
-        "ref": "d05c40523730b2beeceb408afb79997a2fb59b75",
+        "ref": "cf7511dffd761786b4a77d04a2bc4f14c7b3f259",
         "skillRoots": ["skill/tripo3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-tripo3d#readme",
@@ -164,7 +164,7 @@
     {
       "name": "dcc-asset-ambientcg",
       "description": "Search and download free ambientCG materials, HDRIs, and models",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax"],
       "tags": ["asset", "ambientcg", "download", "pbr", "domain"],
       "category": "Asset Providers",
@@ -174,7 +174,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
-        "ref": "980f646aa26c0b855890c472abef92ad03520a72",
+        "ref": "924186ee679a9c171699f20e3821e0455d1b6a78",
         "skillRoots": ["skill/ambientcg-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-ambientcg#readme",
@@ -283,7 +283,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
-        "ref": "995801c1ee861854bf78c3e6f21da1fd7dd6af43",
+        "ref": "a621503818afc98a4c058992742689fa32c08d0f",
         "skillRoots": ["skill/objaverse-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-objaverse#readme",
@@ -374,7 +374,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-openai-image",
-        "ref": "3bf96b347435160bbd91024430e74a3605cb0645",
+        "ref": "ce827c3d6c3b190d81357051e3bb3d97276d0e1d",
         "skillRoots": ["skill/openai-image-textures"]
       },
       "policy": {
@@ -385,7 +385,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-ai-openai-image#readme",
-      "showcase": "docs/openai-image-workflow.png",
+      "showcase": "docs/images/dcc-ai-openai-image-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -400,7 +400,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
-        "ref": "426540672049ac48c99101db80f0082388b4b41b",
+        "ref": "744a621bb6aa97754617e94ee215b87496117d23",
         "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
       },
       "policy": {
@@ -411,7 +411,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-texture-pipeline#readme",
-      "showcase": "docs/texture-pipeline.png",
+      "showcase": "docs/images/dcc-texture-pipeline-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -426,7 +426,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-materialx",
-        "ref": "d8545d4e00bba15fed8098407e2e5e953c67533e",
+        "ref": "531793630c27535f694b7c5203265ee9f1f05def",
         "skillRoots": ["skill/materialx-lookdev"]
       },
       "policy": {
@@ -437,7 +437,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-materialx#readme",
-      "showcase": "docs/materialx-workflow.png",
+      "showcase": "docs/images/dcc-materialx-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -452,7 +452,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "df06ea31369fc4eba4b67046b2d2ecc38bf5d295",
+        "ref": "a1809a33e598a589b1ec38979d4786b98931e4ee",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -463,7 +463,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
-      "showcase": "docs/publish-workflow.png",
+      "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
       "lifecycle": "experimental"
     }
   ]
