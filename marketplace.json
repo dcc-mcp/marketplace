@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -52,7 +52,7 @@
     {
       "name": "dcc-ui-qt-actions",
       "description": "Reusable Qt UI actions for DCC-MCP — click widgets, trigger actions, set values, and drive legacy UI workflows",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "dcc": ["maya", "houdini", "nuke", "substance", "mari", "katana"],
       "tags": ["skills", "ui", "qt", "pyside", "pyqt", "automation", "infrastructure"],
       "category": "Infrastructure",
@@ -61,7 +61,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "04a6a207598d810db1beee1a87b0abd78723d4ae",
+        "ref": "0d1ee9475e47d2e9212dbd9e8ce42ad76e09ac22",
         "skillRoots": ["skill/qt-ui-actions"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
