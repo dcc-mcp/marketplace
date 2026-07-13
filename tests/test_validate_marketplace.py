@@ -216,6 +216,20 @@ class MarketplaceValidatorTests(unittest.TestCase):
 
         self.assertEqual(list(Draft202012Validator(schema).iter_errors(catalog)), [])
 
+    def test_schema_accepts_adapter_style_dcc_identifier(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        skill = valid_skill()
+        skill["dcc"] = ["substance3d_designer"]
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [skill],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(catalog)), [])
+
     def test_schema_rejects_showcase_parent_traversal(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
         catalog = {
