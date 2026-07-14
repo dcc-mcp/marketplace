@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "693c08d9f52c300d1bb55f5bbeb429bf47e06950",
+        "ref": "3827774a00e78c95a719511c2e639073145cefed",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
@@ -464,6 +464,77 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
       "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-pexels-video",
+      "description": "Search and download free Pexels stock video with creator and license attribution",
+      "version": "0.1.0",
+      "dcc": ["after-effects", "premiere"],
+      "tags": ["asset", "pexels", "video", "stock", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
+        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "skillRoots": ["skill/pexels-video-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["PEXELS_API_KEY"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-mixkit-free-media",
+      "description": "Download free Mixkit music, sound effects, and explicit After Effects templates with license metadata",
+      "version": "0.1.0",
+      "dcc": ["after-effects", "premiere"],
+      "tags": ["asset", "mixkit", "music", "sound-effects", "after-effects", "template", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
+        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "skillRoots": ["skill/mixkit-free-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-plugin-github-releases",
+      "description": "Inspect licensed open-source GitHub projects and download release plugin packages with SHA-256 metadata",
+      "version": "0.1.0",
+      "dcc": ["after-effects", "premiere"],
+      "tags": ["plugin", "github", "open-source", "release", "download", "security", "domain"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
+        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "skillRoots": ["skill/github-release-plugins"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "lifecycle": "experimental"
     }
   ]
