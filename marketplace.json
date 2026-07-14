@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -479,7 +479,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
         "skillRoots": ["skill/pexels-video-assets"]
       },
       "policy": {
@@ -494,10 +494,10 @@
     },
     {
       "name": "dcc-asset-mixkit-free-media",
-      "description": "Download free Mixkit music, sound effects, and explicit After Effects templates with license metadata",
-      "version": "0.1.0",
+      "description": "Download Free License Mixkit stock video, music, sound effects, and explicit After Effects templates with license metadata",
+      "version": "0.2.0",
       "dcc": ["after-effects", "premiere"],
-      "tags": ["asset", "mixkit", "music", "sound-effects", "after-effects", "template", "download", "domain"],
+      "tags": ["asset", "mixkit", "stock-video", "music", "sound-effects", "after-effects", "template", "download", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -505,7 +505,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
         "skillRoots": ["skill/mixkit-free-assets"]
       },
       "policy": {
@@ -527,7 +527,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "52adf2047021704b7cde02e87e8e8b6f679ca12f",
+        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
         "skillRoots": ["skill/github-release-plugins"]
       },
       "policy": {
