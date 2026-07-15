@@ -173,10 +173,11 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
-        "ref": "24203b1e26f8823d203cca490f08fd3687b24b8b",
+        "ref": "70b06b7e3304fdb0caa00bc0cb204400755db1fc",
         "skillRoots": ["skill/godot-asset-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
+      "showcase": "docs/images/dcc-asset-godot-store-showcase.webp",
       "policy": {
         "installation": "available"
       },
@@ -198,10 +199,11 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
-        "ref": "51100eb49fd8b244aad2184dac3fa01b35feb8ab",
+        "ref": "f5de70188cbbeab47775824a27174d62cf75d46f",
         "skillRoots": ["skill/blender-extension-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
+      "showcase": "docs/images/dcc-asset-blender-extensions-showcase.webp",
       "policy": {
         "installation": "available"
       },
