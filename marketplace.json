@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -160,6 +160,56 @@
       "policy": {
         "installation": "available"
       }
+    },
+    {
+      "name": "dcc-asset-godot-store",
+      "description": "Search, inspect, and download reusable add-ons and projects from the Godot Asset Store",
+      "version": "0.1.0",
+      "dcc": ["godot"],
+      "tags": ["asset", "godot", "asset-store", "addon", "project", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
+        "ref": "24203b1e26f8823d203cca490f08fd3687b24b8b",
+        "skillRoots": ["skill/godot-asset-store"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "skills": ["godot-assets"]
+      },
+      "license": "MIT",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-blender-extensions",
+      "description": "Search and download checksum-verified add-ons from the official Blender Extensions repository",
+      "version": "0.1.0",
+      "dcc": ["blender"],
+      "tags": ["asset", "blender", "extensions", "addon", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
+        "ref": "51100eb49fd8b244aad2184dac3fa01b35feb8ab",
+        "skillRoots": ["skill/blender-extension-store"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "skills": ["blender-extensions"]
+      },
+      "license": "MIT",
+      "lifecycle": "experimental"
     },
     {
       "name": "dcc-asset-ambientcg",
