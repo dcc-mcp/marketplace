@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -562,6 +562,55 @@
       },
       "policy": {
         "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-game-icons",
+      "description": "Search and download CC BY 3.0 SVG icons for game HUD, inventory, and ability UI",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "blender", "maya", "houdini", "3dsmax", "photoshop"],
+      "tags": ["asset", "game-icons", "game-ui", "svg", "cc-by", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
+        "ref": "0a35f82224ae5741f47a76bde0d050f517e43a05",
+        "skillRoots": ["skill/game-icons-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-google-fonts",
+      "description": "Search Google Fonts and download a font variant with its family license metadata",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "photoshop", "after-effects", "premiere"],
+      "tags": ["asset", "google-fonts", "font", "typography", "game-ui", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
+        "ref": "0a35f82224ae5741f47a76bde0d050f517e43a05",
+        "skillRoots": ["skill/google-font-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["GOOGLE_FONTS_API_KEY"]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
