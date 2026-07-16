@@ -24,6 +24,7 @@
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
+      "showcase": "docs/images/dcc-mcp-maya-mgear-showcase.webp",
       "policy": {
         "installation": "available"
       }
@@ -531,7 +532,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
+        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
         "skillRoots": ["skill/pexels-video-assets"]
       },
       "policy": {
@@ -542,6 +543,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "showcase": "docs/images/pexels-video-assets-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -557,7 +559,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
+        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
         "skillRoots": ["skill/mixkit-free-assets"]
       },
       "policy": {
@@ -565,6 +567,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "showcase": "docs/images/mixkit-free-assets-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -580,7 +583,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "0a35f82224ae5741f47a76bde0d050f517e43a05",
+        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
         "skillRoots": ["skill/game-icons-assets"]
       },
       "policy": {
@@ -588,6 +591,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "showcase": "docs/images/game-icons-assets-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -603,7 +607,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "0a35f82224ae5741f47a76bde0d050f517e43a05",
+        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
         "skillRoots": ["skill/google-font-assets"]
       },
       "policy": {
@@ -614,6 +618,58 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "showcase": "docs/images/google-font-assets-showcase.webp",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-openstreetmap-city",
+      "description": "Download bounded OpenStreetMap buildings, roads, railways, water, and land use as attributed GeoJSON",
+      "version": "0.1.0",
+      "dcc": ["houdini", "blender", "unreal"],
+      "tags": ["asset", "geospatial", "openstreetmap", "city", "pcg", "geojson", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
+        "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
+        "skillRoots": ["skill/openstreetmap-city-data"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
+      "showcase": "docs/images/openstreetmap-city-data-showcase.webp",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-overture-city",
+      "description": "Download bounded Overture Maps buildings, transportation, infrastructure, land cover, and water as licensed GeoJSON",
+      "version": "0.1.0",
+      "dcc": ["houdini", "blender", "unreal"],
+      "tags": ["asset", "geospatial", "overture", "city", "pcg", "geojson", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
+        "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
+        "skillRoots": ["skill/overture-city-data"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "bins": ["overturemaps"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
+      "showcase": "docs/images/overture-city-data-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -628,7 +684,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "7e14f56ee51a741b24e193512aa8e0efa32c0a17",
+        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
         "skillRoots": ["skill/github-release-plugins"]
       },
       "policy": {
@@ -636,6 +692,7 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
+      "showcase": "docs/images/github-release-plugins-showcase.webp",
       "lifecycle": "experimental"
     }
   ]
