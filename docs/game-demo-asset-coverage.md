@@ -15,6 +15,7 @@ third-party content. Provider skills download files and return attribution-aware
 | Cutscenes and background video | Pexels Video, Mixkit | Pexels needs an API key. |
 | Import and format fixtures | Khronos glTF Sample Assets | Intended for pipeline validation, not final art direction. |
 | Engine extensions | Godot Asset Store, Blender Extensions | Add-ons are code; review their own license and trust before installation. |
+| City PCG vectors | OpenStreetMap City, Overture City | Bounded GeoJSON for roads, buildings, land cover, water, and infrastructure. |
 
 ## Demo smoke path
 
