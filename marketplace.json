@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -25,6 +25,26 @@
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
       "showcase": "docs/images/dcc-mcp-maya-mgear-showcase.webp",
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
+      "name": "dcc-mcp-maya-advancedskeleton",
+      "description": "AdvancedSkeleton rigging for DCC-MCP — inspect templates, create or import FitSkeletons, and build or rebuild Maya rigs",
+      "version": "0.1.0",
+      "dcc": ["maya"],
+      "tags": ["skills", "domain", "maya", "rigging", "advancedskeleton", "fitskeleton"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
+        "ref": "25d08f2136658ac404ad31941ad8f8bdbae99a70",
+        "skillRoots": ["skill/maya-advancedskeleton"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
       "policy": {
         "installation": "available"
       }
