@@ -32,7 +32,7 @@
     {
       "name": "dcc-mcp-maya-advancedskeleton",
       "description": "AdvancedSkeleton rigging for DCC-MCP — inspect templates, create or import FitSkeletons, and build or rebuild Maya rigs",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya"],
       "tags": ["skills", "domain", "maya", "rigging", "advancedskeleton", "fitskeleton"],
       "category": "Skills",
@@ -41,7 +41,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
-        "ref": "25d08f2136658ac404ad31941ad8f8bdbae99a70",
+        "ref": "0a40fd07f8138270a162adcec23d1c251fa4e3e8",
         "skillRoots": ["skill/maya-advancedskeleton"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
