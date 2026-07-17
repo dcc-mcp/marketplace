@@ -41,7 +41,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
-        "ref": "6207d0c9ef3c27d3ecaa416bc95217bec03a2052",
+        "ref": "17870840f671009f533d3b75e44c89a819131baf",
         "skillRoots": ["skill/maya-advancedskeleton"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
