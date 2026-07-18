@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -52,17 +52,17 @@
     },
     {
       "name": "dcc-mcp-maya-procedural-architecture",
-      "description": "Generate seeded craftsman, farmhouse, and cottage homes in Maya with Bifrost structure, beveled details, and ambientCG PBR materials",
-      "version": "1.0.1",
+      "description": "Generate six seeded Maya house styles with realistic or stylized Arnold materials, cancellable progress, and optional CC0 HDR lighting",
+      "version": "1.1.0",
       "dcc": ["maya"],
-      "tags": ["skills", "domain", "maya", "bifrost", "architecture", "procedural-modeling", "arnold", "pbr"],
+      "tags": ["skills", "domain", "maya", "bifrost", "architecture", "procedural-modeling", "arnold", "pbr", "hdri", "stylized"],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
-        "ref": "f8055fb95980e2909d25ba636206eabf616be549",
+        "ref": "e00d2f04f3e6da031001fdd6f97e28793ce9587a",
         "skillRoots": ["skill/maya-procedural-architecture"]
       },
       "policy": {
