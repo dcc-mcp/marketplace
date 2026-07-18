@@ -80,8 +80,9 @@ Each skill entry includes:
 - Declarative runtime requirements: `requires.env`, `requires.bins`,
   `requires.python`, and `requires.skills`. The marketplace reports them but
   never installs or resolves them.
-- Optional `showcase` points to a repository-relative 16:9 image. Admin clients
-  resolve it against the same immutable `source.ref`; do not use mutable CDN URLs.
+- Optional `showcase` points to one repository-relative 16:9 PNG, JPEG, WebP,
+  AVIF, or animated GIF. Marketplace clients resolve it against the same
+  immutable `source.ref`; do not use mutable CDN URLs.
 
 Official entries use a full 40-character Git commit in `source.ref`. The CLI records that
 resolved commit in local install state, so an update can be detected even when an entry's
