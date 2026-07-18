@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -49,6 +49,31 @@
       "policy": {
         "installation": "available"
       }
+    },
+    {
+      "name": "dcc-mcp-maya-procedural-architecture",
+      "description": "Generate seeded craftsman, farmhouse, and cottage homes in Maya with Bifrost structure, beveled details, and ambientCG PBR materials",
+      "version": "1.0.1",
+      "dcc": ["maya"],
+      "tags": ["skills", "domain", "maya", "bifrost", "architecture", "procedural-modeling", "arnold", "pbr"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
+        "ref": "f8055fb95980e2909d25ba636206eabf616be549",
+        "skillRoots": ["skill/maya-procedural-architecture"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "skills": ["maya-bifrost", "maya-materials", "maya-render", "ambientcg-assets"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture#readme",
+      "showcase": "docs/showcase/maya-bifrost-random-houses.gif"
     },
     {
       "name": "dcc-ui-qt-inspector",

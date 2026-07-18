@@ -24,6 +24,7 @@ guidelines, avoid its insignia and identifiers, and never imply endorsement.
 2. Download through the source skill, then hand its `asset_descriptor` to a DCC adapter.
 3. Render an original scene in Blender or the target DCC; do not include third-party branding.
 4. Save an optimized image under `docs/images/<skill>-showcase.webp` in the skill repository.
+   Use an animated GIF only when motion materially demonstrates the result or workflow.
 5. Add the image and a short provenance line to the skill README:
 
    ```md
@@ -33,5 +34,5 @@ guidelines, avoid its insignia and identifiers, and never imply endorsement.
    ```
 
 Use a 16:9 image (at least 1280 × 720), concise descriptive alt text, and an image file below
-500 KB where practical. A README should show one representative workflow, not a gallery of
-unattributed assets.
+500 KB where practical. Keep animated GIFs concise and optimized. A README should show one
+representative workflow, not a gallery of unattributed assets.
