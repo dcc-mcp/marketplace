@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "3827774a00e78c95a719511c2e639073145cefed",
+        "ref": "f1b0266cff26d4779584e201ef260db2bda7c04d",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
@@ -41,7 +41,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
-        "ref": "17870840f671009f533d3b75e44c89a819131baf",
+        "ref": "2e6a6dcd350a3e35d89b1a4c7870d2908103ea15",
         "skillRoots": ["skill/maya-advancedskeleton"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
@@ -62,7 +62,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
-        "ref": "e00d2f04f3e6da031001fdd6f97e28793ce9587a",
+        "ref": "8b5344d6c87df45ba9367454eebb2ac14626cee4",
         "skillRoots": ["skill/maya-procedural-architecture"]
       },
       "policy": {
@@ -129,7 +129,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "3878dcf2d37d6287e75c59e94b9f5ec159f9d9f3",
+        "ref": "380cd18287c30ddc3db300239f81ef46fbf885b7",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
@@ -220,7 +220,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
-        "ref": "70b06b7e3304fdb0caa00bc0cb204400755db1fc",
+        "ref": "3cbacf1c4641e02d1bd8898017a11db771f450c3",
         "skillRoots": ["skill/godot-asset-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
@@ -246,7 +246,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
-        "ref": "f5de70188cbbeab47775824a27174d62cf75d46f",
+        "ref": "503cdadef0238e827da01ede65618ee2c26601f5",
         "skillRoots": ["skill/blender-extension-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
@@ -317,7 +317,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
-        "ref": "c740eb57a727e98ec761149023a00941bf4b73b8",
+        "ref": "7bf1804a0246f980605ff1c0194d623c3cd06df4",
         "skillRoots": ["skill/smithsonian3d-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d#readme",
@@ -578,7 +578,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "d849420787ab3a1dc3010c859434bc15aa336f62",
         "skillRoots": ["skill/pexels-video-assets"]
       },
       "policy": {
@@ -605,7 +605,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "d849420787ab3a1dc3010c859434bc15aa336f62",
         "skillRoots": ["skill/mixkit-free-assets"]
       },
       "policy": {
@@ -629,7 +629,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "d849420787ab3a1dc3010c859434bc15aa336f62",
         "skillRoots": ["skill/game-icons-assets"]
       },
       "policy": {
@@ -653,7 +653,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "d849420787ab3a1dc3010c859434bc15aa336f62",
         "skillRoots": ["skill/google-font-assets"]
       },
       "policy": {
@@ -730,7 +730,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "d849420787ab3a1dc3010c859434bc15aa336f62",
         "skillRoots": ["skill/github-release-plugins"]
       },
       "policy": {
