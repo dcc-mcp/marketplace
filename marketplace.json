@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "3827774a00e78c95a719511c2e639073145cefed",
+        "ref": "f1b0266cff26d4779584e201ef260db2bda7c04d",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
@@ -129,7 +129,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "3878dcf2d37d6287e75c59e94b9f5ec159f9d9f3",
+        "ref": "380cd18287c30ddc3db300239f81ef46fbf885b7",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
@@ -317,7 +317,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
-        "ref": "c740eb57a727e98ec761149023a00941bf4b73b8",
+        "ref": "7bf1804a0246f980605ff1c0194d623c3cd06df4",
         "skillRoots": ["skill/smithsonian3d-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d#readme",
@@ -563,6 +563,31 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
       "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-game-release-package",
+      "description": "Package prebuilt Unreal, Unity, and Godot Windows games as installers, SteamPipe previews, or WeGame preflight records",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "unity"],
+      "tags": ["game", "release", "package", "installer", "steam", "wegame", "windows", "domain"],
+      "category": "Studio",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
+        "ref": "de203dcaa0281ad0e7af20b46f5a2b12e67a7bf5",
+        "skillRoots": ["skill/game-release-package"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "bins": ["ISCC.exe"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#game-releases",
       "lifecycle": "experimental"
     },
     {
