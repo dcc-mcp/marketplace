@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
+        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -602,14 +602,36 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
+        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
         "installation": "available"
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa/skill/game-runtime-acceptance/SKILL.md",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/499fa133aa47f90f2e456ce2c58c965243a7249c/skill/game-runtime-acceptance/SKILL.md",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-game-pv-capture",
+      "description": "Plan and preserve exact-window, hash-verified Unity, Unreal, and Godot gameplay shots for HyperFrames PV editing",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "unity"],
+      "tags": ["game", "pv", "trailer", "capture", "recording", "evidence", "domain"],
+      "category": "Studio",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.65",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
+        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
+        "skillRoots": ["skill/game-pv-capture"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/499fa133aa47f90f2e456ce2c58c965243a7249c/skill/game-pv-capture/SKILL.md",
       "lifecycle": "experimental"
     },
     {
