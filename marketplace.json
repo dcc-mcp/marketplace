@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -263,7 +263,7 @@
     {
       "name": "dcc-asset-ambientcg",
       "description": "Search and download free ambientCG materials, HDRIs, and models",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "dcc": ["maya", "blender", "houdini", "3dsmax"],
       "tags": ["asset", "ambientcg", "download", "pbr", "domain"],
       "category": "Asset Providers",
@@ -273,7 +273,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
-        "ref": "924186ee679a9c171699f20e3821e0455d1b6a78",
+        "ref": "207d608b5076a487572ac9c647a2f4f75a6ac64d",
         "skillRoots": ["skill/ambientcg-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-ambientcg#readme",
@@ -339,7 +339,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "a2f5fddde9187465b0ef7fe4a38042555e0854fa",
+        "ref": "a07da54892037f43c78b1abd54f0474d40e85df8",
         "skillRoots": ["skill/kenney-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-kenney#readme",
@@ -361,7 +361,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
-        "ref": "e9894df26c7b204088beb79f74bbbd7680589e53",
+        "ref": "3b28750af6f07b48e6532656ad62c3296064f6a6",
         "skillRoots": ["skill/quaternius-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-quaternius#readme",
@@ -525,7 +525,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-materialx",
-        "ref": "531793630c27535f694b7c5203265ee9f1f05def",
+        "ref": "34c478987c2887a506f97af4f34b4d502eb04f9b",
         "skillRoots": ["skill/materialx-lookdev"]
       },
       "policy": {
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "a1809a33e598a589b1ec38979d4786b98931e4ee",
+        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -588,6 +588,28 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#game-releases",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-game-runtime-acceptance",
+      "description": "Launch prebuilt Unity, Unreal, and Godot games with bounded structured runtime acceptance and hash-bearing evidence",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "unity"],
+      "tags": ["game", "runtime", "acceptance", "validation", "evidence", "domain"],
+      "category": "Studio",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.64",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
+        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
+        "skillRoots": ["skill/game-runtime-acceptance"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa/skill/game-runtime-acceptance/SKILL.md",
       "lifecycle": "experimental"
     },
     {
