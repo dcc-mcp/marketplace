@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
+        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -602,14 +602,14 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa",
+        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
         "installation": "available"
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/1a380dc0f0319a49af5d037d8c5cd5fbbc07aefa/skill/game-runtime-acceptance/SKILL.md",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/499fa133aa47f90f2e456ce2c58c965243a7249c/skill/game-runtime-acceptance/SKILL.md",
       "lifecycle": "experimental"
     },
     {
