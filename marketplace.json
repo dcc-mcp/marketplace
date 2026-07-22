@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -711,10 +711,10 @@
     },
     {
       "name": "dcc-asset-google-fonts",
-      "description": "Search Google Fonts and download a font variant with its family license metadata",
-      "version": "0.1.0",
-      "dcc": ["godot", "unreal", "photoshop", "after-effects", "premiere"],
-      "tags": ["asset", "google-fonts", "font", "typography", "game-ui", "download", "domain"],
+      "description": "Search Google Fonts or download a verified keyless font with family and license metadata",
+      "version": "0.2.0",
+      "dcc": ["godot", "unreal", "unity", "photoshop", "after-effects", "premiere"],
+      "tags": ["asset", "google-fonts", "font", "typography", "game-ui", "cjk", "download", "domain"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -722,14 +722,11 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
         "skillRoots": ["skill/google-font-assets"]
       },
       "policy": {
         "installation": "available"
-      },
-      "requires": {
-        "env": ["GOOGLE_FONTS_API_KEY"]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
