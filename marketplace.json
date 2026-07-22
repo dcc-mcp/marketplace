@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -330,7 +330,7 @@
       "name": "dcc-asset-kenney",
       "description": "Search and download CC0 Kenney game asset packs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "godot", "unreal", "unity"],
       "tags": ["asset", "kenney", "cc0", "game-assets", "download"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
+        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -567,8 +567,8 @@
     },
     {
       "name": "dcc-game-release-package",
-      "description": "Package prebuilt Unreal, Unity, and Godot Windows games as installers, SteamPipe previews, or WeGame preflight records",
-      "version": "0.1.0",
+      "description": "Package prebuilt Unreal, Unity, and Godot Windows games with explicit license provenance as installers, SteamPipe previews, or WeGame preflight records",
+      "version": "0.2.0",
       "dcc": ["godot", "unreal", "unity"],
       "tags": ["game", "release", "package", "installer", "steam", "wegame", "windows", "domain"],
       "category": "Studio",
@@ -577,7 +577,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "de203dcaa0281ad0e7af20b46f5a2b12e67a7bf5",
+        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -587,7 +587,7 @@
         "bins": ["ISCC.exe"]
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#game-releases",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-release-package/SKILL.md",
       "lifecycle": "experimental"
     },
     {
@@ -602,14 +602,14 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
+        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
         "installation": "available"
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/499fa133aa47f90f2e456ce2c58c965243a7249c/skill/game-runtime-acceptance/SKILL.md",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-runtime-acceptance/SKILL.md",
       "lifecycle": "experimental"
     },
     {
@@ -624,14 +624,14 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "499fa133aa47f90f2e456ce2c58c965243a7249c",
+        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
         "installation": "available"
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/499fa133aa47f90f2e456ce2c58c965243a7249c/skill/game-pv-capture/SKILL.md",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-pv-capture/SKILL.md",
       "lifecycle": "experimental"
     },
     {

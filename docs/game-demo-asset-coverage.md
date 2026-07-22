@@ -27,6 +27,11 @@ third-party content. Provider skills download files and return attribution-aware
 4. Validate every returned `AssetDescriptor`, then hand it to the target DCC or engine importer.
 5. Export a credits file from the descriptors before sharing the demo.
 
+`dcc-asset-kenney` is installable directly for Godot, Unreal, and Unity because
+its provider contract is engine-neutral. It only searches, downloads, and
+returns a validated descriptor; engine import remains owned by the selected
+adapter. Do not create an engine-specific asset-download Skill for this path.
+
 ## Sources intentionally not automated
 
 - [Freesound](https://freesound.org/docs/api/terms_of_use.html): free API access is limited to
