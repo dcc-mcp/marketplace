@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
+        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -568,7 +568,7 @@
     {
       "name": "dcc-game-release-package",
       "description": "Package prebuilt Unreal, Unity, and Godot Windows games with explicit license provenance as installers, SteamPipe previews, or WeGame preflight records",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "dcc": ["godot", "unreal", "unity"],
       "tags": ["game", "release", "package", "installer", "steam", "wegame", "windows", "domain"],
       "category": "Studio",
@@ -577,7 +577,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
+        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -602,7 +602,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
+        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
@@ -624,7 +624,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
+        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
