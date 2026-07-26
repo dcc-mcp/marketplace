@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -41,7 +41,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
-        "ref": "17870840f671009f533d3b75e44c89a819131baf",
+        "ref": "2e6a6dcd350a3e35d89b1a4c7870d2908103ea15",
         "skillRoots": ["skill/maya-advancedskeleton"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
@@ -62,7 +62,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
-        "ref": "e00d2f04f3e6da031001fdd6f97e28793ce9587a",
+        "ref": "8b5344d6c87df45ba9367454eebb2ac14626cee4",
         "skillRoots": ["skill/maya-procedural-architecture"]
       },
       "policy": {
@@ -220,7 +220,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
-        "ref": "70b06b7e3304fdb0caa00bc0cb204400755db1fc",
+        "ref": "3cbacf1c4641e02d1bd8898017a11db771f450c3",
         "skillRoots": ["skill/godot-asset-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
@@ -246,7 +246,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
-        "ref": "f5de70188cbbeab47775824a27174d62cf75d46f",
+        "ref": "503cdadef0238e827da01ede65618ee2c26601f5",
         "skillRoots": ["skill/blender-extension-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
@@ -339,7 +339,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "a07da54892037f43c78b1abd54f0474d40e85df8",
+        "ref": "6d949423a3e8f34d3aa0edaa85224165bfe07177",
         "skillRoots": ["skill/kenney-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-kenney#readme",
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
+        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -577,7 +577,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
+        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -593,7 +593,7 @@
     {
       "name": "dcc-game-runtime-acceptance",
       "description": "Launch prebuilt Unity, Unreal, and Godot games with bounded structured runtime acceptance and hash-bearing evidence",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["godot", "unreal", "unity"],
       "tags": ["game", "runtime", "acceptance", "validation", "evidence", "domain"],
       "category": "Studio",
@@ -602,14 +602,14 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
+        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
         "installation": "available"
       },
       "license": "MIT",
-      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-runtime-acceptance/SKILL.md",
+      "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/ba45fcad6fc8db9413e81365573904da02857989/skill/game-runtime-acceptance/SKILL.md",
       "lifecycle": "experimental"
     },
     {
@@ -624,7 +624,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "53bf8ae24da003b522ad91df3d03e2564f162727",
+        "ref": "ba45fcad6fc8db9413e81365573904da02857989",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
@@ -647,7 +647,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
         "skillRoots": ["skill/pexels-video-assets"]
       },
       "policy": {
@@ -674,7 +674,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
         "skillRoots": ["skill/mixkit-free-assets"]
       },
       "policy": {
@@ -698,7 +698,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
         "skillRoots": ["skill/game-icons-assets"]
       },
       "policy": {
@@ -796,7 +796,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
-        "ref": "040a071e6c2daa61852438a520ad2b307bc10faf",
+        "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
         "skillRoots": ["skill/github-release-plugins"]
       },
       "policy": {
