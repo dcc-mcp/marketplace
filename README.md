@@ -1,8 +1,20 @@
 # DCC-MCP Marketplace
 
-Official skill registry for the [DCC-MCP](https://github.com/dcc-mcp/dcc-mcp-core) ecosystem.
+[Browse Marketplace](https://dcc-mcp.github.io/marketplace) ·
+[Showcase](https://dcc-mcp.github.io/showcase) ·
+[For Agents](https://dcc-mcp.github.io/agents) ·
+[Ecosystem](https://dcc-mcp.github.io/ecosystem) ·
+[Core docs](https://dcc-mcp.github.io/dcc-mcp-core/)
+
+Official skill registry for the
+[DCC-MCP](https://dcc-mcp.github.io/) ecosystem.
 
 Publish, discover, install, and upgrade DCC-MCP skill packs through **`dcc-mcp-cli`**. Metadata lives in this repo; skill implementations live in their own Git repositories.
+
+The [public Marketplace](https://dcc-mcp.github.io/marketplace) reads this
+catalog and lets people search by workflow, package, category, or DCC. The
+[Showcase](https://dcc-mcp.github.io/showcase) pairs real outputs with copyable
+agent prompts; the website never installs software or changes a local machine.
 
 ## Design references
 
