@@ -40,11 +40,11 @@ def valid_skill(ref: str = "a" * 40) -> dict:
 
 
 class MarketplaceValidatorTests(unittest.TestCase):
-    def test_kenney_provider_is_installable_for_game_engines(self) -> None:
+    def test_kenney_provider_is_installable_for_supported_hosts(self) -> None:
         catalog = json.loads((ROOT / "marketplace.json").read_text(encoding="utf-8"))
         kenney = next(skill for skill in catalog["skills"] if skill["name"] == "dcc-asset-kenney")
 
-        self.assertTrue({"godot", "unreal", "unity"}.issubset(set(kenney["dcc"])))
+        self.assertTrue({"godot", "unreal", "unity", "zbrush"}.issubset(set(kenney["dcc"])))
 
     def test_official_catalog_requires_immutable_git_refs(self) -> None:
         catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [valid_skill("main")]}
