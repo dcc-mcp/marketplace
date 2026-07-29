@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.11.3",
+  "version": "1.11.4",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -330,7 +330,7 @@
       "name": "dcc-asset-kenney",
       "description": "Search and download CC0 Kenney game asset packs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "godot", "unreal", "unity"],
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "godot", "unreal", "unity", "zbrush"],
       "tags": ["asset", "kenney", "cc0", "game-assets", "download"],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
@@ -339,7 +339,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
-        "ref": "6d949423a3e8f34d3aa0edaa85224165bfe07177",
+        "ref": "8a4af6e2742c876763fac03bfa87562649c55dc0",
         "skillRoots": ["skill/kenney-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-kenney#readme",
