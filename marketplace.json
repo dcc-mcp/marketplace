@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-        "ref": "195932e943cd001406d141b43d963637484d4097",
+        "ref": "3b44363e82edad748878f14802b436fa0d5d8bdb",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
