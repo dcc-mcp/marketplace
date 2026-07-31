@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
@@ -541,8 +541,8 @@
     },
     {
       "name": "dcc-lookdev-turntable",
-      "description": "Build and verify a camera-facing PBR LookDev stage with fixed references plus subject and lighting turntables",
-      "version": "0.2.0",
+      "description": "Build and verify one camera-facing PBR LookDev sequence with fixed references, subject turntable, then lighting turntable",
+      "version": "0.3.0",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "marmoset", "substance3d_designer", "substance3d_painter"],
       "tags": ["lookdev", "pbr", "turntable", "hdri", "color-management", "render", "domain"],
       "category": "Skills",
@@ -551,7 +551,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-        "ref": "3b44363e82edad748878f14802b436fa0d5d8bdb",
+        "ref": "e56a7e829d9839b64ca15e7ee40086986fc50f17",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
