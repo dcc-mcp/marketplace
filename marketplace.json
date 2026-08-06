@@ -371,6 +371,28 @@
       }
     },
     {
+      "name": "dcc-asset-pirate-nation",
+      "description": "Search and download CC0 Pirate Nation game art, voxel models, cards, logos, and NFT assets",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "unity", "godot"],
+      "tags": ["asset", "pirate-nation", "cc0", "game-assets", "voxel", "gltf", "download"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-pirate-nation",
+        "ref": "d6b0610f8715df9cf9d8e690063c3abfa2295d3c",
+        "skillRoots": ["skill/pirate-nation-assets"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-asset-pirate-nation#readme",
+      "showcase": "docs/images/pirate-nation-assets-showcase.webp",
+      "policy": {
+        "installation": "available"
+      }
+    },
+    {
       "name": "dcc-asset-objaverse",
       "description": "Browse Objaverse annotations and download Creative Commons GLB objects",
       "version": "0.1.0",
