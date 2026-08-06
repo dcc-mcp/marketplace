@@ -97,6 +97,19 @@ class MarketplaceValidatorTests(unittest.TestCase):
             validate_marketplace.load_marketplace = original
         self.assertIn("must declare non-empty source.skillRoots", output.getvalue())
 
+    def test_bundle_skills_must_match_declared_roots(self) -> None:
+        skill = valid_skill()
+        skill["package"] = {"format": "skill-bundle", "skills": ["other", "second"]}
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_metadata_quality())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("skills must match source.skillRoots", output.getvalue())
+
     def test_deprecated_skill_requires_a_known_successor(self) -> None:
         deprecated = valid_skill()
         deprecated["lifecycle"] = "deprecated"
@@ -247,6 +260,20 @@ class MarketplaceValidatorTests(unittest.TestCase):
         from jsonschema import Draft202012Validator
 
         self.assertEqual(list(Draft202012Validator(schema).iter_errors(catalog)), [])
+
+    def test_schema_rejects_single_skill_bundle(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        skill = valid_skill()
+        skill["package"] = {"format": "skill-bundle", "skills": ["maya-rig-tools"]}
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [skill],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertTrue(list(Draft202012Validator(schema).iter_errors(catalog)))
 
     def test_schema_rejects_showcase_parent_traversal(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))

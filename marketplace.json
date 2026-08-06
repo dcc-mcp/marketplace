@@ -1,10 +1,10 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.12.3",
+  "version": "1.13.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
-    "description": "Curated DCC-MCP skill packs, asset providers, and adapter bundles."
+    "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
   },
   "installRoot": "~/.dcc-mcp/marketplace/{dcc}/{name}",
   "skills": [
@@ -22,6 +22,10 @@
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
         "ref": "f1b0266cff26d4779584e201ef260db2bda7c04d",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
+      },
+      "package": {
+        "format": "skill-bundle",
+        "skills": ["maya-mgear", "mgear-import-to-scene"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
       "showcase": "docs/images/dcc-mcp-maya-mgear-showcase.webp",
@@ -523,6 +527,10 @@
         "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
         "ref": "744a621bb6aa97754617e94ee215b87496117d23",
         "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
+      },
+      "package": {
+        "format": "skill-bundle",
+        "skills": ["oiio-textures", "ocio-color"]
       },
       "policy": {
         "installation": "available"

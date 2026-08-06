@@ -207,6 +207,27 @@ def check_metadata_quality() -> bool:
                     print(f"::error::Skill '{name}' has unsafe source.skillRoots entry: {root!r}")
                     ok = False
 
+        package = skill.get("package")
+        if package:
+            package_format = package.get("format")
+            package_skills = package.get("skills", [])
+            if package_format == "skill-bundle" and len(package_skills) < 2:
+                print(f"::error::Skill bundle '{name}' must contain at least two skills")
+                ok = False
+            root_names = {
+                root.rstrip("/").rsplit("/", 1)[-1]
+                for root in skill_roots or []
+                if isinstance(root, str)
+            }
+            if set(package_skills) != root_names:
+                print(f"::error::Package '{name}' skills must match source.skillRoots")
+                ok = False
+            if package_format == "agent-plugin" and any(
+                not root.startswith("skills/") for root in skill_roots or []
+            ):
+                print(f"::error::Agent Plugin '{name}' skill roots must use skills/<name>")
+                ok = False
+
         policy = skill.get("policy", {})
         installation = policy.get("installation", "")
         if installation not in _VALID_POLICIES:
@@ -561,6 +582,15 @@ def check_skill_layout() -> bool:
         if missing:
             errors.append((name, f"declared skill roots contain no SKILL.md: {', '.join(missing)}"))
             continue
+        package = skill.get("package", {})
+        if package.get("format") == "agent-plugin":
+            if "plugin.json" not in paths:
+                errors.append((name, "Agent Plugin source is missing root plugin.json"))
+                continue
+            expected = {f"skills/{component}/SKILL.md" for component in package.get("skills", [])}
+            if not expected.issubset(paths):
+                errors.append((name, "Agent Plugin skills are not immediate children of skills/"))
+                continue
         showcase = skill.get("showcase")
         if showcase and showcase not in paths:
             errors.append((name, f"declared showcase does not exist at source.ref: {showcase}"))
