@@ -6,10 +6,10 @@
 [Ecosystem](https://dcc-mcp.github.io/ecosystem) ·
 [Core docs](https://dcc-mcp.github.io/dcc-mcp-core/)
 
-Official skill registry for the
+Official plugin, bundle, and skill registry for the
 [DCC-MCP](https://dcc-mcp.github.io/) ecosystem.
 
-Publish, discover, install, and upgrade DCC-MCP skill packs through **`dcc-mcp-cli`**. Metadata lives in this repo; skill implementations live in their own Git repositories.
+Publish, discover, install, and upgrade DCC-MCP packages through **`dcc-mcp-cli`**. Metadata lives in this repo; implementations live in their own Git repositories.
 
 The [public Marketplace](https://dcc-mcp.github.io/marketplace) reads this
 catalog and lets people search by workflow, package, category, or DCC. The
@@ -28,6 +28,10 @@ Installed skills land at:
 ```text
 ~/.dcc-mcp/marketplace/<dcc>/<name>/
 ```
+
+Multi-skill packages install each Skill into that discovery root and keep one
+package manifest under `~/.dcc-mcp/marketplace/<dcc>/.packages/<name>/` so the
+whole bundle updates and uninstalls as one unit.
 
 Example:
 
@@ -88,6 +92,8 @@ Each skill entry includes:
 - Identity: `name`, `description`, `version`, `maintainer`
 - Targeting: `dcc[]`, `tags[]`, `category`, `minCoreVersion`
 - Source: `source.type` (`git` | `zip`), `source.url`, `source.ref` or `source.sha256`, and `source.skillRoots`
+- Optional package shape: `package.format` (`agent-plugin` | `skill-bundle`)
+  and the displayed `package.skills[]` component names.
 - Policy: `policy.installation` (`available` | `installed_by_default` | `not_available`)
 - Declarative runtime requirements: `requires.env`, `requires.bins`,
   `requires.python`, and `requires.skills`. The marketplace reports them but
@@ -106,6 +112,19 @@ Official entries also declare every installable directory in `source.skillRoots`
 installs only those directories, keeping repository examples and development-only skills out
 of users' local skill paths. CI verifies that each declared root contains a `SKILL.md` at the
 pinned revision.
+
+### Agent Plugins and bundles
+
+An `agent-plugin` follows [Agent Plugins 1.0](https://agent-plugins.org/specification):
+the source root contains `plugin.json`, and Skills are immediate children of
+`skills/`. The DCC-MCP client currently installs the Skill components and
+ignores optional `mcp.json`; DCC adapters already provide the runtime MCP path.
+
+A `skill-bundle` is the existing DCC-MCP multi-Skill layout selected by more
+than one `source.skillRoots` entry. Use it for packages that already share one
+release, compatibility, and uninstall boundary. Do not combine Skills merely
+because they share a repository or category; keep independently versioned,
+credentialed, or optional workflows installable on their own.
 
 Every Monday, the `marketplace-freshness` workflow reports official source branches with newer
 commits. It never changes a pin automatically; maintainers review the source, then publish a new

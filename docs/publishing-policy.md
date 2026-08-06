@@ -10,6 +10,16 @@ install policy. CI checks schema conformance, unique names, source reachability,
 pinned commit is still advertised by the source repository, and that every `source.skillRoots`
 directory contains a `SKILL.md` at that revision.
 
+Multi-Skill packages must declare `package.skills` and a `package.format`.
+Use `skill-bundle` for the legacy `source.skillRoots` layout. Use
+`agent-plugin` only when the pinned source conforms to Agent Plugins 1.0 with
+a root `plugin.json` and immediate `skills/<name>/SKILL.md` components. CI
+checks that displayed component names match the immutable install roots.
+
+Bundle only Skills that share versioning, compatibility, trust, and uninstall
+boundaries. A shared repository alone is not a reason to force unrelated or
+independently useful Skills into one install.
+
 Packages that require credentials or external binaries must declare their variable and binary
 names in `requires`; secrets must never appear in catalog metadata.
 

@@ -86,6 +86,7 @@
         "maintainer": { "type": "string", "minLength": 1 },
         "minCoreVersion": { "$ref": "#/$defs/semver" },
         "source": { "$ref": "#/$defs/source" },
+        "package": { "$ref": "#/$defs/package" },
         "policy": { "$ref": "#/$defs/policy" },
         "requires": { "$ref": "#/$defs/requires" },
         "license": { "type": "string", "minLength": 1 },
@@ -146,6 +147,31 @@
         {
           "if": { "properties": { "type": { "const": "zip" } } },
           "then": { "required": ["sha256"] }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "package": {
+      "type": "object",
+      "required": ["format", "skills"],
+      "properties": {
+        "format": {
+          "enum": ["agent-plugin", "skill-bundle"]
+        },
+        "skills": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "format": { "const": "skill-bundle" } } },
+          "then": { "properties": { "skills": { "minItems": 2 } } }
         }
       ],
       "additionalProperties": false
