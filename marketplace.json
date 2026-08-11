@@ -572,7 +572,7 @@
     {
       "name": "dcc-lookdev-turntable",
       "description": "Build and verify one camera-facing PBR LookDev sequence with calibrated references and asset-aware HDR presets",
-        "version": "0.4.0",
+        "version": "0.4.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "marmoset", "substance3d_designer", "substance3d_painter"],
       "tags": ["lookdev", "tt", "pbr", "turntable", "hdri", "color-management", "render", "domain"],
       "category": "Skills",
@@ -581,7 +581,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-          "ref": "a95c6f0fe81df6615e9487c9360597281af9364c",
+          "ref": "3121a34632e79ef130bf30675e092487b9821dc8",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
