@@ -91,7 +91,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
-        "ref": "17724921fef2cb0ce714aaf56e131065710cf754",
+        "ref": "bca538cb6ffb372025bbe400bed7ee61e60617b9",
         "skillRoots": ["skill/qt-ui-inspector"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-inspector#readme",
@@ -112,7 +112,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "f17dc72d7d3aebe3489ba41486814cc5b13efca6",
+        "ref": "9c16447100d2c5883883ec175a61e4bcd8839f0d",
         "skillRoots": ["skill/qt-ui-actions"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
@@ -133,7 +133,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "bfd8b4b9ce9ac1e72b263e6b459e000e9847918e",
+        "ref": "7b36e670eab1a0ee44b0996996f3fa72747acdfe",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
