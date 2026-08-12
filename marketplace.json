@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -81,17 +81,17 @@
     },
     {
       "name": "dcc-ui-qt-inspector",
-      "description": "Reusable Qt UI inspection for DCC-MCP — discover windows, widgets, and selector state across PySide/PyQt hosts",
+      "description": "Read-only Qt inspection for DCC-MCP CUA and UI Control selector discovery",
       "version": "0.1.0",
       "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "qt", "pyside", "pyqt", "inspection", "infrastructure"],
+      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "qt", "pyside", "pyqt", "inspection", "infrastructure"],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.20.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
-        "ref": "eed94e8b3e224ab1f16e4f40e9ddaa2618bac5d1",
+        "ref": "17724921fef2cb0ce714aaf56e131065710cf754",
         "skillRoots": ["skill/qt-ui-inspector"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-inspector#readme",
@@ -102,17 +102,17 @@
     },
     {
       "name": "dcc-ui-qt-actions",
-      "description": "Reusable Qt UI actions for DCC-MCP — click widgets, trigger actions, set values, and drive legacy UI workflows",
+      "description": "Structured Qt actions for DCC-MCP CUA and UI Control workflows backed by dcc-cua",
       "version": "0.1.2",
       "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "qt", "pyside", "pyqt", "automation", "infrastructure"],
+      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "qt", "pyside", "pyqt", "automation", "infrastructure"],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.20.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
-        "ref": "0d1ee9475e47d2e9212dbd9e8ce42ad76e09ac22",
+        "ref": "f17dc72d7d3aebe3489ba41486814cc5b13efca6",
         "skillRoots": ["skill/qt-ui-actions"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
@@ -123,17 +123,17 @@
     },
     {
       "name": "dcc-ui-workflow-memory",
-      "description": "Structured workflow memory for DCC-MCP UI automation — remember selectors, recipes, and verified failures",
+      "description": "Structured workflow memory for DCC-MCP CUA and UI Control automation backed by dcc-cua",
       "version": "0.1.1",
       "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "workflow", "memory", "automation", "selectors", "infrastructure"],
+      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "workflow", "memory", "automation", "selectors", "infrastructure"],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
-      "minCoreVersion": "0.18.0",
+      "minCoreVersion": "0.20.0",
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
-        "ref": "380cd18287c30ddc3db300239f81ef46fbf885b7",
+        "ref": "bfd8b4b9ce9ac1e72b263e6b459e000e9847918e",
         "skillRoots": ["skill/ui-workflow-memory"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
