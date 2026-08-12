@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -858,6 +858,32 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/github-release-plugins-showcase.webp",
       "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-mcp-cache-inspector",
+      "description": "Host-neutral, bounded read-only inspection for SideFX .geo, .bgeo, and .bgeo.sc geometry caches",
+      "version": "0.3.0",
+      "dcc": ["any"],
+      "tags": ["pipeline", "read-only", "houdini", "cache", "skills", "infrastructure"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.20.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector",
+        "ref": "c961442fca498315361cd89df05bd27182a38833",
+        "skillRoots": ["skill/cache-inspection"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "python": ["blosc>=1.11.2,<2"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector#readme",
+      "showcase": "docs/images/cache-inspection-showcase.webp",
+      "lifecycle": "active"
     }
   ]
 }
