@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
   attestations: write
 
@@ -25,6 +25,19 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Attest marketplace.json
+        id: attest
         uses: actions/attest@v4
         with:
           subject-path: marketplace.json
+
+      - name: Publish detached verification bundle
+        run: |
+          cp "${{ steps.attest.outputs.bundle-path }}" marketplace.sigstore.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add marketplace.sigstore.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: update marketplace attestation"
+          git push
