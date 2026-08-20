@@ -1,0 +1,30 @@
+name: Attest catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "marketplace.json"
+      - ".github/workflows/attest-catalog.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: attest-marketplace-catalog
+  cancel-in-progress: false
+
+jobs:
+  attest:
+    name: Sigstore provenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Attest marketplace.json
+        uses: actions/attest@v4
+        with:
+          subject-path: marketplace.json

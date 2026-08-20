@@ -81,6 +81,19 @@ Environment overrides:
 | `DCC_MCP_MARKETPLACE_SOURCES` | Comma-separated extra catalog URLs or `owner/repo` shorthands |
 | `DCC_MCP_MARKETPLACE_INSTALL_ROOT` | Override install root (default `~/.dcc-mcp/marketplace`) |
 
+## Catalog provenance
+
+Every `marketplace.json` revision on `main` receives a GitHub Artifact
+Attestation signed through the public Sigstore service. The attestation binds
+the exact catalog SHA-256 to this repository and
+`.github/workflows/attest-catalog.yml`; no long-lived signing key is stored.
+
+Verify a downloaded catalog before consuming it outside DCC-MCP:
+
+```bash
+gh attestation verify marketplace.json --repo dcc-mcp/marketplace
+```
+
 ## Catalog format
 
 Primary index: [`marketplace.json`](marketplace.json)
