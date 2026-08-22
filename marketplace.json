@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.13.2",
+  "version": "1.14.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -236,6 +236,34 @@
         "skills": ["godot-assets"]
       },
       "license": "MIT",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-asset-itchio",
+      "description": "Browse itch.io game assets and download directly owned uploads with explicit license evidence",
+      "version": "0.1.0",
+      "dcc": ["any"],
+      "tags": ["asset", "itchio", "game-assets", "owned", "download", "license", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.91",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-itchio",
+        "ref": "a5665c80f83f64e304e2c13d761f7c6c40194272",
+        "skillRoots": ["skill/itchio-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["BUTLER_API_KEY"],
+        "bins": ["butler"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
+      "showcase": "docs/images/dcc-itchio-showcase.webp",
       "lifecycle": "experimental"
     },
     {
@@ -640,6 +668,34 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-release-package/SKILL.md",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-game-itchio-publish",
+      "description": "Preview and publish packaged Godot, Unreal, and Unity games to exact itch.io channels with license and parent-build gates",
+      "version": "0.1.0",
+      "dcc": ["godot", "unreal", "unity"],
+      "tags": ["game", "release", "publish", "itchio", "butler", "upload", "domain"],
+      "category": "Studio",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.91",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-itchio",
+        "ref": "a5665c80f83f64e304e2c13d761f7c6c40194272",
+        "skillRoots": ["skill/itchio-publish"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["BUTLER_API_KEY"],
+        "bins": ["butler"],
+        "skills": ["game-release-package"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
+      "showcase": "docs/images/dcc-itchio-showcase.webp",
       "lifecycle": "experimental"
     },
     {
