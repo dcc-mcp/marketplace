@@ -40,6 +40,21 @@ def valid_skill(ref: str = "a" * 40) -> dict:
 
 
 class MarketplaceValidatorTests(unittest.TestCase):
+    def test_modeling_spec_is_installable_for_supported_hosts(self) -> None:
+        catalog = json.loads((ROOT / "marketplace.json").read_text(encoding="utf-8"))
+
+        modeling_spec = next(
+            skill for skill in catalog["skills"] if skill["name"] == "dcc-modeling-spec"
+        )
+
+        self.assertEqual(
+            modeling_spec["dcc"],
+            ["maya", "blender", "houdini", "3dsmax"],
+        )
+        self.assertEqual(modeling_spec["source"]["skillRoots"], ["skill/modeling-spec"])
+        self.assertIn("domain", modeling_spec["tags"])
+        self.assertEqual(modeling_spec["policy"]["installation"], "available")
+
     def test_kenney_provider_is_installable_for_supported_hosts(self) -> None:
         catalog = json.loads((ROOT / "marketplace.json").read_text(encoding="utf-8"))
         kenney = next(skill for skill in catalog["skills"] if skill["name"] == "dcc-asset-kenney")
