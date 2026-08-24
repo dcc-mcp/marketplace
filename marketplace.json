@@ -631,7 +631,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-modeling-spec",
-        "ref": "581f82d31977128dfc78d64c5117d46e00036461",
+        "ref": "a2e78de794ffc272fcbb6c904d6d602fbe237401",
         "skillRoots": ["skill/modeling-spec"]
       },
       "policy": {
