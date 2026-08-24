@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -617,6 +617,28 @@
       },
       "license": "MIT-0",
       "docs": "https://github.com/dcc-mcp/dcc-lookdev#readme",
+      "lifecycle": "experimental"
+    },
+    {
+      "name": "dcc-modeling-spec",
+      "description": "Define and validate staged cross-DCC modeling specifications, scene measurements, and bounded review artifacts",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["modeling", "specification", "validation", "topology", "uv", "materials", "review", "domain"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-modeling-spec",
+        "ref": "581f82d31977128dfc78d64c5117d46e00036461",
+        "skillRoots": ["skill/modeling-spec"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-modeling-spec#readme",
       "lifecycle": "experimental"
     },
     {
