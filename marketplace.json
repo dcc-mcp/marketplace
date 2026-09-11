@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "f1b0266cff26d4779584e201ef260db2bda7c04d",
+        "ref": "77214bad3bb4f7394641145406a8089eed5b97a4",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "package": {
@@ -154,7 +154,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
-        "ref": "21b4e53f5a5ede0fc1565b772de16ae8871d31cd",
+        "ref": "67154e0e372867c68bc4214db580c146f6bc8ffd",
         "skillRoots": ["skill/hunyuan3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d#readme",
@@ -267,6 +267,32 @@
       "lifecycle": "experimental"
     },
     {
+      "name": "dcc-asset-poly-pizza",
+      "description": "Search and download license-validated low-poly models from the Poly Pizza published API",
+      "version": "0.1.0",
+      "dcc": ["any"],
+      "tags": ["asset", "poly-pizza", "low-poly", "3d-models", "cc0", "cc-by", "download", "domain"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.90",
+      "assetContract": "descriptor-v1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-poly-pizza",
+        "ref": "898cbbdc7d11428b9eb846bea756795cc11119c5",
+        "skillRoots": ["skill/poly-pizza-assets"]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["POLY_PIZZA_API_KEY"]
+      },
+      "license": "MIT",
+      "docs": "https://github.com/dcc-mcp/dcc-asset-poly-pizza#readme",
+      "lifecycle": "experimental"
+    },
+    {
       "name": "dcc-asset-blender-extensions",
       "description": "Search and download checksum-verified add-ons from the official Blender Extensions repository",
       "version": "0.1.0",
@@ -327,7 +353,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
-        "ref": "5b0638225abc80bcfe5b5b4045edff6e457874ac",
+        "ref": "9724a757a5ae85313414b712e9c8f5ae1fc4ae91",
         "skillRoots": ["skill/nasa3d-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-nasa3d#readme",
@@ -553,7 +579,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
-        "ref": "744a621bb6aa97754617e94ee215b87496117d23",
+        "ref": "9d1ec1b434a08dac019246fce49615effb63432a",
         "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
       },
       "package": {
@@ -609,7 +635,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-          "ref": "3121a34632e79ef130bf30675e092487b9821dc8",
+          "ref": "c0ae9ca8eb2dd75f3ae060da49a52558c25db9f0",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
