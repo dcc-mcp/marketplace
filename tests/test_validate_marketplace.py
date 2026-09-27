@@ -331,6 +331,209 @@ class MarketplaceValidatorTests(unittest.TestCase):
         self.assertTrue(errors)
         self.assertIn("replacedBy", errors[0].message)
 
+    def test_official_catalog_declares_the_full_prompt_contract(self) -> None:
+        catalog = json.loads((ROOT / "marketplace.json").read_text(encoding="utf-8"))
+
+        covered = [skill for skill in catalog["skills"] if skill.get("examplePrompts")]
+        self.assertEqual(len(covered), len(catalog["skills"]))
+        for skill in covered:
+            with self.subTest(skill=skill["name"]):
+                self.assertGreaterEqual(len(skill["examplePrompts"]), 1)
+
+        gated = {"Skills", "Studio", "Infrastructure"}
+        required = [s for s in catalog["skills"] if s["category"] in gated]
+        for skill in required:
+            with self.subTest(skill=skill["name"]):
+                self.assertTrue(skill.get("recovery"))
+                self.assertIn(skill.get("undo"), ("single-step", "none", "manual"))
+
+    def test_prompt_contract_runs_as_part_of_all(self) -> None:
+        self.assertIn("prompt-contract", validate_marketplace.COMMANDS)
+
+    def test_prompt_contract_accepts_a_complete_official_entry(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = [
+            "Build a biped rig from the current Maya guide and report every control",
+            "Inspect which rigging modules are loaded in this Maya session",
+        ]
+        skill["recovery"] = [
+            {
+                "on": "mGear is not importable in the running Maya interpreter",
+                "next": "dcc-mcp-cli marketplace inspect dcc-mcp-maya-mgear",
+            },
+            {
+                "on": "a partially built rig is left in the scene",
+                "next": "undo the build and delete the leftover rig group, then rebuild",
+            },
+        ]
+        skill["undo"] = "single-step"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertTrue(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("Prompt contract check passed", output.getvalue())
+
+    def test_prompt_contract_rejects_missing_example_prompts(self) -> None:
+        skill = valid_skill()
+        skill["undo"] = "single-step"
+        skill["recovery"] = [{"on": "anything fails", "next": "dcc-mcp-cli marketplace list"}]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("must declare a non-empty examplePrompts array", output.getvalue())
+
+    def test_prompt_contract_rejects_identifier_lists_and_duplicates(self) -> None:
+        skill = valid_skill()
+        skill["undo"] = "single-step"
+        skill["recovery"] = [{"on": "anything fails", "next": "dcc-mcp-cli marketplace list"}]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            skill["examplePrompts"] = ["maya-rig-tools, maya-render"]
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+            self.assertIn("lists identifiers instead of a prompt", output.getvalue())
+
+            skill["examplePrompts"] = ["rig the character now", "rig the character now"]
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+            self.assertIn("duplicate examplePrompts entry", output.getvalue())
+
+            skill["examplePrompts"] = ["rig"]
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+            self.assertIn("too short", output.getvalue())
+        finally:
+            validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_rejects_empty_recovery_next(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [{"on": "the guide is invalid", "next": "   "}]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("has an empty 'next'", output.getvalue())
+
+    def test_prompt_contract_rejects_no_op_recovery_next(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [{"on": "the guide is invalid", "next": "retry"}]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("non-actionable 'next'", output.getvalue())
+
+    def test_prompt_contract_requires_rollback_steps_for_manual_undo(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "manual"
+        skill["recovery"] = [
+            {"on": "the guide is invalid", "next": "ask the user to fix the guide"}
+        ]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+            self.assertIn("must spell out the rollback step", output.getvalue())
+
+            skill["recovery"].append(
+                {
+                    "on": "a partial rig is left behind",
+                    "next": "delete the leftover rig group and rebuild",
+                }
+            )
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertTrue(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_rejects_unknown_undo_value(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "automatic"
+        skill["recovery"] = [
+            {"on": "the guide is invalid", "next": "delete the rig group and rebuild"}
+        ]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("has invalid undo value", output.getvalue())
+
+    def test_prompt_contract_only_warns_for_asset_providers(self) -> None:
+        skill = valid_skill()
+        skill["category"] = "Asset Providers"
+        skill["examplePrompts"] = ["Download a CC0 wooden crate model"]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertTrue(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("must declare a non-empty recovery array", output.getvalue())
+        self.assertIn("must declare undo", output.getvalue())
+
+    def test_schema_accepts_prompt_contract_fields(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["recovery"] = [
+            {"on": "the guide is invalid", "next": "delete the rig group and rebuild"}
+        ]
+        skill["undo"] = "single-step"
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [skill],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(catalog)), [])
+
+    def test_schema_rejects_unknown_undo_value(self) -> None:
+        schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
+        catalog = {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "version": "1.0.0",
+            "skills": [dict(valid_skill(), undo="automatic")],
+        }
+        from jsonschema import Draft202012Validator
+
+        self.assertTrue(list(Draft202012Validator(schema).iter_errors(catalog)))
+
     def test_catalog_option_validates_custom_catalog(self) -> None:
         catalog = {
             "name": "my-studio-private",

@@ -105,7 +105,10 @@
         "replacedBy": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]*$"
-        }
+        },
+        "examplePrompts": { "$ref": "#/$defs/examplePrompts" },
+        "recovery": { "$ref": "#/$defs/recovery" },
+        "undo": { "$ref": "#/$defs/undo" }
       },
       "allOf": [
         {
@@ -185,6 +188,32 @@
         }
       },
       "additionalProperties": false
+    },
+    "examplePrompts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 8
+      }
+    },
+    "recovery": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/recoveryRule" }
+    },
+    "recoveryRule": {
+      "type": "object",
+      "required": ["on", "next"],
+      "properties": {
+        "on": { "type": "string", "minLength": 1 },
+        "next": { "type": "string", "minLength": 8 }
+      },
+      "additionalProperties": false
+    },
+    "undo": {
+      "type": "string",
+      "enum": ["single-step", "none", "manual"]
     },
     "requires": {
       "type": "object",

@@ -10,6 +10,7 @@ Usage:
     python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
     python scripts/validate_marketplace.py skill-layout  # Verify declared skill roots at pinned revisions
     python scripts/validate_marketplace.py asset-contract # Verify opted-in asset descriptor contracts
+    python scripts/validate_marketplace.py prompt-contract # Verify examplePrompts/recovery/undo coverage
     python scripts/validate_marketplace.py source-freshness # Report upstream commits awaiting review
     python scripts/validate_marketplace.py catalog-parse # Validate via dcc-mcp-catalog
     python scripts/validate_marketplace.py all           # Run all checks (default)
@@ -496,6 +497,206 @@ def check_asset_contract() -> bool:
     return True
 
 
+# ── prompt contract checks ───────────────────────────────────────────
+
+# Categories whose entries are required to declare recovery + undo. Asset
+# Providers share one homogeneous failure mode (unreachable download source)
+# and stay recommended-but-optional so the gate never blocks a new provider.
+_RECOVERY_REQUIRED_CATEGORIES = {"Skills", "Studio", "Infrastructure"}
+_VALID_UNDO_VALUES = ("single-step", "none", "manual")
+_MIN_PROMPT_CHARS = 8
+
+# A prompt is meant to be natural language an agent can act on. A bare
+# identifier, or a comma/pipe separated list of them, is a tool listing.
+_IDENTIFIER_LIST_PATTERN = re.compile(
+    r"^[A-Za-z0-9_.:/-]+(?:\s*[,;|/]\s*[A-Za-z0-9_.:/-]+)*$"
+)
+
+# `next` values that just tell the agent to spin without changing anything.
+_NO_OP_NEXT = {
+    "retry",
+    "try again",
+    "retry again",
+    "rerun",
+    "re-run",
+    "restart",
+    "n/a",
+    "none",
+    "todo",
+    "tbd",
+    "see docs",
+    "see documentation",
+}
+
+# Words that make a recovery rule count as a concrete rollback step when an
+# entry declares that its work cannot be undone automatically.
+_ROLLBACK_KEYWORDS = (
+    "undo",
+    "rollback",
+    "roll back",
+    "revert",
+    "restore",
+    "reset",
+    "cleanup",
+    "clean up",
+    "remove",
+    "delete",
+    "discard",
+)
+
+
+def _is_identifier_list(value: str) -> bool:
+    return bool(_IDENTIFIER_LIST_PATTERN.match(value))
+
+
+def _is_actionable_next(value: str, skill_names: set[str]) -> bool:
+    """A recovery `next` must be something the agent can actually do next."""
+    candidate = value.strip()
+    if len(candidate) < _MIN_PROMPT_CHARS:
+        return False
+    if candidate.lower().rstrip(".!") in _NO_OP_NEXT:
+        return False
+    # Another catalog entry, a CLI invocation, or a described action.
+    return candidate in skill_names or candidate.startswith("dcc-mcp-cli") or " " in candidate
+
+
+def _mentions_rollback(rule: dict) -> bool:
+    haystack = f"{rule.get('on', '')} {rule.get('next', '')}".lower()
+    return any(keyword in haystack for keyword in _ROLLBACK_KEYWORDS)
+
+
+def check_prompt_contract() -> bool:
+    """Verify the agent-facing prompt contract: examplePrompts, recovery, undo.
+
+    `examplePrompts` is required on every entry because it is what makes an
+    agent pick the skill up. `recovery` and `undo` are required on entries that
+    mutate a scene or an external system (Skills, Studio, Infrastructure);
+    Asset Providers are reported as warnings so a new provider is never blocked.
+    """
+    print("::group::Prompt contract check")
+    data = load_marketplace()
+    skills = data.get("skills", [])
+    skill_names = {skill.get("name", "") for skill in skills}
+    errors: list[tuple[str, str]] = []
+    warnings = 0
+    prompts_total = 0
+    recovery_covered = 0
+    recovery_required = 0
+
+    for skill in skills:
+        name = skill.get("name", "?")
+        category = skill.get("category", "")
+        requires_recovery = category in _RECOVERY_REQUIRED_CATEGORIES
+        if requires_recovery:
+            recovery_required += 1
+
+        # ── examplePrompts ────────────────────────────────────────────
+        prompts = skill.get("examplePrompts")
+        if not isinstance(prompts, list) or not prompts:
+            errors.append((name, "must declare a non-empty examplePrompts array"))
+        else:
+            seen: set[str] = set()
+            for prompt in prompts:
+                if not isinstance(prompt, str) or not prompt.strip():
+                    errors.append((name, "has an empty examplePrompts entry"))
+                    continue
+                text = prompt.strip()
+                if len(text) < _MIN_PROMPT_CHARS:
+                    errors.append(
+                        (name, f"examplePrompts entry is too short: {text!r}")
+                    )
+                    continue
+                if " " not in text:
+                    errors.append((name, f"examplePrompts entry is not a sentence: {text!r}"))
+                    continue
+                if _is_identifier_list(text):
+                    errors.append(
+                        (name, f"examplePrompts entry lists identifiers instead of a prompt: {text!r}")
+                    )
+                    continue
+                key = text.casefold()
+                if key in seen:
+                    errors.append((name, f"duplicate examplePrompts entry: {text!r}"))
+                    continue
+                seen.add(key)
+            prompts_total += len(seen)
+
+        # ── recovery ──────────────────────────────────────────────────
+        recovery = skill.get("recovery")
+        if not isinstance(recovery, list) or not recovery:
+            message = "must declare a non-empty recovery array"
+            if requires_recovery:
+                errors.append((name, message))
+            else:
+                print(f"::warning::{name}: {message}")
+                warnings += 1
+            recovery = []
+        else:
+            seen_conditions: set[str] = set()
+            for rule in recovery:
+                if not isinstance(rule, dict):
+                    errors.append((name, "recovery entries must be objects with 'on' and 'next'"))
+                    continue
+                condition = rule.get("on")
+                following = rule.get("next")
+                if not isinstance(condition, str) or not condition.strip():
+                    errors.append((name, "has a recovery rule with an empty 'on'"))
+                    continue
+                if not isinstance(following, str) or not following.strip():
+                    errors.append((name, f"recovery rule {condition!r} has an empty 'next'"))
+                    continue
+                if not _is_actionable_next(following, skill_names):
+                    errors.append(
+                        (
+                            name,
+                            f"recovery rule {condition!r} has a non-actionable 'next': {following!r}",
+                        )
+                    )
+                key = condition.strip().casefold()
+                if key in seen_conditions:
+                    errors.append((name, f"duplicate recovery condition: {condition!r}"))
+                    continue
+                seen_conditions.add(key)
+            recovery_covered += 1
+
+        # ── undo ──────────────────────────────────────────────────────
+        undo = skill.get("undo")
+        if undo is None:
+            message = "must declare undo (single-step | none | manual)"
+            if requires_recovery:
+                errors.append((name, message))
+            else:
+                print(f"::warning::{name}: {message}")
+                warnings += 1
+        elif undo not in _VALID_UNDO_VALUES:
+            errors.append((name, f"has invalid undo value {undo!r}"))
+        elif undo != "single-step" and not any(
+            _mentions_rollback(rule) for rule in recovery if isinstance(rule, dict)
+        ):
+            errors.append(
+                (
+                    name,
+                    f"undo is {undo!r}, so recovery must spell out the rollback step",
+                )
+            )
+
+    for name, reason in errors:
+        print(f"::error::{name}: {reason}")
+    if errors:
+        print("::endgroup::")
+        return False
+
+    print(
+        f"Prompt contract check passed for {len(skills)} skills "
+        f"({prompts_total} example prompts, {recovery_covered}/{len(skills)} with recovery"
+        f", {recovery_required} required)."
+    )
+    if warnings:
+        print(f"::warning::{warnings} optional coverage gap(s) reported above.")
+    print("::endgroup::")
+    return True
+
+
 # ── source freshness checks ───────────────────────────────────────────
 
 
@@ -657,6 +858,7 @@ COMMANDS = {
     "source-revisions": check_source_revisions,
     "skill-layout": check_skill_layout,
     "asset-contract": check_asset_contract,
+    "prompt-contract": check_prompt_contract,
     "source-freshness": check_source_freshness,
     "catalog-parse": check_catalog_parse,
 }

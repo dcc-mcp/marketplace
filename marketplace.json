@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -31,7 +31,23 @@
       "showcase": "docs/images/dcc-mcp-maya-mgear-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Build a mGear Shifter biped rig from the current Maya guide and report every component it created", "Inspect which mGear modules and versions are loaded in this Maya session", "Import the exported mGear rig back into the scene and verify the control hierarchy"],
+      "recovery": [
+        {
+          "on": "mGear is not importable in the running Maya interpreter",
+          "next": "dcc-mcp-cli marketplace inspect dcc-mcp-maya-mgear"
+        },
+        {
+          "on": "guide or component validation fails before the build starts",
+          "next": "run the mgear inspection tool to list the offending guide nodes, fix them in Maya, then rebuild"
+        },
+        {
+          "on": "a partially built rig is left in the scene after a failed build",
+          "next": "undo back to the pre-build state with a single Maya undo step, delete the leftover rig group, then rebuild"
+        }
+      ],
+      "undo": "single-step"
     },
     {
       "name": "dcc-mcp-maya-advancedskeleton",
@@ -52,7 +68,23 @@
       "showcase": "docs/images/maya-advancedskeleton-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["List the AdvancedSkeleton templates available in this Maya session", "Create a FitSkeleton from the selected biped template and report the joints it placed", "Rebuild the existing AdvancedSkeleton rig after I move the FitSkeleton joints"],
+      "recovery": [
+        {
+          "on": "AdvancedSkeleton is not installed or not importable in Maya",
+          "next": "dcc-mcp-cli marketplace inspect dcc-mcp-maya-advancedskeleton"
+        },
+        {
+          "on": "no FitSkeleton or template exists in the scene yet",
+          "next": "create a FitSkeleton from a template first, then retry the rig build"
+        },
+        {
+          "on": "the rebuild produced a duplicate or broken rig",
+          "next": "undo the rebuild with a single Maya undo step, delete the duplicate rig group, then rebuild from the FitSkeleton"
+        }
+      ],
+      "undo": "single-step"
     },
     {
       "name": "dcc-mcp-maya-procedural-architecture",
@@ -77,7 +109,23 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture#readme",
-      "showcase": "docs/showcase/maya-bifrost-random-houses.gif"
+      "showcase": "docs/showcase/maya-bifrost-random-houses.gif",
+      "examplePrompts": ["Generate three seeded suburban house variants in Maya with Arnold materials and report the mesh counts", "Build one stylized cottage with a CC0 HDRI from ambientCG and frame it with the existing camera", "Cancel the running house generation and tell me what was already created"],
+      "recovery": [
+        {
+          "on": "Bifrost or Arnold is unavailable in this Maya version",
+          "next": "dcc-mcp-cli marketplace inspect dcc-mcp-maya-procedural-architecture"
+        },
+        {
+          "on": "HDR download fails or ambientCG is unreachable",
+          "next": "fall back to the built-in studio HDR preset and re-run the same seed"
+        },
+        {
+          "on": "generation was cancelled part way and left stray geometry",
+          "next": "undo with a single Maya undo step, delete the leftover house group, then re-run with a new seed"
+        }
+      ],
+      "undo": "single-step"
     },
     {
       "name": "dcc-ui-qt-inspector",
@@ -98,7 +146,19 @@
       "showcase": "docs/images/dcc-ui-qt-inspector-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Inspect the Qt widget tree of the running Houdini session and list every dialog title", "Find a stable selector for the render settings Apply button in this DCC", "Report which Qt widgets are currently visible under the main window"],
+      "recovery": [
+        {
+          "on": "no Qt binding is available in the target DCC process",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ui-qt-inspector"
+        },
+        {
+          "on": "the widget tree is empty or the target window is not found",
+          "next": "confirm the DCC window is open and re-run the inspection; it is read-only so nothing needs to be undone"
+        }
+      ],
+      "undo": "none"
     },
     {
       "name": "dcc-ui-qt-actions",
@@ -119,7 +179,23 @@
       "showcase": "docs/images/dcc-ui-qt-actions-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Click the Apply button in the Houdini render settings dialog and report the resulting widget state", "Set the frame range fields in the open Qt dialog and verify the values were accepted", "Drive the Nuke write node creation dialog through structured Qt actions"],
+      "recovery": [
+        {
+          "on": "the target selector no longer resolves in the live UI",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ui-qt-inspector"
+        },
+        {
+          "on": "the action was applied but the widget state did not change",
+          "next": "re-inspect the widget tree to find the updated selector, then retry the single action"
+        },
+        {
+          "on": "an action sequence left the dialog in a partially edited state",
+          "next": "restore the dialog to its saved settings from the DCC preferences, then undo the field edits and re-run"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-ui-workflow-memory",
@@ -140,7 +216,23 @@
       "showcase": "docs/images/dcc-ui-workflow-memory-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Record the Qt selector path for building a Nuke write node so later runs can reuse it", "Recall the stored workflow for publishing a Houdini render and list its verified steps", "Store this successful Qt action sequence as a reusable workflow for Substance Painter"],
+      "recovery": [
+        {
+          "on": "no stored workflow matches the requested task",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ui-workflow-memory"
+        },
+        {
+          "on": "a stored selector no longer resolves in the live UI",
+          "next": "re-inspect the widget tree, then update the stored workflow with the new selector"
+        },
+        {
+          "on": "a workflow was recorded with an incomplete or wrong step",
+          "next": "discard the recorded workflow entry and re-record it from the verified action sequence"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-ai-hunyuan3d",
@@ -164,7 +256,23 @@
       },
       "requires": {
         "bins": ["tccli"]
-      }
+      },
+      "examplePrompts": ["Generate a 3D model of a wooden chair from this text prompt and download the result", "Check the status of my last Hunyuan 3D job and download it when it finishes", "Turn this concept image into a 3D mesh with Hunyuan and report the poly count"],
+      "recovery": [
+        {
+          "on": "tccli is missing or Tencent Cloud credentials are not configured",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ai-hunyuan3d"
+        },
+        {
+          "on": "the job is still queued or reports a failure state",
+          "next": "query the job status again, and start a new job with a simpler prompt if it failed"
+        },
+        {
+          "on": "the download produced a partial or empty model file",
+          "next": "delete the partial download and re-download the completed job, then verify the file size"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-ai-tripo3d",
@@ -188,7 +296,23 @@
       },
       "requires": {
         "env": ["TRIPO_API_KEY"]
-      }
+      },
+      "examplePrompts": ["Generate a low-poly treasure chest with Tripo from this text prompt and download the GLB", "Check the status of my Tripo task and download it when it is done", "Build a 3D model from these four reference views with Tripo and report the result"],
+      "recovery": [
+        {
+          "on": "TRIPO_API_KEY is unset or rejected",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ai-tripo3d"
+        },
+        {
+          "on": "the task is still running or returned a failure",
+          "next": "inspect the task status, then submit a new task with fewer reference images if it failed"
+        },
+        {
+          "on": "the downloaded GLB is incomplete or fails to open",
+          "next": "delete the partial download and re-download the completed task, then verify the GLB loads"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-polyhaven",
@@ -210,7 +334,23 @@
       "showcase": "docs/images/polyhaven-barrel-01.jpg",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Find a CC0 4k wooden floor texture on Poly Haven and download the 2k variant", "Search Poly Haven for a studio HDRI and download the 1k EXR", "Download this Poly Haven model as glTF and report its file size and license"],
+      "recovery": [
+        {
+          "on": "the Poly Haven API is unreachable or rate limited",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-polyhaven"
+        },
+        {
+          "on": "the requested resolution or format is not published for this asset",
+          "next": "inspect the asset to list available resolutions and formats, then download a published one"
+        },
+        {
+          "on": "a download was interrupted and left a partial file",
+          "next": "delete the partial file and re-run the same download, then verify the file size"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-godot-store",
@@ -236,7 +376,23 @@
         "skills": ["godot-assets"]
       },
       "license": "MIT",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Search the Godot Asset Store for a terrain addon and download it into this project", "Inspect this Godot Asset Store addon and report its license and supported Godot version", "Download this Godot Asset Store project template and list its top-level files"],
+      "recovery": [
+        {
+          "on": "the Godot Asset Store API is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-godot-store"
+        },
+        {
+          "on": "the addon does not support the current Godot version",
+          "next": "inspect the addon to see supported versions, then pick a compatible one"
+        },
+        {
+          "on": "the addon extracted only partially into the project",
+          "next": "delete the partial addon directory and re-download it, then verify the files exist"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-itchio",
@@ -264,7 +420,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
       "showcase": "docs/images/dcc-itchio-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["List the itch.io assets I own that match the term dungeon and download one", "Download this itch.io asset I own and report its license evidence", "Check which of my owned itch.io uploads are downloadable right now"],
+      "recovery": [
+        {
+          "on": "BUTLER_API_KEY or the butler binary is missing",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-itchio"
+        },
+        {
+          "on": "the asset is not owned or has no downloadable upload",
+          "next": "report that only directly owned uploads can be downloaded and list what is available"
+        },
+        {
+          "on": "butler left a partial download directory",
+          "next": "remove the partial directory and re-run the download, then verify the file list"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-poly-pizza",
@@ -290,7 +462,23 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-poly-pizza#readme",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Search Poly Pizza for a low-poly tree and download the GLB", "Find a CC0 barrel model on Poly Pizza and report its license and poly count", "Download five Poly Pizza props for a tavern scene and list what was saved"],
+      "recovery": [
+        {
+          "on": "POLY_PIZZA_API_KEY is unset or rejected",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-poly-pizza"
+        },
+        {
+          "on": "the API returns no models for the query",
+          "next": "retry with a simpler keyword, then pick a model from the returned list"
+        },
+        {
+          "on": "a model downloaded with zero bytes",
+          "next": "delete the empty download and re-download the model, then verify the file size"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-blender-extensions",
@@ -316,7 +504,23 @@
         "skills": ["blender-extensions"]
       },
       "license": "MIT",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Search Blender Extensions for a retopology addon and download the verified wheel", "Download this Blender extension and verify its checksum before I enable it", "Find a Blender extension for node presets and report its version and license"],
+      "recovery": [
+        {
+          "on": "the Blender Extensions repository is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-blender-extensions"
+        },
+        {
+          "on": "the checksum does not match the published value",
+          "next": "delete the downloaded file and do not enable the extension, then report the mismatch"
+        },
+        {
+          "on": "the extension was enabled but Blender reports an import error",
+          "next": "disable and remove the extension, then re-install a version matching this Blender release"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-ambientcg",
@@ -338,7 +542,23 @@
       "showcase": "docs/images/dcc-asset-ambientcg-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download a CC0 2k concrete material set from ambientCG with all its maps", "Search ambientCG for a fabric material and download the 1k variant", "Get an ambientCG HDRI for outdoor lighting and report its resolution"],
+      "recovery": [
+        {
+          "on": "ambientCG is unreachable or returns an error page",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-ambientcg"
+        },
+        {
+          "on": "the requested material has no download at that resolution",
+          "next": "inspect the material to list published resolutions, then download an available one"
+        },
+        {
+          "on": "only some maps of the set downloaded",
+          "next": "delete the incomplete material directory and re-download the full set, then verify every map exists"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-nasa3d",
@@ -360,7 +580,23 @@
       "showcase": "docs/images/dcc-asset-nasa3d-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download the NASA Mars rover 3D model and report its usage notice", "Search NASA 3D Resources for a satellite model and download it", "List the formats published for this NASA 3D asset"],
+      "recovery": [
+        {
+          "on": "nasa3d.arc.nasa.gov is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-nasa3d"
+        },
+        {
+          "on": "the asset publishes no downloadable format for this DCC",
+          "next": "inspect the asset to list published formats and pick one the DCC can import"
+        },
+        {
+          "on": "the download is incomplete",
+          "next": "delete the partial file and re-download the asset, then verify the file size"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-smithsonian3d",
@@ -382,7 +618,23 @@
       "showcase": "docs/images/dcc-asset-smithsonian3d-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download this Smithsonian Open Access 3D scan as glTF and report its license", "Search the Smithsonian 3D collection for a historical aircraft model", "Check whether this Smithsonian asset has a CC0 download before I use it in a client project"],
+      "recovery": [
+        {
+          "on": "3d.si.edu is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-smithsonian3d"
+        },
+        {
+          "on": "the asset is not CC0 or has no downloadable file",
+          "next": "report the license restriction to the user instead of downloading the asset"
+        },
+        {
+          "on": "the downloaded model will not open in the DCC",
+          "next": "delete the file, inspect the asset for another published format, and download that instead"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-kenney",
@@ -404,7 +656,23 @@
       "showcase": "docs/images/dcc-asset-kenney-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download the Kenney nature pack and list every model it contains", "Search Kenney packs for a dungeon tileset and download it", "Install the Kenney UI pack into this Godot project and report the import path"],
+      "recovery": [
+        {
+          "on": "kenney.nl is unreachable or the pack page changed",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-kenney"
+        },
+        {
+          "on": "no pack matches the search term",
+          "next": "search with a broader term and pick from the returned pack list"
+        },
+        {
+          "on": "the pack archive extracted only partially",
+          "next": "delete the partial extraction directory and re-download the pack, then verify the file count"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-quaternius",
@@ -426,7 +694,23 @@
       "showcase": "docs/images/dcc-asset-quaternius-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Search Quaternius for a CC0 animal pack and inspect what is inside", "List the models in this Quaternius pack with their formats and poly counts", "Find a CC0 vehicle model on Quaternius and report its download URL"],
+      "recovery": [
+        {
+          "on": "quaternius.com is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-quaternius"
+        },
+        {
+          "on": "no pack matches the search term",
+          "next": "browse the full pack list and pick a category instead of searching"
+        },
+        {
+          "on": "a downloaded pack is missing files",
+          "next": "delete the partial download directory and re-download the pack, then re-run the inspection"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-pirate-nation",
@@ -448,7 +732,23 @@
       "showcase": "docs/images/pirate-nation-assets-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download the Pirate Nation voxel ship models and list what was saved", "Search Pirate Nation art for a tavern card and download the PNG", "Grab the CC0 Pirate Nation logo pack and report the license for each file"],
+      "recovery": [
+        {
+          "on": "the Pirate Nation asset host is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-pirate-nation"
+        },
+        {
+          "on": "the requested collection has no downloadable file",
+          "next": "inspect the collection to list available files, then download one that exists"
+        },
+        {
+          "on": "a download left a partial or zero-byte file",
+          "next": "delete the partial file and re-download the asset, then verify the file size"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-objaverse",
@@ -472,7 +772,23 @@
       },
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Find Objaverse chairs with Creative Commons licenses and download one as GLB", "Inspect the annotations for this Objaverse object and report its license", "Download ten CC-licensed Objaverse mugs and list the saved files"],
+      "recovery": [
+        {
+          "on": "the objaverse Python package is missing or Hugging Face is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-objaverse"
+        },
+        {
+          "on": "no object matches the query with a reusable license",
+          "next": "retry with a broader category and filter the results by license before downloading"
+        },
+        {
+          "on": "a GLB downloaded with zero bytes or fails to parse",
+          "next": "delete the broken file and download a different object from the result list"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-gltf-sample-assets",
@@ -493,7 +809,23 @@
       "showcase": "docs/images/dcc-asset-gltf-sample-assets-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download the Khronos glTF DamagedHelmet sample and verify it loads in this DCC", "List the glTF Sample Assets that exercise KTX2 textures", "Download the glTF sample model suite for a regression pass and report the file count"],
+      "recovery": [
+        {
+          "on": "the Khronos sample repository is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-gltf-sample-assets"
+        },
+        {
+          "on": "no sample matches the requested feature",
+          "next": "inspect the sample index to list available feature tags, then download a matching one"
+        },
+        {
+          "on": "a sample download is incomplete",
+          "next": "delete the partial download and re-download the sample, then verify it loads"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-sketchfab",
@@ -517,7 +849,23 @@
       },
       "requires": {
         "env": ["SKETCHFAB_TOKEN"]
-      }
+      },
+      "examplePrompts": ["Search Sketchfab for a downloadable CC-licensed cottage and download the glTF", "Report the attribution and license metadata for this Sketchfab model", "Download this Sketchfab model and save its attribution text next to the file"],
+      "recovery": [
+        {
+          "on": "SKETCHFAB_TOKEN is unset or the API rejects it",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-sketchfab"
+        },
+        {
+          "on": "the model is not downloadable under the current token",
+          "next": "filter the search to downloadable models only and pick another result"
+        },
+        {
+          "on": "the download finished but the attribution text is missing",
+          "next": "delete the download without attribution, or write the attribution file before using the model"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-google-scanned-objects",
@@ -538,7 +886,23 @@
       "showcase": "docs/images/dcc-asset-google-scanned-objects-showcase.webp",
       "policy": {
         "installation": "available"
-      }
+      },
+      "examplePrompts": ["Download a Google Scanned Objects toy model and report its CC-BY attribution", "List the Google Scanned Objects categories available on Gazebo Fuel", "Download three scanned household objects and verify each OBJ and texture pair"],
+      "recovery": [
+        {
+          "on": "Gazebo Fuel is unreachable or the collection moved",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-google-scanned-objects"
+        },
+        {
+          "on": "the named object is not in the collection",
+          "next": "list the available categories first, then download a named object from that list"
+        },
+        {
+          "on": "the OBJ downloaded without its texture files",
+          "next": "delete the incomplete object directory and re-download it, then verify the texture files exist"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-ai-openai-image",
@@ -565,7 +929,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-ai-openai-image#readme",
       "showcase": "docs/images/dcc-ai-openai-image-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Generate a seamless 2k rusty metal albedo texture and return its AssetDescriptor", "Edit this texture source image to remove the baked-in lighting and return the new descriptor", "Generate four stylized wood albedo variants for this prop and report their license metadata"],
+      "recovery": [
+        {
+          "on": "OPENAI_API_KEY is unset or the request is rejected",
+          "next": "dcc-mcp-cli marketplace inspect dcc-ai-openai-image"
+        },
+        {
+          "on": "the generated image fails validation or the descriptor is incomplete",
+          "next": "re-run generation with a more explicit prompt, then re-validate the returned AssetDescriptor"
+        },
+        {
+          "on": "generated files were left in the output directory after a failed run",
+          "next": "delete the unreferenced generated files and re-run generation, then re-check the descriptor"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-texture-pipeline",
@@ -595,7 +975,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-texture-pipeline#readme",
       "showcase": "docs/images/dcc-texture-pipeline-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Convert this albedo PNG to a tiled, mipmapped .tx with ACEScg color management", "Inspect this texture and report resolution, bit depth, file size, and color space", "Validate that the OCIO config resolves and report the available color spaces"],
+      "recovery": [
+        {
+          "on": "OpenImageIO or OpenColorIO binaries are missing from PATH",
+          "next": "dcc-mcp-cli marketplace inspect dcc-texture-pipeline"
+        },
+        {
+          "on": "the OCIO config does not resolve or the named color space is unknown",
+          "next": "run the OCIO check to list available color spaces, then re-run the conversion with a valid one"
+        },
+        {
+          "on": "conversion produced a partial or oversized .tx file",
+          "next": "delete the partial .tx output and re-run the conversion, then re-inspect to confirm size and mip levels"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-materialx",
@@ -621,12 +1017,28 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-materialx#readme",
       "showcase": "docs/images/dcc-materialx-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Create a MaterialX document for a standard-surface brushed metal and validate it against the shipped nodedefs", "Inspect this .mtlx file and list every node, input, and unresolved reference", "Convert the MaterialX look so it renders the same in Houdini Karma and Unreal"],
+      "recovery": [
+        {
+          "on": "the MaterialX Python package is missing or too old",
+          "next": "dcc-mcp-cli marketplace inspect dcc-materialx"
+        },
+        {
+          "on": "validation reports unresolved nodedefs or unknown node types",
+          "next": "inspect the document to list unresolved references, then replace them with shipped standard_surface nodes"
+        },
+        {
+          "on": "the written .mtlx file is corrupt or partially written",
+          "next": "delete the partial .mtlx file and re-run the export, then re-validate before handing it downstream"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-lookdev-turntable",
       "description": "Build and verify one camera-facing PBR LookDev sequence with calibrated references and asset-aware HDR presets",
-        "version": "0.4.1",
+      "version": "0.4.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "marmoset", "substance3d_designer", "substance3d_painter"],
       "tags": ["lookdev", "tt", "pbr", "turntable", "hdri", "color-management", "render", "domain"],
       "category": "Skills",
@@ -635,7 +1047,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-          "ref": "c0ae9ca8eb2dd75f3ae060da49a52558c25db9f0",
+        "ref": "c0ae9ca8eb2dd75f3ae060da49a52558c25db9f0",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
@@ -643,7 +1055,23 @@
       },
       "license": "MIT-0",
       "docs": "https://github.com/dcc-mcp/dcc-lookdev#readme",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Render a 24-frame PBR turntable of the selected asset with a studio HDR and export it to /tmp/turntable.mp4", "Build a LookDev turntable for this material ball and verify the greyscale and color chart read correctly", "Re-run the turntable with a 4k resolution and report the calibration deltas"],
+      "recovery": [
+        {
+          "on": "no renderable camera exists in the scene",
+          "next": "dcc-mcp-cli marketplace inspect dcc-lookdev-turntable"
+        },
+        {
+          "on": "the HDR preset cannot be resolved for this asset type",
+          "next": "pick an explicit HDR preset from the inspect output and re-run the turntable"
+        },
+        {
+          "on": "the render stopped part way and left a partial frame sequence",
+          "next": "delete the partial output directory, restore the saved camera with a single undo step, then re-render"
+        }
+      ],
+      "undo": "single-step"
     },
     {
       "name": "dcc-modeling-spec",
@@ -665,7 +1093,23 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-modeling-spec#readme",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Validate the current scene against the modeling spec and list every failing measurement", "Define a staged modeling spec for a hero prop with topology, UV, and material gates", "Measure the bounding box and poly count of the selected mesh and export a bounded review artifact"],
+      "recovery": [
+        {
+          "on": "no active spec matches the selected asset",
+          "next": "dcc-mcp-cli marketplace inspect dcc-modeling-spec"
+        },
+        {
+          "on": "measurements disagree between DCC hosts",
+          "next": "check scene units and up-axis in both hosts, then re-measure before comparing"
+        },
+        {
+          "on": "a review artifact was written before validation failed",
+          "next": "delete the stale review artifact and re-run validation, then export a fresh bounded artifact"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-pipeline-publish",
@@ -691,7 +1135,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
       "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Build a publish manifest for this Maya asset export and validate its OpenUSD and ShotGrid references", "Verify every dependency in this publish manifest resolves before I submit it", "Generate the publish manifest for a Blender prop and list the farm-ready export paths"],
+      "recovery": [
+        {
+          "on": "a required OpenUSD, ShotGrid, or farm skill is missing",
+          "next": "dcc-mcp-cli marketplace inspect dcc-pipeline-publish"
+        },
+        {
+          "on": "manifest validation reports unresolved dependencies",
+          "next": "fix or re-export the referenced paths, then re-validate the manifest before publishing"
+        },
+        {
+          "on": "a manifest was written with stale or broken references",
+          "next": "discard the stale manifest and regenerate it from the current exports, then re-validate"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-game-release-package",
@@ -716,7 +1176,23 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-release-package/SKILL.md",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Package this prebuilt Godot Windows build as an installer and report the license provenance", "Preview the SteamPipe upload for this Unreal build without pushing it", "Run the WeGame preflight check for this Unity build and list what would fail submission"],
+      "recovery": [
+        {
+          "on": "Inno Setup (ISCC.exe) is not installed or not on PATH",
+          "next": "dcc-mcp-cli marketplace inspect dcc-game-release-package"
+        },
+        {
+          "on": "the prebuild is missing required files or the license provenance is incomplete",
+          "next": "report the missing files to the user and re-run packaging after the build is complete"
+        },
+        {
+          "on": "packaging failed after writing a partial output directory",
+          "next": "remove the partial output directory and re-run packaging from a clean build directory"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-game-itchio-publish",
@@ -744,7 +1220,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
       "showcase": "docs/images/dcc-itchio-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Preview what this Godot build would push to itch.io without uploading anything", "Publish this packaged Unreal build to the windows channel on itch.io and report the upload result", "Check that the parent build exists and the license is declared before I publish to itch.io"],
+      "recovery": [
+        {
+          "on": "butler is missing or BUTLER_API_KEY is unset",
+          "next": "dcc-mcp-cli marketplace inspect dcc-game-itchio-publish"
+        },
+        {
+          "on": "the parent release package does not exist or the license gate fails",
+          "next": "run dcc-game-release-package first, then re-run the itch.io publish"
+        },
+        {
+          "on": "an upload was interrupted and itch.io shows a partial build",
+          "next": "remove the partial build from the itch.io channel, then re-run the publish from the same package"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-game-runtime-acceptance",
@@ -766,7 +1258,23 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/ba45fcad6fc8db9413e81365573904da02857989/skill/game-runtime-acceptance/SKILL.md",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Launch this prebuilt Unity game, run the bounded acceptance checks, and report pass or fail with hashes", "Capture runtime acceptance evidence for this Godot build and save it next to the build", "Re-run acceptance on this Unreal build after a config change and diff the evidence"],
+      "recovery": [
+        {
+          "on": "the prebuilt executable is missing or fails to launch",
+          "next": "dcc-mcp-cli marketplace inspect dcc-game-runtime-acceptance"
+        },
+        {
+          "on": "acceptance timed out before the run completed",
+          "next": "re-run with a shorter bounded step budget and report which checks did not finish"
+        },
+        {
+          "on": "a run left stale evidence files behind",
+          "next": "delete the stale evidence directory and re-run acceptance, then verify the new hashes"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-game-pv-capture",
@@ -788,7 +1296,19 @@
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-pv-capture/SKILL.md",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Plan an exact-window capture of this Godot game and report the resolved window rect", "Record 30 seconds of this Unreal build at 1080p with hash-verified output", "Re-capture this Unity gameplay segment with the same window geometry as the last take"],
+      "recovery": [
+        {
+          "on": "the target window cannot be found or the exact window geometry cannot be locked",
+          "next": "dcc-mcp-cli marketplace inspect dcc-game-pv-capture"
+        },
+        {
+          "on": "the recording is shorter than planned or the hash does not verify",
+          "next": "delete the unverified capture and re-run with the same plan, then re-check the hash"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-pexels-video",
@@ -815,7 +1335,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/pexels-video-assets-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Find free Pexels stock video of ocean waves and download the 1080p file", "Download this Pexels clip and write its creator attribution next to the file", "Search Pexels for vertical city footage and report the available resolutions"],
+      "recovery": [
+        {
+          "on": "PEXELS_API_KEY is unset or rejected",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-pexels-video"
+        },
+        {
+          "on": "the requested clip has no file at that resolution",
+          "next": "inspect the clip to list its available resolutions, then download a published one"
+        },
+        {
+          "on": "the video downloaded without its attribution metadata",
+          "next": "write the attribution file before using the clip, or delete the download"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-mixkit-free-media",
@@ -839,7 +1375,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/mixkit-free-assets-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Download a Free License Mixkit ambient track and report the license terms", "Find Mixkit sound effects for footsteps on gravel and download three", "Download this Mixkit After Effects template and list the files it contains"],
+      "recovery": [
+        {
+          "on": "mixkit.co is unreachable or the page layout changed",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-mixkit-free-media"
+        },
+        {
+          "on": "the asset is not covered by the Mixkit Free License",
+          "next": "report the license restriction to the user instead of downloading the asset"
+        },
+        {
+          "on": "the download is partial or the file will not open",
+          "next": "delete the partial file and re-download the asset, then verify it opens"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-game-icons",
@@ -863,7 +1415,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/game-icons-assets-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Download CC BY 3.0 game icons for health, mana, and stamina as SVG", "Search game-icons.net for sword icons and download five of them", "Download this icon set and write the CC BY 3.0 attribution into the target folder"],
+      "recovery": [
+        {
+          "on": "game-icons.net is unreachable",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-game-icons"
+        },
+        {
+          "on": "no icon matches the search term",
+          "next": "try a synonym or a broader category, then pick from the returned icon list"
+        },
+        {
+          "on": "SVGs downloaded without the required attribution",
+          "next": "add the CC BY 3.0 attribution file next to the icons before shipping, or delete the downloads"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-google-fonts",
@@ -887,7 +1455,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/google-font-assets-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Download the Inter font family with its license and report the installed files", "Search Google Fonts for a CJK-capable sans-serif and download it", "Download this specific Google Fonts family and verify the file checksum"],
+      "recovery": [
+        {
+          "on": "the Google Fonts API is unreachable or the key is rejected",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-google-fonts"
+        },
+        {
+          "on": "the requested family or weight does not exist",
+          "next": "inspect the family to list available weights and subsets, then download a published one"
+        },
+        {
+          "on": "font files downloaded without license metadata",
+          "next": "delete the download or add the license file before using the font in a shipped build"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-openstreetmap-city",
@@ -911,7 +1495,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
       "showcase": "docs/images/openstreetmap-city-data-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Download buildings and roads for this bounding box from OpenStreetMap as GeoJSON", "Get land use and water polygons for this city block as attributed GeoJSON", "Export OpenStreetMap railways for this area and report the feature counts"],
+      "recovery": [
+        {
+          "on": "the Overpass API is unreachable or rate limited",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-openstreetmap-city"
+        },
+        {
+          "on": "the bounding box returns no features or exceeds the query limit",
+          "next": "shrink the bounding box or split it into tiles, then re-run the download"
+        },
+        {
+          "on": "the GeoJSON is truncated or fails to parse",
+          "next": "delete the partial file and re-run with a smaller bounding box, then verify it parses"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-asset-overture-city",
@@ -938,7 +1538,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
       "showcase": "docs/images/overture-city-data-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Download Overture Maps buildings for this bounding box as licensed GeoJSON", "Get Overture transportation and land cover layers for this city tile", "Export Overture water and infrastructure features for this area and report the counts"],
+      "recovery": [
+        {
+          "on": "the overturemaps CLI is missing or the release download fails",
+          "next": "dcc-mcp-cli marketplace inspect dcc-asset-overture-city"
+        },
+        {
+          "on": "the bounding box is empty or the requested theme has no features",
+          "next": "check the bounding box order and list available themes, then re-run the download"
+        },
+        {
+          "on": "the exported GeoJSON is partial or unparseable",
+          "next": "delete the partial export and re-run with a smaller bounding box, then verify it parses"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-plugin-github-releases",
@@ -961,7 +1577,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/github-release-plugins-showcase.webp",
-      "lifecycle": "experimental"
+      "lifecycle": "experimental",
+      "examplePrompts": ["Find the latest release of a licensed open-source After Effects plugin and report its download URL and SHA-256", "Check whether this GitHub project's license allows studio redistribution before I download it", "Download the pinned plugin release asset and verify its SHA-256 matches the manifest"],
+      "recovery": [
+        {
+          "on": "the rate limit blocks GitHub API access",
+          "next": "dcc-mcp-cli marketplace inspect dcc-plugin-github-releases"
+        },
+        {
+          "on": "the project license is missing or not redistributable",
+          "next": "stop and report the license finding to the user instead of downloading the asset"
+        },
+        {
+          "on": "SHA-256 verification fails after download",
+          "next": "delete the unverified download, re-download the pinned asset, and re-verify the SHA-256"
+        }
+      ],
+      "undo": "manual"
     },
     {
       "name": "dcc-mcp-cache-inspector",
@@ -987,7 +1619,23 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector#readme",
       "showcase": "docs/images/cache-inspection-showcase.webp",
-      "lifecycle": "active"
+      "lifecycle": "active",
+      "examplePrompts": ["Inspect this Houdini .bgeo.sc cache and report the primitive and point counts per frame", "List the attributes stored in this geometry cache without loading the whole sequence", "Compare the attribute layout of two .geo frames and report what changed"],
+      "recovery": [
+        {
+          "on": "the blosc dependency is missing or the cache uses an unsupported codec",
+          "next": "dcc-mcp-cli marketplace inspect dcc-mcp-cache-inspector"
+        },
+        {
+          "on": "the cache file is truncated or reports zero primitives",
+          "next": "re-export the cache from Houdini, then re-run the read-only inspection"
+        },
+        {
+          "on": "inspection exceeds the bounded read limit",
+          "next": "re-run with a narrower attribute or frame range; inspection is read-only so nothing needs to be undone"
+        }
+      ],
+      "undo": "none"
     }
   ]
 }

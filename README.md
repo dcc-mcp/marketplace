@@ -114,6 +114,9 @@ Each skill entry includes:
 - Optional `showcase` points to one repository-relative 16:9 PNG, JPEG, WebP,
   AVIF, or animated GIF. Marketplace clients resolve it against the same
   immutable `source.ref`; do not use mutable CDN URLs.
+- Agent-facing prompt contract: `examplePrompts[]` (required on every entry),
+  plus `recovery[]` and `undo` (required on `Skills`, `Studio`, and
+  `Infrastructure` entries). See the [prompt contract](docs/prompt-contract.md).
 
 Official entries use a full 40-character Git commit in `source.ref`. The CLI records that
 resolved commit in local install state, so an update can be detected even when an entry's
@@ -157,6 +160,10 @@ pins and one catalog patch bump. It never auto-merges or chooses an individual s
 5. After merge, users can `marketplace install <name>`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+New entries must ship `examplePrompts`, and `Skills` / `Studio` / `Infrastructure`
+entries must also ship `recovery` and `undo`; see the
+[prompt contract](docs/prompt-contract.md).
 
 Asset-provider authors: follow the [asset descriptor handoff guide](docs/asset-descriptor-contract.md)
 to keep download, licensing, attribution, and DCC import responsibilities separate. For original,
