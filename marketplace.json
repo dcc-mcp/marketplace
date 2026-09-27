@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.2",
+  "version": "1.15.3",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -1038,7 +1038,7 @@
     {
       "name": "dcc-lookdev-turntable",
       "description": "Build and verify one camera-facing PBR LookDev sequence with calibrated references and asset-aware HDR presets",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "marmoset", "substance3d_designer", "substance3d_painter"],
       "tags": ["lookdev", "tt", "pbr", "turntable", "hdri", "color-management", "render", "domain"],
       "category": "Skills",
@@ -1047,7 +1047,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-        "ref": "c0ae9ca8eb2dd75f3ae060da49a52558c25db9f0",
+        "ref": "4632fd5ba12b6dd864565abb80ab0e012225716c",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
@@ -1056,7 +1056,7 @@
       "license": "MIT-0",
       "docs": "https://github.com/dcc-mcp/dcc-lookdev#readme",
       "lifecycle": "experimental",
-      "examplePrompts": ["Render a 24-frame PBR turntable of the selected asset with a studio HDR and export it to /tmp/turntable.mp4", "Build a LookDev turntable for this material ball and verify the greyscale and color chart read correctly", "Re-run the turntable with a 4k resolution and report the calibration deltas"],
+      "examplePrompts": ["Render a 24-frame PBR turntable of the selected asset with a studio HDR and export it to /tmp/turntable.mp4", "Build a LookDev turntable for this material ball and verify the greyscale and color chart read correctly", "Re-run the turntable with a 4k resolution and report the calibration deltas", "Build a fixed-camera EXR lighting comparison sheet for this asset and report the sheet digest"],
       "recovery": [
         {
           "on": "no renderable camera exists in the scene",
@@ -1071,12 +1071,12 @@
           "next": "delete the partial output directory, restore the saved camera with a single undo step, then re-render"
         }
       ],
-      "undo": "single-step"
+      "undo": "manual"
     },
     {
       "name": "dcc-modeling-spec",
       "description": "Define and validate staged cross-DCC modeling specifications, scene measurements, and bounded review artifacts",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax"],
       "tags": ["modeling", "specification", "validation", "topology", "uv", "materials", "review", "domain"],
       "category": "Skills",
@@ -1085,7 +1085,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-modeling-spec",
-        "ref": "9b098a9e8dd83924532b878f3efc161986693047",
+        "ref": "73a276d227dda568f23a4b07f4fb9f35ebeb5e65",
         "skillRoots": ["skill/modeling-spec"]
       },
       "policy": {
@@ -1094,7 +1094,7 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-modeling-spec#readme",
       "lifecycle": "experimental",
-      "examplePrompts": ["Validate the current scene against the modeling spec and list every failing measurement", "Define a staged modeling spec for a hero prop with topology, UV, and material gates", "Measure the bounding box and poly count of the selected mesh and export a bounded review artifact"],
+      "examplePrompts": ["Validate the current scene against the modeling spec and list every failing measurement", "Define a staged modeling spec for a hero prop with topology, UV, and material gates", "Measure the bounding box and poly count of the selected mesh and export a bounded review artifact", "Ingest this glTF asset with unit and normal normalization, then report every material mapping gap"],
       "recovery": [
         {
           "on": "no active spec matches the selected asset",
@@ -1114,7 +1114,7 @@
     {
       "name": "dcc-pipeline-publish",
       "description": "Create verified publish manifests connecting DCC exports, OpenUSD, render farms, and ShotGrid/FPT",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "nuke"],
       "tags": ["publish", "shotgrid", "fpt", "openusd", "deadline", "render-farm", "pipeline"],
       "category": "Studio",
@@ -1123,7 +1123,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
+        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -1136,7 +1136,7 @@
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
       "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Build a publish manifest for this Maya asset export and validate its OpenUSD and ShotGrid references", "Verify every dependency in this publish manifest resolves before I submit it", "Generate the publish manifest for a Blender prop and list the farm-ready export paths"],
+      "examplePrompts": ["Build a publish manifest for this Maya asset export and validate its OpenUSD and ShotGrid references", "Verify every dependency in this publish manifest resolves before I submit it", "Generate the publish manifest for a Blender prop and list the farm-ready export paths", "Check whether this scene is ready for the render farm and write a scene QA report with a digest"],
       "recovery": [
         {
           "on": "a required OpenUSD, ShotGrid, or farm skill is missing",
