@@ -71,6 +71,9 @@ jobs:
           python scripts/validate_marketplace.py uniqueness
           python scripts/validate_marketplace.py metadata
 
+      - name: Run prompt contract checks
+        run: python scripts/validate_marketplace.py prompt-contract
+
       - name: Run validator unit tests
         run: python -m unittest discover -s tests -p "test_*.py"
 

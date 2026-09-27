@@ -26,6 +26,8 @@
 - [ ] Entry is an optional extension, not a skill already bundled with its DCC adapter
 - [ ] `assetContract: "descriptor-v1"` entries declare `asset_descriptor`, `source_url`, and a license field in pinned `tools.yaml`
 - [ ] `requires.env` / `requires.bins` declared when the skill needs secrets or binaries
+- [ ] `examplePrompts` holds at least one natural-language prompt (see the [prompt contract](docs/prompt-contract.md))
+- [ ] `recovery` and `undo` declared when `category` is `Skills`, `Studio`, or `Infrastructure`
 - [ ] Every declared `source.skillRoots` directory contains a valid `SKILL.md` and any referenced `tools.yaml`
 
 ## Custom marketplace sources
@@ -54,6 +56,6 @@ Merge rules (implemented in CLI):
 
 ## Version bumps
 
-- Patch: fix metadata typos, update `source.ref` pin
+- Patch: fix metadata typos, update `source.ref` pin, fill in prompt contract fields
 - Minor: add or remove an installable skill entry
 - Major: breaking schema changes (coordinate with dcc-mcp-core release)
