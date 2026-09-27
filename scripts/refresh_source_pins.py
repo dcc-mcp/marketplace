@@ -50,10 +50,15 @@ def bump_patch(version: str) -> str:
     return f"{major}.{minor}.{int(patch) + 1}"
 
 
-def refresh_catalog(catalog: dict, fetch: Callable[[str], dict]) -> list[tuple[str, str, str]]:
+def refresh_catalog(
+    catalog: dict,
+    fetch: Callable[[str], dict],
+    warn: Callable[[str], None] | None = None,
+) -> list[tuple[str, str, str]]:
     if catalog.get("name") != "dcc-mcp-official":
         raise ValueError("only the official catalog can refresh source pins")
 
+    emit = warn if warn is not None else print
     changes: list[tuple[str, str, str]] = []
     for skill in catalog.get("skills", []):
         source = skill.get("source", {})
@@ -62,17 +67,36 @@ def refresh_catalog(catalog: dict, fetch: Callable[[str], dict]) -> list[tuple[s
         if source.get("type") != "git" or not repo or not _GIT_SHA.fullmatch(ref):
             continue
 
-        default_branch = fetch(f"repos/{repo}").get("default_branch")
-        if not isinstance(default_branch, str) or not default_branch:
-            raise ValueError(f"{skill.get('name', '?')}: source has no default branch")
-        comparison = fetch(f"repos/{repo}/compare/{ref}...{quote(default_branch, safe='')}")
-        if not comparison.get("ahead_by", 0):
+        name = skill.get("name", "?")
+        try:
+            default_branch = fetch(f"repos/{repo}").get("default_branch")
+            if not isinstance(default_branch, str) or not default_branch:
+                raise ValueError("source has no default branch")
+
+            try:
+                comparison = fetch(f"repos/{repo}/compare/{ref}...{quote(default_branch, safe='')}")
+                stale = bool(comparison.get("ahead_by", 0))
+            except (OSError, ValueError) as exc:
+                # GitHub answers a comparison against a commit it no longer holds
+                # with an error. Such a pin is dead by definition, so refresh it
+                # rather than leaving it to fail the catalog's smoke test.
+                emit(f"warning: {name}: compare against {default_branch} failed ({exc}); repinning")
+                stale = True
+
+            if not stale:
+                continue
+
+            target = fetch(f"repos/{repo}/commits/{quote(default_branch, safe='')}").get("sha", "")
+            if not isinstance(target, str) or not _GIT_SHA.fullmatch(target):
+                raise ValueError("default branch has no commit SHA")
+        except (OSError, ValueError) as exc:
+            # One unreachable upstream must not stop the remaining pins from
+            # refreshing; report it and keep going.
+            emit(f"warning: skipping {name}: {exc}")
             continue
-        target = fetch(f"repos/{repo}/commits/{quote(default_branch, safe='')}").get("sha", "")
-        if not isinstance(target, str) or not _GIT_SHA.fullmatch(target):
-            raise ValueError(f"{skill.get('name', '?')}: default branch has no commit SHA")
+
         source["ref"] = target
-        changes.append((skill.get("name", "?"), ref, target))
+        changes.append((name, ref, target))
 
     if changes:
         catalog["version"] = bump_patch(catalog.get("version", ""))

@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.3",
+  "version": "1.15.4",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "77214bad3bb4f7394641145406a8089eed5b97a4",
+        "ref": "406e8f90f3528ed1206a36cd0b80e904270179a0",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "package": {
@@ -98,7 +98,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
-        "ref": "8b5344d6c87df45ba9367454eebb2ac14626cee4",
+        "ref": "73938bbc7b21b2e6b7e5e5d79a5d44d75a106cf7",
         "skillRoots": ["skill/maya-procedural-architecture"]
       },
       "policy": {
@@ -407,7 +407,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-itchio",
-        "ref": "a5665c80f83f64e304e2c13d761f7c6c40194272",
+        "ref": "8560614de5ffafe84d862b6b1d012654bb94a692",
         "skillRoots": ["skill/itchio-assets"]
       },
       "policy": {
@@ -917,7 +917,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-openai-image",
-        "ref": "ce827c3d6c3b190d81357051e3bb3d97276d0e1d",
+        "ref": "0c2c2d47ebd20dd01ef61dc5d3280f339547d5e9",
         "skillRoots": ["skill/openai-image-textures"]
       },
       "policy": {
@@ -959,7 +959,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
-        "ref": "9d1ec1b434a08dac019246fce49615effb63432a",
+        "ref": "7c1667eed499fc58a7bd54bc7d99b5a928108b9e",
         "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
       },
       "package": {
@@ -1005,7 +1005,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-materialx",
-        "ref": "34c478987c2887a506f97af4f34b4d502eb04f9b",
+        "ref": "f6c57565555c22520cb60552b82cee7cd021d115",
         "skillRoots": ["skill/materialx-lookdev"]
       },
       "policy": {
@@ -1165,7 +1165,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
+        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -1206,7 +1206,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-itchio",
-        "ref": "a5665c80f83f64e304e2c13d761f7c6c40194272",
+        "ref": "8560614de5ffafe84d862b6b1d012654bb94a692",
         "skillRoots": ["skill/itchio-publish"]
       },
       "policy": {
@@ -1250,7 +1250,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
+        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
@@ -1288,7 +1288,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "085202c7685399779fa1dbbb5a6af43fbb7bd316",
+        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
@@ -1607,7 +1607,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector",
-        "ref": "c961442fca498315361cd89df05bd27182a38833",
+        "ref": "a5af985fdd5c2079a974a278514fcc6831ba91ba",
         "skillRoots": ["skill/cache-inspection"]
       },
       "policy": {
