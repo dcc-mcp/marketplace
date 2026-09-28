@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.4",
+  "version": "1.15.5",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "406e8f90f3528ed1206a36cd0b80e904270179a0",
+        "ref": "19fafba4c4c78e234b6207bafbe2ca4584e40a2d",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "package": {
@@ -1047,7 +1047,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
-        "ref": "4632fd5ba12b6dd864565abb80ab0e012225716c",
+        "ref": "c0c3f8e8d84c070168c55c702628e1673003c0c7",
         "skillRoots": ["skill/lookdev-turntable"]
       },
       "policy": {
@@ -1085,7 +1085,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-modeling-spec",
-        "ref": "73a276d227dda568f23a4b07f4fb9f35ebeb5e65",
+        "ref": "6f57f214f60139ae3802fb737f15b7713d5751c6",
         "skillRoots": ["skill/modeling-spec"]
       },
       "policy": {
@@ -1123,7 +1123,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
+        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -1165,7 +1165,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
+        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -1250,7 +1250,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
+        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
@@ -1288,7 +1288,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "10b978925e6a0ab5ce0f19b5f00191b4ed17f262",
+        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
