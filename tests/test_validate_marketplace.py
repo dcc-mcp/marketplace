@@ -506,6 +506,38 @@ class MarketplaceValidatorTests(unittest.TestCase):
         self.assertIn("must declare a non-empty recovery array", output.getvalue())
         self.assertIn("must declare undo", output.getvalue())
 
+    def test_prompt_contract_warns_for_asset_provider_with_manual_undo(self) -> None:
+        skill = valid_skill()
+        skill["category"] = "Asset Providers"
+        skill["examplePrompts"] = ["Download a CC0 wooden crate model"]
+        skill["undo"] = "manual"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertTrue(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("must spell out the rollback step", output.getvalue())
+        self.assertNotIn("::error::", output.getvalue())
+
+    def test_prompt_contract_still_errors_for_required_categories(self) -> None:
+        # Skills/Studio/Infrastructure keep the rollback-step requirement as an error.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "manual"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("::error::", output.getvalue())
+        self.assertIn("must spell out the rollback step", output.getvalue())
+
     def test_schema_accepts_prompt_contract_fields(self) -> None:
         schema = json.loads((ROOT / "schemas" / "marketplace-v1.schema.json").read_text(encoding="utf-8"))
         skill = valid_skill()

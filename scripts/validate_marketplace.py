@@ -829,12 +829,12 @@ def check_prompt_contract() -> bool:
         elif undo != "single-step" and not any(
             _mentions_rollback(rule) for rule in recovery if isinstance(rule, dict)
         ):
-            errors.append(
-                (
-                    name,
-                    f"undo is {undo!r}, so recovery must spell out the rollback step",
-                )
-            )
+            message = f"undo is {undo!r}, so recovery must spell out the rollback step"
+            if requires_recovery:
+                errors.append((name, message))
+            else:
+                print(f"::warning::{name}: {message}")
+                warnings += 1
 
     for name, reason in errors:
         print(f"::error::{name}: {reason}")
