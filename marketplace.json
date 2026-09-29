@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.4",
+  "version": "1.16.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -1636,6 +1636,91 @@
         }
       ],
       "undo": "none"
+    },
+    {
+      "name": "freecad-session",
+      "description": "FreeCAD document lifecycle for DCC-MCP — create, inspect, validate, copy, and safely edit durable FCStd documents",
+      "version": "0.2.0",
+      "dcc": ["freecad"],
+      "tags": ["skills", "domain", "freecad", "cad", "document", "parametric-modeling"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.20.36",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-freecad",
+        "ref": "c969684e18499a22e2628de80df94bda0c0a7e60",
+        "skillRoots": ["src/dcc_mcp_freecad/skills/freecad-session"]
+      },
+      "requires": {
+        "bins": ["FreeCADCmd"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-freecad#readme",
+      "showcase": "docs/images/dcc-mcp-freecad-showcase.webp",
+      "license": "MIT",
+      "policy": {
+        "installation": "available"
+      },
+      "lifecycle": "experimental",
+      "examplePrompts": ["Create a durable FCStd document at projects/enclosure.FCStd and report what it contains", "Inspect projects/enclosure.FCStd and list every object with its placement, shape validity, and bounding box", "Validate projects/enclosure.FCStd, then save a reviewed copy to projects/enclosure-review.FCStd"],
+      "recovery": [
+        {
+          "on": "FreeCADCmd is not on PATH or the reported version is unsupported",
+          "next": "dcc-mcp-cli marketplace inspect freecad-session"
+        },
+        {
+          "on": "a requested source or output path falls outside the configured allowed roots",
+          "next": "add the parent directory to DCC_MCP_FREECAD_ALLOWED_ROOTS and re-run the document operation"
+        },
+        {
+          "on": "a mutation left a partially written document behind",
+          "next": "the original file is preserved on failure, so delete the sibling staging copy and restore the last known good FCStd before retrying"
+        }
+      ],
+      "undo": "manual"
+    },
+    {
+      "name": "freecad-modeling",
+      "description": "Parametric FreeCAD modeling for DCC-MCP — build primitives, update dimensions and placements, run booleans, and exchange CAD or mesh geometry",
+      "version": "0.2.0",
+      "dcc": ["freecad"],
+      "tags": ["skills", "domain", "freecad", "cad", "modeling", "boolean", "step"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.20.36",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-freecad",
+        "ref": "c969684e18499a22e2628de80df94bda0c0a7e60",
+        "skillRoots": ["src/dcc_mcp_freecad/skills/freecad-modeling"]
+      },
+      "requires": {
+        "bins": ["FreeCADCmd"],
+        "skills": ["freecad-session"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-freecad#readme",
+      "showcase": "docs/images/dcc-mcp-freecad-showcase.webp",
+      "license": "MIT",
+      "policy": {
+        "installation": "available"
+      },
+      "lifecycle": "experimental",
+      "examplePrompts": ["Add a parametric box to projects/enclosure.FCStd, resize it, and move it to the origin", "Cut a cylinder out of the enclosure body with a boolean and report the resulting volume", "Export the finished enclosure to STEP and STL, then report both output paths and file sizes"],
+      "recovery": [
+        {
+          "on": "no durable FCStd document exists at the requested path",
+          "next": "freecad-session"
+        },
+        {
+          "on": "a boolean or recompute reports an invalid or empty shape",
+          "next": "inspect the operands with the document inspection tool, fix the offending sketch or primitive, then recompute"
+        },
+        {
+          "on": "an export target already exists and the call refused to overwrite it",
+          "next": "re-run the export with overwrite enabled, or delete the existing output and export to a fresh path"
+        }
+      ],
+      "undo": "manual"
     }
   ]
 }
