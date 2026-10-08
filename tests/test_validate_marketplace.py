@@ -3,10 +3,12 @@ import base64
 import importlib.util
 import io
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -533,6 +535,244 @@ class MarketplaceValidatorTests(unittest.TestCase):
         from jsonschema import Draft202012Validator
 
         self.assertTrue(list(Draft202012Validator(schema).iter_errors(catalog)))
+
+    def _run_source_revisions(self, reachable):
+        skill = valid_skill("b" * 40)
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original_load = validate_marketplace.load_marketplace
+        original_run = validate_marketplace.subprocess.run
+        original_reachable = validate_marketplace._revision_reachable
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=0, stdout="", stderr=""
+        )
+        validate_marketplace._revision_reachable = lambda url, ref: reachable
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                ok = validate_marketplace.check_source_revisions()
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace.subprocess.run = original_run
+            validate_marketplace._revision_reachable = original_reachable
+        return ok, output.getvalue()
+
+    def test_source_revisions_accepts_pin_that_drifted_behind_default_branch(self) -> None:
+        # A pin the source repo no longer advertises still resolves in history.
+        ok, output = self._run_source_revisions(True)
+        self.assertTrue(ok)
+        self.assertNotIn("::error::", output)
+
+    def test_source_revisions_errors_when_pinned_commit_is_missing(self) -> None:
+        # Discrimination guard: a revision that genuinely does not resolve fails.
+        ok, output = self._run_source_revisions(False)
+        self.assertFalse(ok)
+        self.assertIn("::error::", output)
+        self.assertIn("does not resolve", output)
+
+    def test_source_revisions_warns_when_reachability_is_indeterminate(self) -> None:
+        # Rate limits and transport failures must not fail the build.
+        ok, output = self._run_source_revisions(None)
+        self.assertTrue(ok)
+        self.assertIn("::warning::", output)
+        self.assertIn("treated as indeterminate", output)
+        self.assertNotIn("::error::", output)
+
+    def test_source_revisions_flags_a_mostly_indeterminate_run(self) -> None:
+        # A blind run must not look identical to a clean one.
+        skill = valid_skill("b" * 40)
+        other = valid_skill("c" * 40)
+        other["name"] = "maya-anim-tools"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill, other]}
+        original_load = validate_marketplace.load_marketplace
+        original_run = validate_marketplace.subprocess.run
+        original_reachable = validate_marketplace._revision_reachable
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=0, stdout="", stderr=""
+        )
+        validate_marketplace._revision_reachable = lambda url, ref: None
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                ok = validate_marketplace.check_source_revisions()
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace.subprocess.run = original_run
+            validate_marketplace._revision_reachable = original_reachable
+        self.assertTrue(ok)
+        self.assertIn("did not meaningfully verify the catalog", output.getvalue())
+
+    def test_source_revisions_stays_quiet_until_indeterminate_is_a_majority(self) -> None:
+        # The blind-run guard trips on a true majority: 1 of 3 is noise, 2 of 3 is not.
+        skills = [valid_skill(char * 40) for char in ("b", "c", "d")]
+        for index, skill in enumerate(skills):
+            skill["name"] = f"maya-rig-tools-{index}"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": skills}
+        original_load = validate_marketplace.load_marketplace
+        original_run = validate_marketplace.subprocess.run
+        original_reachable = validate_marketplace._revision_reachable
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=0, stdout="", stderr=""
+        )
+        seen: list[int] = []
+
+        def reachable(url, ref):
+            seen.append(1)
+            return None if len(seen) == 1 else True
+
+        validate_marketplace._revision_reachable = reachable
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                ok = validate_marketplace.check_source_revisions()
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace.subprocess.run = original_run
+            validate_marketplace._revision_reachable = original_reachable
+        self.assertTrue(ok)
+        self.assertIn("treated as indeterminate", output.getvalue())
+        self.assertNotIn("did not meaningfully verify the catalog", output.getvalue())
+
+    def test_source_revisions_reuses_a_cached_verdict_for_shared_pins(self) -> None:
+        # Entries sharing a (url, ref) resolve once and print a cached verdict.
+        skill = valid_skill("b" * 40)
+        other = valid_skill("b" * 40)
+        other["name"] = "maya-anim-tools"
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill, other]}
+        calls: list[tuple[str, str]] = []
+        original_load = validate_marketplace.load_marketplace
+        original_run = validate_marketplace.subprocess.run
+        original_reachable = validate_marketplace._revision_reachable
+        validate_marketplace.load_marketplace = lambda: catalog
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=0, stdout="", stderr=""
+        )
+        validate_marketplace._revision_reachable = lambda url, ref: calls.append((url, ref)) or True
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                ok = validate_marketplace.check_source_revisions()
+        finally:
+            validate_marketplace.load_marketplace = original_load
+            validate_marketplace.subprocess.run = original_run
+            validate_marketplace._revision_reachable = original_reachable
+        self.assertTrue(ok)
+        self.assertEqual(len(calls), 1)
+        self.assertIn("(cached)", output.getvalue())
+
+    def test_revision_reachable_is_false_for_a_missing_commit(self) -> None:
+        # Live: a 40-char SHA absent from a real repo does not resolve.
+        self.assertFalse(
+            validate_marketplace._revision_reachable(
+                "https://github.com/dcc-mcp/dcc-mcp-maya-mgear", "0" * 40
+            )
+        )
+
+    def test_revision_reachable_is_true_for_a_drifted_commit(self) -> None:
+        # Live: a real pin that drifted behind the default branch still resolves.
+        self.assertIs(
+            validate_marketplace._revision_reachable(
+                "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
+                "406e8f90f3528ed1206a36cd0b80e904270179a0",
+            ),
+            True,
+        )
+
+    def test_revision_reachable_fails_for_an_unresolvable_host(self) -> None:
+        # A host that cannot be reached at all cannot resolve the revision.
+        self.assertIs(
+            validate_marketplace._revision_reachable(
+                "https://example.invalid/nope/repo", "a" * 40
+            ),
+            False,
+        )
+
+    def test_revision_reachable_is_false_for_a_missing_commit_on_other_hosts(self) -> None:
+        # "not our ref" is the one non-GitHub signal that proves absence.
+        original_run = validate_marketplace.subprocess.run
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=128, stdout="", stderr="fatal: remote error: upload-pack: not our ref abc"
+        )
+        try:
+            self.assertIs(
+                validate_marketplace._revision_reachable(
+                    "https://gitlab.example.com/owner/repo", "a" * 40
+                ),
+                False,
+            )
+        finally:
+            validate_marketplace.subprocess.run = original_run
+
+    def _revision_reachable_with_status(self, code, token=None):
+        original_api = validate_marketplace._github_api_json
+        original_token = os.environ.get("GITHUB_TOKEN")
+        if token is None:
+            os.environ.pop("GITHUB_TOKEN", None)
+        else:
+            os.environ["GITHUB_TOKEN"] = token
+
+        def boom(path):
+            raise urllib.error.HTTPError(path, code, "err", {}, None)
+
+        validate_marketplace._github_api_json = boom
+        try:
+            return validate_marketplace._revision_reachable(
+                "https://github.com/dcc-mcp/dcc-mcp-maya-mgear", "a" * 40
+            )
+        finally:
+            validate_marketplace._github_api_json = original_api
+            if original_token is None:
+                os.environ.pop("GITHUB_TOKEN", None)
+            else:
+                os.environ["GITHUB_TOKEN"] = original_token
+
+    def test_revision_reachable_fails_when_the_revision_is_absent(self) -> None:
+        self.assertIs(self._revision_reachable_with_status(404), False)
+
+    def test_revision_reachable_treats_rate_limits_as_indeterminate(self) -> None:
+        # Rate limiting says nothing about the revision; it must not fail a PR.
+        self.assertIsNone(self._revision_reachable_with_status(403))
+        self.assertIsNone(self._revision_reachable_with_status(429))
+
+    def test_revision_reachable_treats_server_errors_as_indeterminate(self) -> None:
+        self.assertIsNone(self._revision_reachable_with_status(500))
+        self.assertIsNone(self._revision_reachable_with_status(502))
+
+    def test_revision_reachable_fails_when_a_token_cannot_read_the_repo(self) -> None:
+        # With a token attached, 403 is a visibility defect, not a rate limit.
+        self.assertIs(self._revision_reachable_with_status(403, token="ghp_example"), False)
+
+    def test_revision_reachable_treats_incomparable_refs_as_indeterminate(self) -> None:
+        self.assertIsNone(self._revision_reachable_with_status(422))
+
+    def test_revision_reachable_fails_when_a_non_github_host_is_unreachable(self) -> None:
+        # Discrimination guard: a dead host must not pass as indeterminate.
+        original_run = validate_marketplace.subprocess.run
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=128, stdout="", stderr="fatal: Could not resolve host: example.invalid"
+        )
+        try:
+            self.assertIs(
+                validate_marketplace._revision_reachable(
+                    "https://example.invalid/owner/repo", "a" * 40
+                ),
+                False,
+            )
+        finally:
+            validate_marketplace.subprocess.run = original_run
+
+    def test_revision_reachable_is_indeterminate_when_a_host_refuses_sha_fetch(self) -> None:
+        # A server declining arbitrary SHA fetches says nothing about the revision.
+        original_run = validate_marketplace.subprocess.run
+        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
+            returncode=128, stdout="", stderr="fatal: server does not allow request for sha"
+        )
+        try:
+            self.assertIsNone(
+                validate_marketplace._revision_reachable(
+                    "https://git.example.com/owner/repo", "a" * 40
+                )
+            )
+        finally:
+            validate_marketplace.subprocess.run = original_run
 
     def test_catalog_option_validates_custom_catalog(self) -> None:
         catalog = {
