@@ -685,21 +685,77 @@ class MarketplaceValidatorTests(unittest.TestCase):
             False,
         )
 
-    def test_revision_reachable_is_false_for_a_missing_commit_on_other_hosts(self) -> None:
-        # "not our ref" is the one non-GitHub signal that proves absence.
+    def _revision_reachable_with_fetch(self, shallow_stderr, history_rc=0, exists_rc=0, exists_stderr=""):
+        """Drive the non-GitHub path: shallow fetch fails, then history decides."""
         original_run = validate_marketplace.subprocess.run
-        validate_marketplace.subprocess.run = lambda *args, **kwargs: SimpleNamespace(
-            returncode=128, stdout="", stderr="fatal: remote error: upload-pack: not our ref abc"
-        )
+
+        def fake(*args, **kwargs):
+            command = args[0] if args else []
+            if "fetch" in command and "--depth=1" in command:
+                return SimpleNamespace(returncode=128, stdout="", stderr=shallow_stderr)
+            if "fetch" in command:
+                return SimpleNamespace(returncode=history_rc, stdout="", stderr="")
+            if "cat-file" in command:
+                return SimpleNamespace(returncode=exists_rc, stdout="", stderr=exists_stderr)
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        validate_marketplace.subprocess.run = fake
         try:
-            self.assertIs(
-                validate_marketplace._revision_reachable(
-                    "https://gitlab.example.com/owner/repo", "a" * 40
-                ),
-                False,
+            return validate_marketplace._revision_reachable(
+                "https://gitlab.example.com/owner/repo", "a" * 40
             )
         finally:
             validate_marketplace.subprocess.run = original_run
+
+    def test_revision_reachable_resolves_not_our_ref_via_history(self) -> None:
+        # "not our ref" is ambiguous; a revision present in history resolves.
+        self.assertIs(
+            self._revision_reachable_with_fetch(
+                "fatal: remote error: upload-pack: not our ref abc", history_rc=0, exists_rc=0
+            ),
+            True,
+        )
+
+    def test_revision_reachable_fails_when_history_confirms_the_revision_is_absent(self) -> None:
+        # Discrimination guard: history says the object genuinely does not exist.
+        self.assertIs(
+            self._revision_reachable_with_fetch(
+                "fatal: remote error: upload-pack: not our ref abc",
+                history_rc=0,
+                exists_rc=128,
+                exists_stderr="fatal: Not a valid object name aaa^{commit}",
+            ),
+            False,
+        )
+
+    def test_revision_reachable_is_indeterminate_when_history_fetch_also_fails(self) -> None:
+        self.assertIsNone(
+            self._revision_reachable_with_fetch(
+                "fatal: remote error: upload-pack: not our ref abc", history_rc=128
+            )
+        )
+
+    def test_revision_reachable_is_indeterminate_on_capability_refusal(self) -> None:
+        # Mixed-case directive: git prints allowReachableSHA1InWant this way,
+        # so matching the marker must be case-insensitive or this is a false fail.
+        self.assertIsNone(
+            self._revision_reachable_with_fetch(
+                "fatal: server does not allow: uploadpack.allowReachableSHA1InWant"
+            )
+        )
+
+    def test_capability_refusal_markers_match_case_insensitively(self) -> None:
+        # Git prints these config directives in mixed case while the markers are
+        # lowercase, so a case-sensitive match would miss a genuine refusal.
+        self.assertTrue(
+            validate_marketplace._is_capability_refusal(
+                "fatal: upload-pack: allowReachableSHA1InWant"
+            )
+        )
+        self.assertTrue(
+            validate_marketplace._is_capability_refusal("fatal: allowAnySHA1InWant required")
+        )
+        self.assertFalse(validate_marketplace._is_capability_refusal("fatal: Could not resolve host"))
 
     def _revision_reachable_with_status(self, code, token=None):
         original_api = validate_marketplace._github_api_json

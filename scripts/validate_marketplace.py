@@ -142,7 +142,6 @@ _UNSUPPORTED_SHA_FETCH_MARKERS = (
     "allowanysha1inwant",
     "uploadpack.allow",
     "server does not allow",
-    "not our ref",
     "denycurrentbranch",
     "protocol error",
 )
@@ -373,9 +372,6 @@ def _revision_reachable(url: str, ref: str) -> bool | None:
             return None
         return True
 
-    # Non-GitHub hosts: fetching an arbitrary SHA needs the server to allow
-    # reachable-SHA1-in-want, so a capability refusal is indeterminate rather
-    # than proof the revision is missing.
     with tempfile.TemporaryDirectory() as workdir:
         try:
             subprocess.run(["git", "init", "--quiet", workdir], check=True, capture_output=True)
@@ -384,28 +380,66 @@ def _revision_reachable(url: str, ref: str) -> bool | None:
                 check=True,
                 capture_output=True,
             )
-            result = subprocess.run(
+            shallow = subprocess.run(
                 ["git", "-C", workdir, "fetch", "--depth=1", "origin", ref],
                 capture_output=True,
                 text=True,
                 timeout=60,
                 check=False,
             )
+            if shallow.returncode == 0:
+                return True
+            # A shallow fetch of an arbitrary SHA needs the server to allow
+            # reachable-SHA1-in-want. "not our ref" means either the revision is
+            # absent or the server declines such requests, so it proves nothing
+            # on its own: confirm against the full history instead.
+            if "not our ref" in (shallow.stderr or ""):
+                return _confirm_revision_in_history(workdir, ref)
+            # Any other failure (DNS, auth, transport, deleted repository) means
+            # the revision genuinely could not be resolved.
+            if shallow.returncode != 0 and not _is_capability_refusal(shallow.stderr or ""):
+                return False
         except subprocess.CalledProcessError:
             # The remote could not even be configured; reachability is unknown.
             return None
         except (OSError, subprocess.TimeoutExpired):
             return None
-        if result.returncode == 0:
-            return True
-        stderr = result.stderr or ""
-        if "not our ref" in stderr:
-            return False
-        # A server that refuses to serve arbitrary SHAs proves nothing about the
-        # revision. Everything else genuinely could not resolve it.
-        if any(marker in stderr for marker in _UNSUPPORTED_SHA_FETCH_MARKERS):
+        return None
+
+
+def _is_capability_refusal(stderr: str) -> bool:
+    # Git prints these directives in mixed case, so compare case-insensitively.
+    lowered = stderr.lower()
+    return any(marker in lowered for marker in _UNSUPPORTED_SHA_FETCH_MARKERS)
+
+
+def _confirm_revision_in_history(workdir: str, ref: str) -> bool | None:
+    """Settle an ambiguous "not our ref" by checking the fetched history."""
+    try:
+        fetched = subprocess.run(
+            ["git", "-C", workdir, "fetch", "--filter=blob:none", "origin"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            check=False,
+        )
+        if fetched.returncode != 0:
             return None
+        exists = subprocess.run(
+            ["git", "-C", workdir, "cat-file", "-e", f"{ref}^{{commit}}"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if exists.returncode == 0:
+        return True
+    # "Not a valid object name" means the revision is genuinely absent.
+    if "not a valid object name" in (exists.stderr or "").lower():
         return False
+    return None
 
 
 def indeterminate_message(ref: str) -> str:

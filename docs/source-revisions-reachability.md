@@ -40,13 +40,19 @@ resolves at all is a real catalog defect and still fails.
    `ahead`, or `diverged`); `404` proves it does not. This is the same endpoint
    `source-freshness` already uses.
 3. Otherwise, for non-GitHub hosts, `git fetch --depth=1 origin {ref}`. Success
-   proves resolution; `not our ref` proves absence and **fails**. A server that
-   refuses to serve arbitrary SHAs outright (it does not enable
-   `allowReachableSHA1InWant`) is **indeterminate**: the refusal is a statement
-   about server capability, not about the revision. Any other fetch failure —
-   DNS, connection refused, auth, deleted repository — means the revision could
-   not be resolved and **fails**, matching how an unreachable GitHub repo is
-   treated.
+   proves resolution. A failure is triaged:
+
+   - `not our ref` is **ambiguous** — it means either the revision is absent or
+     the server declines to serve arbitrary SHAs. It is settled by fetching the
+     full history (`--filter=blob:none`) and running `cat-file -e {ref}^{commit}`,
+     which resolves to **pass** if the revision exists and **fail** if it does
+     not. If that fetch also fails, the result is indeterminate.
+   - Any other fetch failure — DNS, connection refused, auth, deleted
+     repository — means the revision could not be resolved and **fails**,
+     matching how an unreachable GitHub repo is treated.
+   - A server that states it does not allow reachable-SHA1-in-want is
+     **indeterminate**: that is a statement about server capability, not about
+     the revision.
 
 ## Rate limits
 
