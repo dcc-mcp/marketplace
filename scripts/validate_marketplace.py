@@ -7,7 +7,7 @@ Usage:
     python scripts/validate_marketplace.py uniqueness    # Duplicate name check
     python scripts/validate_marketplace.py metadata      # Required metadata and immutable refs
     python scripts/validate_marketplace.py reachability  # URL existence check
-    python scripts/validate_marketplace.py source-revisions # Verify pinned git commits are advertised
+    python scripts/validate_marketplace.py source-revisions # Verify pinned git revisions resolve
     python scripts/validate_marketplace.py skill-layout  # Verify declared skill roots at pinned revisions
     python scripts/validate_marketplace.py asset-contract # Verify opted-in asset descriptor contracts
     python scripts/validate_marketplace.py prompt-contract # Verify examplePrompts/recovery/undo coverage
@@ -23,6 +23,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from base64 import b64decode
@@ -133,6 +134,17 @@ _SEMVER_PATTERN = re.compile(
     r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
 )
 _GIT_SHA_PATTERN = re.compile(r"^[a-f0-9]{40}$")
+
+# Ways a server can decline to serve an arbitrary commit SHA. These say nothing
+# about whether the revision exists, so they leave reachability indeterminate.
+_UNSUPPORTED_SHA_FETCH_MARKERS = (
+    "allowreachablesha1inwant",
+    "allowanysha1inwant",
+    "uploadpack.allow",
+    "server does not allow",
+    "denycurrentbranch",
+    "protocol error",
+)
 
 
 def check_metadata_quality() -> bool:
@@ -335,12 +347,115 @@ def check_reachability() -> bool:
 # ── pinned source revision checks ──────────────────────────────────────
 
 
+def _revision_reachable(url: str, ref: str) -> bool | None:
+    """Resolve a pinned revision against the source repository.
+
+    Returns True when the revision resolves, False when the source repo is
+    reachable but does not contain it, and None when the answer is
+    indeterminate (rate limit, transport failure, or a host that will not
+    serve arbitrary SHAs). Indeterminate is not the same as reachable: callers
+    surface it instead of treating it as a pass.
+    """
+    repo = _github_repo_slug(url)
+    if repo:
+        try:
+            _github_api_json(f"repos/{repo}/compare/{quote(ref, safe='')}...HEAD")
+        except urllib.error.HTTPError as exc:
+            if exc.code == 404:
+                return False
+            # A 403 with a token attached means the token cannot read the repo,
+            # which is a real visibility defect rather than a rate limit.
+            if exc.code == 403 and os.environ.get("GITHUB_TOKEN"):
+                return False
+            return None
+        except (OSError, ValueError, urllib.error.URLError):
+            return None
+        return True
+
+    with tempfile.TemporaryDirectory() as workdir:
+        try:
+            subprocess.run(["git", "init", "--quiet", workdir], check=True, capture_output=True)
+            subprocess.run(
+                ["git", "-C", workdir, "remote", "add", "origin", url],
+                check=True,
+                capture_output=True,
+            )
+            shallow = subprocess.run(
+                ["git", "-C", workdir, "fetch", "--depth=1", "origin", ref],
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            if shallow.returncode == 0:
+                return True
+            # A shallow fetch of an arbitrary SHA needs the server to allow
+            # reachable-SHA1-in-want. "not our ref" means either the revision is
+            # absent or the server declines such requests, so it proves nothing
+            # on its own: confirm against the full history instead.
+            if "not our ref" in (shallow.stderr or ""):
+                return _confirm_revision_in_history(workdir, ref)
+            # Any other failure (DNS, auth, transport, deleted repository) means
+            # the revision genuinely could not be resolved.
+            if shallow.returncode != 0 and not _is_capability_refusal(shallow.stderr or ""):
+                return False
+        except subprocess.CalledProcessError:
+            # The remote could not even be configured; reachability is unknown.
+            return None
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+        return None
+
+
+def _is_capability_refusal(stderr: str) -> bool:
+    # Git prints these directives in mixed case, so compare case-insensitively.
+    lowered = stderr.lower()
+    return any(marker in lowered for marker in _UNSUPPORTED_SHA_FETCH_MARKERS)
+
+
+def _confirm_revision_in_history(workdir: str, ref: str) -> bool | None:
+    """Settle an ambiguous "not our ref" by checking the fetched history."""
+    try:
+        fetched = subprocess.run(
+            ["git", "-C", workdir, "fetch", "--filter=blob:none", "origin"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            check=False,
+        )
+        if fetched.returncode != 0:
+            return None
+        exists = subprocess.run(
+            ["git", "-C", workdir, "cat-file", "-e", f"{ref}^{{commit}}"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if exists.returncode == 0:
+        return True
+    # "Not a valid object name" means the revision is genuinely absent.
+    if "not a valid object name" in (exists.stderr or "").lower():
+        return False
+    return None
+
+
+def indeterminate_message(ref: str) -> str:
+    return f"could not confirm pinned commit {ref} resolves; treated as indeterminate"
+
+
 def check_source_revisions() -> bool:
     print("::group::Pinned source revision check")
     data = load_marketplace()
     skills = data.get("skills", [])
     errors: list[tuple[str, str]] = []
+    warnings: list[tuple[str, str]] = []
     official_catalog = data.get("name") == "dcc-mcp-official"
+    verified: dict[tuple[str, str], bool | None] = {}
+    checked = 0
+    indeterminate = 0
 
     for skill in skills:
         source = skill.get("source", {})
@@ -353,6 +468,20 @@ def check_source_revisions() -> bool:
         if official_catalog and not is_commit_pin:
             errors.append((name, "git source ref is not a full commit SHA"))
             continue
+
+        cache_key = (url, ref)
+        if cache_key in verified:
+            reachable = verified[cache_key]
+            if reachable is None:
+                indeterminate += 1
+                warnings.append((name, indeterminate_message(ref)))
+            elif not reachable:
+                errors.append((name, f"pinned commit {ref} does not resolve in {url}"))
+            else:
+                print(f"  OK {name}: {ref} (cached)")
+            checked += 1
+            continue
+
         try:
             result = subprocess.run(
                 ["git", "ls-remote", "--heads", "--tags", url],
@@ -370,17 +499,44 @@ def check_source_revisions() -> bool:
         advertised = [line.split(maxsplit=1) for line in result.stdout.splitlines() if line]
         advertised_revisions = {entry[0].lower() for entry in advertised}
         advertised_refs = {entry[1] for entry in advertised if len(entry) == 2}
-        if is_commit_pin and ref.lower() not in advertised_revisions:
-            errors.append((name, f"pinned commit {ref} is not advertised by a branch or tag"))
-            continue
-        if not is_commit_pin and not {
-            f"refs/heads/{ref}",
-            f"refs/tags/{ref}",
-        }.intersection(advertised_refs):
-            errors.append((name, f"source ref {ref} is not advertised by a branch or tag"))
-            continue
-        print(f"  OK {name}: {ref}")
 
+        if not is_commit_pin:
+            if not {
+                f"refs/heads/{ref}",
+                f"refs/tags/{ref}",
+            }.intersection(advertised_refs):
+                errors.append((name, f"source ref {ref} is not advertised by a branch or tag"))
+                continue
+            checked += 1
+            print(f"  OK {name}: {ref}")
+            continue
+
+        if ref.lower() in advertised_revisions:
+            verified[cache_key] = True
+            checked += 1
+            print(f"  OK {name}: {ref}")
+            continue
+
+        # Not a branch tip or tag any more. A pin is allowed to drift behind the
+        # default branch, so fall back to resolving it through history.
+        reachable = _revision_reachable(url, ref)
+        verified[cache_key] = reachable
+        checked += 1
+        if reachable is None:
+            indeterminate += 1
+            warnings.append((name, indeterminate_message(ref)))
+        elif not reachable:
+            errors.append((name, f"pinned commit {ref} does not resolve in {url}"))
+        else:
+            print(f"  OK {name}: {ref} (reachable, behind default branch)")
+
+    for name, reason in warnings:
+        print(f"::warning::{name}: {reason}")
+    if checked and indeterminate * 2 > checked:
+        print(
+            f"::warning::{indeterminate} of {checked} pinned revision(s) were "
+            "indeterminate; this check did not meaningfully verify the catalog."
+        )
     for name, reason in errors:
         print(f"::error::{name}: {reason}")
     if errors:
