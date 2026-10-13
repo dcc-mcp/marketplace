@@ -1636,6 +1636,134 @@
         }
       ],
       "undo": "none"
+    },
+    {
+      "name": "marketplace-create-extension",
+      "description": "Infrastructure skill - scaffold a new marketplace extension package (SKILL.md + tools.yaml + scripts/) with MIT-0 licensing",
+      "version": "0.20.44",
+      "dcc": ["python"],
+      "tags": ["skills", "marketplace", "extension", "scaffolding", "authoring", "infrastructure"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.17.0",
+      "source": {
+        "type": "zip",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/marketplace-create-extension-0.20.44.zip",
+        "sha256": "591b90ee22d39e3d91b6deee7acb485c5f558404a74d0d7dab2b4b26da0c6823",
+        "skillRoots": ["skill/marketplace-create-extension"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/marketplace-create-extension#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "examplePrompts": ["Scaffold a new marketplace extension package for a Houdini skill with a SKILL.md and tools.yaml", "Create an MIT-0 licensed skill package skeleton I can publish to the marketplace", "Generate the scripts directory and tool declarations for a new marketplace extension"],
+      "recovery": [
+        {
+          "on": "the target directory already holds an extension and scaffolding would overwrite it",
+          "next": "run dcc-mcp-cli marketplace inspect marketplace-create-extension and choose an empty directory"
+        },
+        {
+          "on": "the generated SKILL.md frontmatter fails schema validation",
+          "next": "delete the generated package directory and scaffold again with the corrected metadata fields"
+        }
+      ],
+      "undo": "manual"
+    },
+    {
+      "name": "marketplace-publish-extension",
+      "description": "Infrastructure skill - publish or update an extension package in a marketplace catalog by upserting its SKILL.md frontmatter as a catalog entry",
+      "version": "0.20.44",
+      "dcc": ["python"],
+      "tags": ["skills", "marketplace", "publishing", "catalog", "release", "infrastructure"],
+      "category": "Infrastructure",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.17.0",
+      "source": {
+        "type": "zip",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/marketplace-publish-extension-0.20.44.zip",
+        "sha256": "9b4324b3a3f032fd91d82daa8497b86d30f17044a657b4826a42f45e4d04a3d1",
+        "skillRoots": ["skill/marketplace-publish-extension"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/marketplace-publish-extension#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "examplePrompts": ["Register my scaffolded extension in the target marketplace catalog", "Upsert this skill package's catalog entry and commit the marketplace.json change", "Update an existing marketplace extension entry after bumping its version"],
+      "recovery": [
+        {
+          "on": "the catalog entry already exists and would be silently overwritten",
+          "next": "run dcc-mcp-cli marketplace inspect marketplace-publish-extension to review the current entry before upserting"
+        },
+        {
+          "on": "the extension was registered with the wrong version or metadata",
+          "next": "revert the marketplace.json change in the catalog repository, then publish again with corrected frontmatter"
+        }
+      ],
+      "undo": "manual"
+    },
+    {
+      "name": "mesh-ops",
+      "description": "Cross-adapter polygon modeling recipe pack with structured RECIPES.yaml entries for primitives, hard-surface edits, topology cleanup, UVs, radial arraying, and material assignment",
+      "version": "1.0.0",
+      "dcc": ["any"],
+      "tags": ["skills", "modeling", "mesh", "polygon", "topology", "recipe", "cross-dcc"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.20.29",
+      "source": {
+        "type": "zip",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/mesh-ops-1.0.0.zip",
+        "sha256": "8dc89830e33667d7d3635c376f6d8a83c98dd0313ccc0d759e1327cc50302b05",
+        "skillRoots": ["skill/mesh-ops"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/mesh-ops#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "examplePrompts": ["Look up the structured recipe for bevelling edge loops before dispatching the modeling tool", "Find the cross-DCC recipe for generating UVs on a hard-surface mesh", "Show the radial array recipe so I can reuse it in this DCC adapter"],
+      "recovery": [
+        {
+          "on": "no recipe matches the requested modeling operation",
+          "next": "run dcc-mcp-cli marketplace inspect mesh-ops to list the packaged recipes, then fall back to the adapter's raw modeling tools"
+        },
+        {
+          "on": "a recipe was applied to the wrong mesh selection",
+          "next": "undo the modeling step in the DCC and re-run the recipe against the corrected selection"
+        }
+      ],
+      "undo": "none"
+    },
+    {
+      "name": "spatial-interchange",
+      "description": "Plan deterministic coordinate-axis and unit conversions between DCCs, engines, and interchange formats from explicit right/up/forward axes and meters-per-unit values",
+      "version": "1.0.0",
+      "dcc": ["python", "any"],
+      "tags": ["skills", "pipeline", "interchange", "spatial", "units", "coordinates"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.91",
+      "source": {
+        "type": "zip",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/spatial-interchange-1.0.0.zip",
+        "sha256": "f64e502e835c70a10c91107b99abccf49826767d0383e2eecafcc07a85fb301b",
+        "skillRoots": ["skill/spatial-interchange"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/spatial-interchange#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "examplePrompts": ["Plan the axis and unit conversion for exporting this Maya scene to Unreal", "Compute the meters-per-unit conversion between Blender and Houdini before import", "Show the handedness handling for a Z-up to Y-up coordinate conversion"],
+      "recovery": [
+        {
+          "on": "the source or target axis convention is unknown",
+          "next": "run dcc-mcp-cli marketplace inspect spatial-interchange, then state the right/up/forward axes explicitly instead of inferring them from the DCC name"
+        },
+        {
+          "on": "the conversion plan was generated with the wrong axes and applied downstream",
+          "next": "discard the generated conversion plan, undo the import or export in the target DCC, and re-plan with corrected axes"
+        }
+      ],
+      "undo": "none"
     }
   ]
 }
