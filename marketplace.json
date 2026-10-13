@@ -1660,7 +1660,7 @@
       "recovery": [
         {
           "on": "the target directory already holds an extension and scaffolding would overwrite it",
-          "next": "run dcc-mcp-cli marketplace inspect marketplace-create-extension and choose an empty directory"
+          "next": "dcc-mcp-cli marketplace inspect marketplace-create-extension to confirm the entry state, then scaffold into an empty directory so nothing is overwritten"
         },
         {
           "on": "the generated SKILL.md frontmatter fails schema validation",
@@ -1692,7 +1692,7 @@
       "recovery": [
         {
           "on": "the catalog entry already exists and would be silently overwritten",
-          "next": "run dcc-mcp-cli marketplace inspect marketplace-publish-extension to review the current entry before upserting"
+          "next": "dcc-mcp-cli marketplace inspect marketplace-publish-extension to read the existing entry, then re-run the publish with the corrected version and metadata"
         },
         {
           "on": "the extension was registered with the wrong version or metadata",
@@ -1724,7 +1724,7 @@
       "recovery": [
         {
           "on": "no recipe matches the requested modeling operation",
-          "next": "run dcc-mcp-cli marketplace inspect mesh-ops to list the packaged recipes, then fall back to the adapter's raw modeling tools"
+          "next": "dcc-mcp-cli marketplace inspect mesh-ops to list the packaged recipes, then fall back to the adapter's raw modeling tools"
         },
         {
           "on": "a recipe was applied to the wrong mesh selection",
@@ -1737,7 +1737,7 @@
       "name": "spatial-interchange",
       "description": "Plan deterministic coordinate-axis and unit conversions between DCCs, engines, and interchange formats from explicit right/up/forward axes and meters-per-unit values",
       "version": "1.0.0",
-      "dcc": ["python", "any"],
+      "dcc": ["any"],
       "tags": ["skills", "pipeline", "interchange", "spatial", "units", "coordinates"],
       "category": "Skills",
       "maintainer": "dcc-mcp",
@@ -1756,7 +1756,7 @@
       "recovery": [
         {
           "on": "the source or target axis convention is unknown",
-          "next": "run dcc-mcp-cli marketplace inspect spatial-interchange, then state the right/up/forward axes explicitly instead of inferring them from the DCC name"
+          "next": "dcc-mcp-cli marketplace inspect spatial-interchange, then state the right/up/forward axes explicitly instead of inferring them from the DCC name"
         },
         {
           "on": "the conversion plan was generated with the wrong axes and applied downstream",

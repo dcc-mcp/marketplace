@@ -701,19 +701,126 @@ _ROLLBACK_KEYWORDS = (
 )
 
 
+# Subcommands `dcc-mcp-cli` accepts, and the ones under its `marketplace`
+# group. A recovery rule naming the CLI must name a command that exists;
+# otherwise a typo still reads as actionable.
+_CLI_SUBCOMMANDS = frozenset(
+    {
+        "smoke",
+        "health",
+        "stats",
+        "feedback",
+        "doctor",
+        "list",
+        "dcc-types",
+        "search",
+        "describe",
+        "load-skill",
+        "call",
+        "ui-control",
+        "record-replay",
+        "wait-ready",
+        "reload-skills",
+        "stop-instance",
+        "install",
+        "marketplace",
+        "lint",
+        "components",
+        "update",
+        "gateway",
+        "help",
+    }
+)
+_CLI_MARKETPLACE_SUBCOMMANDS = frozenset(
+    {
+        "add",
+        "list",
+        "search",
+        "inspect",
+        "install",
+        "uninstall",
+        "list-installed",
+        "outdated",
+        "update",
+        "add-repo",
+        "pack",
+        "publish",
+        "help",
+    }
+)
+
+# Leading verbs a recovery rule may prefix a CLI invocation with. Stripped
+# before validating the command so prose like "run dcc-mcp-cli ..." is judged
+# on the command itself rather than on its framing.
+_CLI_LEADING_VERBS = ("run", "execute", "invoke")
+
+_CLI_INVOCATION_PATTERN = re.compile(r"^dcc-mcp-cli(?:\.exe)?(?![A-Za-z0-9_-])")
+
+# Matches the CLI name in any position, including misspellings such as
+# "dcc-mcp-clix", so a value that claims a command is never judged as prose.
+_CLI_NAME_ANYWHERE = re.compile(r"dcc-mcp-cli[A-Za-z0-9_.-]*", re.IGNORECASE)
+
+
 def _is_identifier_list(value: str) -> bool:
     return bool(_IDENTIFIER_LIST_PATTERN.match(value))
 
 
+def _cli_command_is_known(value: str) -> bool:
+    """Return True when `value` names a real dcc-mcp-cli invocation.
+
+    A rule can phrase the command as "run dcc-mcp-cli marketplace inspect X",
+    so the leading verb and any trailing prose are stripped and only the
+    command words are checked against the CLI's own subcommand names.
+    """
+    if not _CLI_INVOCATION_PATTERN.match(value):
+        return False
+    words = value.split()
+    if words[0] in _CLI_LEADING_VERBS:
+        words = words[1:]
+        if not words or not _CLI_INVOCATION_PATTERN.match(words[0]):
+            return False
+    words = words[1:]
+    if not words:
+        return False
+    head = words[0]
+    if head.startswith("--") or head.startswith("-"):
+        return False
+    if head not in _CLI_SUBCOMMANDS:
+        return False
+    if head == "marketplace" and len(words) > 1:
+        return words[1] in _CLI_MARKETPLACE_SUBCOMMANDS
+    return True
+
+
 def _is_actionable_next(value: str, skill_names: set[str]) -> bool:
-    """A recovery `next` must be something the agent can actually do next."""
+    """A recovery `next` must be something the agent can actually do next.
+
+    A named CLI invocation is only as actionable as the command it names, so
+    those are checked against the CLI's real subcommands instead of a bare
+    prefix match. Everything else stays a described action: most recovery
+    rules in this catalog are prose ("delete the leftover rig group and
+    rebuild"), and those must keep passing.
+    """
     candidate = value.strip()
     if len(candidate) < _MIN_PROMPT_CHARS:
         return False
     if candidate.lower().rstrip(".!") in _NO_OP_NEXT:
         return False
-    # Another catalog entry, a CLI invocation, or a described action.
-    return candidate in skill_names or candidate.startswith("dcc-mcp-cli") or " " in candidate
+    if candidate in skill_names:
+        return True
+    # `run dcc-mcp-cli ...` is a command; check the command, not the framing.
+    stripped = candidate
+    first = stripped.split()[0]
+    if first in _CLI_LEADING_VERBS:
+        stripped = stripped[len(first):].strip()
+    if _CLI_INVOCATION_PATTERN.match(stripped):
+        return _cli_command_is_known(stripped)
+    # Naming the CLI anywhere makes this a command claim, so a misspelled
+    # binary must not fall through to the prose branch and pass anyway.
+    if _CLI_NAME_ANYWHERE.search(candidate):
+        return False
+    # A described action rather than a command.
+    return " " in candidate
 
 
 def _mentions_rollback(rule: dict) -> bool:

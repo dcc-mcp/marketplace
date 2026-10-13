@@ -448,6 +448,99 @@ class MarketplaceValidatorTests(unittest.TestCase):
             validate_marketplace.load_marketplace = original
         self.assertIn("non-actionable 'next'", output.getvalue())
 
+    def test_prompt_contract_rejects_misspelled_cli_executable(self) -> None:
+        # A suffix wildcard would let "dcc-mcp-clix ..." match the real binary.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "skills": [skill],
+        }
+        try:
+            for value in (
+                "dcc-mcp-clix marketplace inspect maya-rig-tools",
+                "dcc-mcp-cli-foo doctor",
+            ):
+                skill["recovery"] = [{"on": "the guide is invalid", "next": value}]
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertFalse(
+                        validate_marketplace.check_prompt_contract(),
+                        f"expected {value!r} to be rejected",
+                    )
+        finally:
+            validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_rejects_unknown_cli_subcommand(self) -> None:
+        # A bare prefix match would accept any typo after "dcc-mcp-cli".
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [
+            {
+                "on": "the guide is invalid",
+                "next": "dcc-mcp-cli marketplace inspct maya-rig-tools",
+            }
+        ]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("non-actionable 'next'", output.getvalue())
+
+    def test_prompt_contract_accepts_known_cli_subcommands(self) -> None:
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "skills": [skill],
+        }
+        try:
+            for value in (
+                "dcc-mcp-cli marketplace inspect maya-rig-tools",
+                "dcc-mcp-cli marketplace inspect",
+                "run dcc-mcp-cli marketplace inspect maya-rig-tools",
+                "dcc-mcp-cli doctor",
+                "dcc-mcp-cli marketplace list-installed",
+            ):
+                skill["recovery"] = [{"on": "the guide is invalid", "next": value}]
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertTrue(
+                        validate_marketplace.check_prompt_contract(),
+                        f"expected {value!r} to stay actionable",
+                    )
+        finally:
+            validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_accepts_described_recovery_actions(self) -> None:
+        # Most recovery rules in this catalog are prose, not commands.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [
+            {
+                "on": "a partial rig is left behind",
+                "next": "delete the leftover rig group and rebuild from the guide",
+            }
+        ]
+        catalog = {"name": "dcc-mcp-official", "schemaVersion": "1", "skills": [skill]}
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: catalog
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertTrue(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+
     def test_prompt_contract_requires_rollback_steps_for_manual_undo(self) -> None:
         skill = valid_skill()
         skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
