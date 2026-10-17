@@ -511,6 +511,8 @@ class MarketplaceValidatorTests(unittest.TestCase):
                 "run dcc-mcp-cli marketplace inspect maya-rig-tools",
                 "dcc-mcp-cli doctor",
                 "dcc-mcp-cli marketplace list-installed",
+                "dcc-mcp-cli start-instance --dcc-type maya --project /tmp/show",
+                "dcc-mcp-cli host list",
             ):
                 skill["recovery"] = [{"on": "the guide is invalid", "next": value}]
                 with contextlib.redirect_stdout(io.StringIO()):
@@ -520,6 +522,83 @@ class MarketplaceValidatorTests(unittest.TestCase):
                     )
         finally:
             validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_reports_unknown_subcommand(self) -> None:
+        # A whitelist gap and a typo are different problems for an author.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [
+            {
+                "on": "the guide is invalid",
+                "next": "dcc-mcp-cli marketplace inspct maya-rig-tools",
+            }
+        ]
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "skills": [skill],
+        }
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("unknown dcc-mcp-cli marketplace subcommand", output.getvalue())
+
+    def test_prompt_contract_reports_malformed_command(self) -> None:
+        # An option where a subcommand belongs is a shape error, not a typo.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "skills": [skill],
+        }
+        try:
+            for expected, value in (
+                ("passes the option '--help'", "dcc-mcp-cli --help"),
+                ("passes the option '--output'", "dcc-mcp-cli marketplace --output json"),
+                ("without a subcommand", "dcc-mcp-cli"),
+            ):
+                skill["recovery"] = [{"on": "the guide is invalid", "next": value}]
+                with contextlib.redirect_stdout(io.StringIO()) as output:
+                    self.assertFalse(
+                        validate_marketplace.check_prompt_contract(),
+                        f"expected {value!r} to be rejected",
+                    )
+                self.assertIn(
+                    expected, output.getvalue(), f"wrong reason for {value!r}"
+                )
+        finally:
+            validate_marketplace.load_marketplace = original
+
+    def test_prompt_contract_reports_misspelled_binary_as_not_prose(self) -> None:
+        # Naming the CLI disqualifies the prose fallback, so say why.
+        skill = valid_skill()
+        skill["examplePrompts"] = ["Build a biped rig from the current Maya guide"]
+        skill["undo"] = "single-step"
+        skill["recovery"] = [
+            {
+                "on": "the guide is invalid",
+                "next": "dcc-mcp-clix marketplace inspect maya-rig-tools",
+            }
+        ]
+        original = validate_marketplace.load_marketplace
+        validate_marketplace.load_marketplace = lambda: {
+            "name": "dcc-mcp-official",
+            "schemaVersion": "1",
+            "skills": [skill],
+        }
+        try:
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                self.assertFalse(validate_marketplace.check_prompt_contract())
+        finally:
+            validate_marketplace.load_marketplace = original
+        self.assertIn("not a runnable command", output.getvalue())
 
     def test_prompt_contract_accepts_described_recovery_actions(self) -> None:
         # Most recovery rules in this catalog are prose, not commands.

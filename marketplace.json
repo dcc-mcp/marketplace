@@ -1724,7 +1724,7 @@
       "recovery": [
         {
           "on": "no recipe matches the requested modeling operation",
-          "next": "dcc-mcp-cli marketplace inspect mesh-ops to list the packaged recipes, then fall back to the adapter's raw modeling tools"
+          "next": "dcc-mcp-cli marketplace inspect mesh-ops to read the packaged entry, then check the bundled RECIPES.yaml before falling back to the adapter's raw modeling tools"
         },
         {
           "on": "a recipe was applied to the wrong mesh selection",
