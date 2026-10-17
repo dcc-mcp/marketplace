@@ -1767,7 +1767,7 @@
     },
     {
       "name": "asset-source",
-      "description": "Gateway skill for cross-DCC asset import: search the asset catalog and resolve matches into a validated AssetDescriptor carrying a local path, format, unit and axis hints, plus license and attribution",
+      "description": "Read-only demo source returning sample AssetDescriptors with illustrative paths and attribution; verify or replace them before real DCC import",
       "version": "1.0.1",
       "dcc": [
         "any"
@@ -1797,7 +1797,7 @@
       "examplePrompts": [
         "Search the asset catalog for a round table and show the resolved AssetDescriptor",
         "Find sci-fi corridor assets and report the local path, format, and up-axis hint for each match",
-        "Resolve the modern chair asset and confirm its attribution and license before I import it"
+        "Inspect the demo chair AssetDescriptor and identify the sample path and attribution that require verification before a real import"
       ],
       "recovery": [
         {
