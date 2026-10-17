@@ -1764,6 +1764,52 @@
         }
       ],
       "undo": "none"
+    },
+    {
+      "name": "asset-source",
+      "description": "Read-only demo source returning sample AssetDescriptors with illustrative paths and attribution; verify or replace them before real DCC import",
+      "version": "1.0.1",
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "skills",
+        "pipeline",
+        "asset-import",
+        "read-only",
+        "cross-dcc"
+      ],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.39",
+      "source": {
+        "type": "zip",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.45/asset-source-1.0.1.zip",
+        "sha256": "cad9d45199410905392f3944c81bfc5443ae16c2755f3cdc2bd73a65b6288f2a",
+        "skillRoots": [
+          "skill/asset-source"
+        ]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/asset-source#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "examplePrompts": [
+        "Search the asset catalog for a round table and show the resolved AssetDescriptor",
+        "Find sci-fi corridor assets and report the local path, format, and up-axis hint for each match",
+        "Inspect the demo chair AssetDescriptor and identify the sample path and attribution that require verification before a real import"
+      ],
+      "recovery": [
+        {
+          "on": "no asset matches the requested search term",
+          "next": "dcc-mcp-cli marketplace inspect asset-source to read the packaged entry, then re-run search_assets with a broader query term"
+        },
+        {
+          "on": "a stale or wrong descriptor was already passed to an import skill",
+          "next": "undo the pending import in the DCC, then re-run search_assets and re-resolve the descriptor from the catalog before importing again"
+        }
+      ],
+      "undo": "none"
     }
   ]
 }
