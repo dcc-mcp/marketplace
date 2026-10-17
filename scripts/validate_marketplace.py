@@ -701,19 +701,201 @@ _ROLLBACK_KEYWORDS = (
 )
 
 
+# Subcommands `dcc-mcp-cli` accepts, and the ones under its `marketplace`
+# group. A recovery rule naming the CLI must name a command that exists;
+# otherwise a typo still reads as actionable.
+#
+# Sourced from the released dcc-mcp-cli 0.20.44 binary, not from a build tree:
+#   curl -sL -o cli.zip \
+#     https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/dcc-mcp-cli-0.20.44-windows-x86_64.zip
+#   unzip -oq cli.zip && ./dcc-mcp-cli.exe --help
+#   ./dcc-mcp-cli.exe marketplace --help
+# Refresh by re-running those commands against the current release. An older
+# CLI omits subcommands that the release carries (0.20.28 lacks both `host`
+# and `start-instance`), so pinning to a stale binary would silently reject
+# valid recovery rules.
+_CLI_SUBCOMMANDS = frozenset(
+    {
+        "smoke",
+        "health",
+        "stats",
+        "feedback",
+        "doctor",
+        "list",
+        "dcc-types",
+        "search",
+        "describe",
+        "load-skill",
+        "call",
+        "ui-control",
+        "record-replay",
+        "wait-ready",
+        "reload-skills",
+        "stop-instance",
+        "start-instance",
+        "host",
+        "install",
+        "marketplace",
+        "lint",
+        "components",
+        "update",
+        "gateway",
+        "help",
+    }
+)
+_CLI_MARKETPLACE_SUBCOMMANDS = frozenset(
+    {
+        "add",
+        "list",
+        "search",
+        "inspect",
+        "install",
+        "uninstall",
+        "list-installed",
+        "outdated",
+        "update",
+        "add-repo",
+        "pack",
+        "publish",
+        "help",
+    }
+)
+
+# Leading verbs a recovery rule may prefix a CLI invocation with. Stripped
+# before validating the command so prose like "run dcc-mcp-cli ..." is judged
+# on the command itself rather than on its framing.
+_CLI_LEADING_VERBS = ("run", "execute", "invoke")
+
+_CLI_INVOCATION_PATTERN = re.compile(r"^dcc-mcp-cli(?:\.exe)?(?![A-Za-z0-9_-])")
+
+# Matches the CLI name in any position, including misspellings such as
+# "dcc-mcp-clix", so a value that claims a command is never judged as prose.
+_CLI_NAME_ANYWHERE = re.compile(r"dcc-mcp-cli[A-Za-z0-9_.-]*", re.IGNORECASE)
+
+
 def _is_identifier_list(value: str) -> bool:
     return bool(_IDENTIFIER_LIST_PATTERN.match(value))
 
 
+def _cli_command_is_known(value: str) -> bool:
+    """Return True when `value` names a real dcc-mcp-cli invocation.
+
+    A rule can phrase the command as "run dcc-mcp-cli marketplace inspect X",
+    so the leading verb and any trailing prose are stripped and only the
+    command words are checked against the CLI's own subcommand names.
+    """
+    if not _CLI_INVOCATION_PATTERN.match(value):
+        return False
+    words = value.split()
+    if words[0] in _CLI_LEADING_VERBS:
+        words = words[1:]
+        if not words or not _CLI_INVOCATION_PATTERN.match(words[0]):
+            return False
+    words = words[1:]
+    if not words:
+        return False
+    head = words[0]
+    if head.startswith("--") or head.startswith("-"):
+        return False
+    if head not in _CLI_SUBCOMMANDS:
+        return False
+    if head == "marketplace" and len(words) > 1:
+        return words[1] in _CLI_MARKETPLACE_SUBCOMMANDS
+    return True
+
+
 def _is_actionable_next(value: str, skill_names: set[str]) -> bool:
-    """A recovery `next` must be something the agent can actually do next."""
+    """A recovery `next` must be something the agent can actually do next.
+
+    A named CLI invocation is only as actionable as the command it names, so
+    those are checked against the CLI's real subcommands instead of a bare
+    prefix match. Everything else stays a described action: most recovery
+    rules in this catalog are prose ("delete the leftover rig group and
+    rebuild"), and those must keep passing.
+    """
     candidate = value.strip()
     if len(candidate) < _MIN_PROMPT_CHARS:
         return False
     if candidate.lower().rstrip(".!") in _NO_OP_NEXT:
         return False
-    # Another catalog entry, a CLI invocation, or a described action.
-    return candidate in skill_names or candidate.startswith("dcc-mcp-cli") or " " in candidate
+    if candidate in skill_names:
+        return True
+    # `run dcc-mcp-cli ...` is a command; check the command, not the framing.
+    stripped = candidate
+    first = stripped.split()[0]
+    if first in _CLI_LEADING_VERBS:
+        stripped = stripped[len(first):].strip()
+    if _CLI_INVOCATION_PATTERN.match(stripped):
+        return _cli_command_is_known(stripped)
+    # Naming the CLI anywhere makes this a command claim, so a misspelled
+    # binary must not fall through to the prose branch and pass anyway.
+    if _CLI_NAME_ANYWHERE.search(candidate):
+        return False
+    # A described action rather than a command.
+    return " " in candidate
+
+
+def _actionable_next_reason(value: str, skill_names: set[str]) -> str | None:
+    """Explain why `value` is not actionable, or None when it is.
+
+    A single "non-actionable" message leaves an author unable to tell a
+    command this catalog's whitelist has not caught up with apart from one
+    they mistyped themselves, so the two are reported separately.
+    """
+    candidate = value.strip()
+    if len(candidate) < _MIN_PROMPT_CHARS:
+        return "too short to describe a next step"
+    if candidate.lower().rstrip(".!") in _NO_OP_NEXT:
+        return "restates the failure instead of describing a next step"
+    if candidate in skill_names:
+        return None
+    stripped = candidate
+    first = stripped.split()[0]
+    if first in _CLI_LEADING_VERBS:
+        stripped = stripped[len(first):].strip()
+    if _CLI_INVOCATION_PATTERN.match(stripped):
+        if _cli_command_is_known(stripped):
+            return None
+        return _unknown_cli_command_reason(stripped)
+    if _CLI_NAME_ANYWHERE.search(candidate):
+        return (
+            "names dcc-mcp-cli but is not a runnable command, so it cannot "
+            "fall back to a described action"
+        )
+    if " " in candidate:
+        return None
+    return "names no command and describes no action"
+
+
+def _unknown_cli_command_reason(value: str) -> str:
+    """Distinguish a malformed invocation from an unrecognized subcommand."""
+    words = value.split()
+    if words and words[0] in _CLI_LEADING_VERBS:
+        words = words[1:]
+    if len(words) < 2:
+        return "names dcc-mcp-cli without a subcommand"
+    head = words[1]
+    if head.startswith("-"):
+        return f"passes the option {head!r} where a subcommand is expected"
+    group: frozenset[str] | None = None
+    if words[1] == "marketplace":
+        group = _CLI_MARKETPLACE_SUBCOMMANDS
+        if len(words) < 3:
+            return "names the 'marketplace' group without a subcommand"
+        command = words[2]
+        group_name = "dcc-mcp-cli marketplace"
+    else:
+        command = head
+        group_name = "dcc-mcp-cli"
+    if command.startswith("-"):
+        return f"passes the option {command!r} where a subcommand is expected"
+    if group is not None:
+        known = group
+    else:
+        known = _CLI_SUBCOMMANDS
+    if command not in known:
+        return f"unknown {group_name} subcommand {command!r}"
+    return f"malformed {group_name} invocation"
 
 
 def _mentions_rollback(rule: dict) -> bool:
@@ -802,10 +984,12 @@ def check_prompt_contract() -> bool:
                     errors.append((name, f"recovery rule {condition!r} has an empty 'next'"))
                     continue
                 if not _is_actionable_next(following, skill_names):
+                    reason = _actionable_next_reason(following, skill_names)
+                    detail = f" ({reason})" if reason else ""
                     errors.append(
                         (
                             name,
-                            f"recovery rule {condition!r} has a non-actionable 'next': {following!r}",
+                            f"recovery rule {condition!r} has a non-actionable 'next': {following!r}{detail}",
                         )
                     )
                 key = condition.strip().casefold()
