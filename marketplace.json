@@ -346,7 +346,7 @@
       "recovery": [
         {
           "on": "HYPER3D_API_KEY is unset or rejected",
-          "next": "dcc-mcp-cli marketplace inspect dcc-ai-hyper3d"
+          "next": "set a valid HYPER3D_API_KEY in the adapter process environment, then restart the adapter; consult the marketplace entry documentation for setup instructions"
         },
         {
           "on": "a submitted task remains queued or running",
@@ -357,8 +357,12 @@
           "next": "check the Hyper3D account history for an existing job before submitting another paid request"
         },
         {
-          "on": "a downloaded result is unwanted or incomplete",
-          "next": "remove only the saved local result files, then download the existing completed task again; local deletion does not cancel a paid provider job"
+          "on": "a downloaded result is unwanted",
+          "next": "remove only unwanted local result files saved by this task; keep other files and do not download the unwanted result again"
+        },
+        {
+          "on": "a download is incomplete",
+          "next": "preserve verified local files and request only missing files through filenames, or choose a new output_dir; reuse the existing completed task without submitting another paid job"
         }
       ],
       "undo": "manual"
