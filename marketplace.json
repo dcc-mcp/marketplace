@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -317,7 +317,7 @@
     {
       "name": "dcc-ai-hyper3d",
       "description": "Hyper3D Rodin generation, Agentic tasks, Bang remeshing, texture generation, status, balance, and asset downloads for any DCC-MCP host",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dcc": ["any"],
       "tags": ["skills", "domain", "ai", "hyper3d", "rodin", "3d-generation", "cross-dcc"],
       "category": "Asset Providers",
@@ -326,7 +326,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hyper3d",
-        "ref": "12bfda536bdfe92cc7a58893a9724af97137b8a4",
+        "ref": "b4357b44bc1b635455dc7bc912f86ccc8b54fb78",
         "skillRoots": ["skill/hyper3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hyper3d#readme",
