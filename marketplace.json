@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.15.5",
+  "version": "1.16.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -310,6 +310,59 @@
         {
           "on": "the downloaded GLB is incomplete or fails to open",
           "next": "delete the partial download and re-download the completed task, then verify the GLB loads"
+        }
+      ],
+      "undo": "manual"
+    },
+    {
+      "name": "dcc-ai-hyper3d",
+      "description": "Hyper3D Rodin generation, Agentic tasks, Bang remeshing, texture generation, status, balance, and asset downloads for any DCC-MCP host",
+      "version": "0.1.0",
+      "dcc": ["any"],
+      "tags": ["skills", "domain", "ai", "hyper3d", "rodin", "3d-generation", "cross-dcc"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.20.44",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-ai-hyper3d",
+        "ref": "12bfda536bdfe92cc7a58893a9724af97137b8a4",
+        "skillRoots": ["skill/hyper3d"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-ai-hyper3d#readme",
+      "policy": {
+        "installation": "available"
+      },
+      "requires": {
+        "env": ["HYPER3D_API_KEY"]
+      },
+      "license": "MIT",
+      "lifecycle": "experimental",
+      "examplePrompts": [
+        "Generate a textured GLB from this concept image with Hyper3D Rodin and download the completed model",
+        "Remesh this model with Hyper3D Bang and inspect its task status before downloading the result",
+        "Check my Hyper3D credit balance and generate textures for this existing mesh"
+      ],
+      "recovery": [
+        {
+          "on": "HYPER3D_API_KEY is unset or rejected",
+          "next": "set a valid HYPER3D_API_KEY in the adapter process environment, then restart the adapter; consult the marketplace entry documentation for setup instructions"
+        },
+        {
+          "on": "a submitted task remains queued or running",
+          "next": "poll the recorded task identifiers rather than submitting a duplicate paid generation"
+        },
+        {
+          "on": "a submission response was lost before a task identifier was recorded",
+          "next": "check the Hyper3D account history for an existing job before submitting another paid request"
+        },
+        {
+          "on": "a downloaded result is unwanted",
+          "next": "remove only unwanted local result files saved by this task; keep other files and do not download the unwanted result again"
+        },
+        {
+          "on": "a download is incomplete",
+          "next": "preserve verified local files and request only missing files through filenames, or choose a new output_dir; reuse the existing completed task without submitting another paid job"
         }
       ],
       "undo": "manual"
