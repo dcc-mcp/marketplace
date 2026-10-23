@@ -326,7 +326,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hyper3d",
-        "ref": "e9d09644e92cef874dee94773ea12955e21e6ca7",
+        "ref": "12bfda536bdfe92cc7a58893a9724af97137b8a4",
         "skillRoots": ["skill/hyper3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hyper3d#readme",
