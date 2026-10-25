@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.16.2",
+  "version": "1.17.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -126,6 +126,48 @@
         }
       ],
       "undo": "single-step"
+    },
+    {
+      "name": "unity-asset-store",
+      "description": "Plan official Unity Asset Store acquisition from a supplied link, guide manual download and import, and verify imported assets with typed Unity tools",
+      "version": "0.1.0",
+      "dcc": ["unity"],
+      "tags": ["skills", "domain", "unity", "asset-store", "asset", "import", "workflow"],
+      "category": "Skills",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.19.90",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-mcp-unity",
+        "ref": "d047665b830f9c71debf3c8461a9050c5ebbeda6",
+        "skillRoots": ["skills/unity-asset-store"]
+      },
+      "docs": "https://github.com/dcc-mcp/dcc-mcp-unity/blob/d047665b830f9c71debf3c8461a9050c5ebbeda6/skills/unity-asset-store/SKILL.md",
+      "policy": {
+        "installation": "available"
+      },
+      "license": "MIT",
+      "lifecycle": "experimental",
+      "examplePrompts": [
+        "Plan how to acquire Mech Combat Kit from this Unity Asset Store link and verify it after I import it",
+        "Explain the official My Assets download and import steps for this Unity Asset Store package",
+        "解析这个 Unity Asset Store 链接，给出官方下载导入步骤，并在导入后检查资源"
+      ],
+      "recovery": [
+        {
+          "on": "the supplied link is not a valid Unity Asset Store package URL",
+          "next": "copy the official package link from the Asset Store and run the local planner again; the planner changes no project files, so there is nothing to undo"
+        },
+        {
+          "on": "the package is missing from My Assets or requires a purchase or license acceptance",
+          "next": "ask the user to complete the official Unity account and acquisition steps, then download and import the package manually through Package Manager My Assets"
+        },
+        {
+          "on": "post-import verification reports missing assets or compilation errors",
+          "next": "inspect Unity assets and diagnostics with the typed tools, then ask the user to review the import; restore the pre-import project backup if the manual import must be reverted"
+        }
+      ],
+      "undo": "none"
     },
     {
       "name": "dcc-ui-qt-inspector",
