@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -20,7 +20,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
-        "ref": "9c45b87b0dda501f5d53f71ad7b39f5905a81b4c",
+        "ref": "5330606327f6d4224e1221d8a8f12d96b40187e9",
         "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
       },
       "package": {
@@ -61,7 +61,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
-        "ref": "2e6a6dcd350a3e35d89b1a4c7870d2908103ea15",
+        "ref": "f20252aa9e6a53337831c03ce551ea4f00fda61e",
         "skillRoots": ["skill/maya-advancedskeleton"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
@@ -98,7 +98,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
-        "ref": "73938bbc7b21b2e6b7e5e5d79a5d44d75a106cf7",
+        "ref": "90e1317c9504db5159d54c8fe8d3fe65a6e7f2a9",
         "skillRoots": ["skill/maya-procedural-architecture"]
       },
       "policy": {
@@ -286,7 +286,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
-        "ref": "cf7511dffd761786b4a77d04a2bc4f14c7b3f259",
+        "ref": "6c04e106e268499a030cafbdc1c5b76dddfc725c",
         "skillRoots": ["skill/tripo3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-tripo3d#readme",
@@ -326,7 +326,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hyper3d",
-        "ref": "b8de82dd1ba4807d29ecf5933968a4d9b6039555",
+        "ref": "a0125c8648a70ae5422a69c7a27a46c0b241b11c",
         "skillRoots": ["skill/hyper3d"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hyper3d#readme",
@@ -417,7 +417,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
-        "ref": "3cbacf1c4641e02d1bd8898017a11db771f450c3",
+        "ref": "d549398d6cc3dc31f3757517483c20becc62cf7c",
         "skillRoots": ["skill/godot-asset-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
@@ -545,7 +545,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
-        "ref": "503cdadef0238e827da01ede65618ee2c26601f5",
+        "ref": "96f04a13337c0f65f259a2178741a162f637f885",
         "skillRoots": ["skill/blender-extension-store"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
@@ -815,7 +815,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
-        "ref": "a621503818afc98a4c058992742689fa32c08d0f",
+        "ref": "9cfd4f77d734b079a3d266823863a51f5fc0fb6f",
         "skillRoots": ["skill/objaverse-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-objaverse#readme",
@@ -855,7 +855,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
-        "ref": "c8e9dfe405ca284fc1979c4da87d8ff61477bbba",
+        "ref": "d968ed58c345e24647d24e8a5264ef05ea99f7d3",
         "skillRoots": ["skill/gltf-sample-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets#readme",
@@ -892,7 +892,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-sketchfab",
-        "ref": "b0e2c8ff19e7a234ce4076458a29574587ab0152",
+        "ref": "bdfc6f26fed75340c67c21d93094301cd6ec73ac",
         "skillRoots": ["skill/sketchfab-assets"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-sketchfab#readme",
@@ -932,7 +932,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects",
-        "ref": "cfd44396b138722b7858d451acbadb1402982524",
+        "ref": "b84832a7bf9e5cb5a499c14d4fdd9306ea0d792b",
         "skillRoots": ["skill/google-scanned-objects"]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects#readme",
@@ -970,7 +970,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-openai-image",
-        "ref": "0c2c2d47ebd20dd01ef61dc5d3280f339547d5e9",
+        "ref": "1a6f9fa7f13a26f16aa0e3de498100cfb4c8d9c6",
         "skillRoots": ["skill/openai-image-textures"]
       },
       "policy": {
@@ -1176,7 +1176,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
+        "ref": "a4a25032bd30b82526c188e973adc2f30aedbe8d",
         "skillRoots": ["skill/pipeline-publish"]
       },
       "policy": {
@@ -1218,7 +1218,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
+        "ref": "a4a25032bd30b82526c188e973adc2f30aedbe8d",
         "skillRoots": ["skill/game-release-package"]
       },
       "policy": {
@@ -1303,7 +1303,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
+        "ref": "a4a25032bd30b82526c188e973adc2f30aedbe8d",
         "skillRoots": ["skill/game-runtime-acceptance"]
       },
       "policy": {
@@ -1341,7 +1341,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
-        "ref": "02e22c9d22345f694320d3488c47b876df08d497",
+        "ref": "a4a25032bd30b82526c188e973adc2f30aedbe8d",
         "skillRoots": ["skill/game-pv-capture"]
       },
       "policy": {
@@ -1539,7 +1539,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
-        "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
+        "ref": "f8d2bf7ec3a114124c7f438900874055d5b136e6",
         "skillRoots": ["skill/openstreetmap-city-data"]
       },
       "policy": {
@@ -1579,7 +1579,7 @@
       "source": {
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
-        "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
+        "ref": "f8d2bf7ec3a114124c7f438900874055d5b136e6",
         "skillRoots": ["skill/overture-city-data"]
       },
       "policy": {
