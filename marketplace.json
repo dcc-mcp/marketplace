@@ -1,7 +1,7 @@
 {
   "name": "dcc-mcp-official",
   "schemaVersion": "1",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "interface": {
     "displayName": "DCC-MCP Official Marketplace",
     "description": "Curated DCC-MCP plugins, multi-skill bundles, asset providers, and Skills."
@@ -10,10 +10,17 @@
   "skills": [
     {
       "name": "dcc-mcp-maya-mgear",
-      "description": "mGear Shifter rigging integration for DCC-MCP — inspect, build, and manage mGear rigs",
+      "description": "mGear Shifter rigging integration for DCC-MCP \u2014 inspect, build, and manage mGear rigs",
       "version": "0.4.3",
-      "dcc": ["maya"],
-      "tags": ["skills", "maya", "rigging", "mgear"],
+      "dcc": [
+        "maya"
+      ],
+      "tags": [
+        "skills",
+        "maya",
+        "rigging",
+        "mgear"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -21,18 +28,28 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear",
         "ref": "9c45b87b0dda501f5d53f71ad7b39f5905a81b4c",
-        "skillRoots": ["skill/maya-mgear", "skill/mgear-import-to-scene"]
+        "skillRoots": [
+          "skill/maya-mgear",
+          "skill/mgear-import-to-scene"
+        ]
       },
       "package": {
         "format": "skill-bundle",
-        "skills": ["maya-mgear", "mgear-import-to-scene"]
+        "skills": [
+          "maya-mgear",
+          "mgear-import-to-scene"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-mgear#readme",
       "showcase": "docs/images/dcc-mcp-maya-mgear-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Build a mGear Shifter biped rig from the current Maya guide and report every component it created", "Inspect which mGear modules and versions are loaded in this Maya session", "Import the exported mGear rig back into the scene and verify the control hierarchy"],
+      "examplePrompts": [
+        "Build a mGear Shifter biped rig from the current Maya guide and report every component it created",
+        "Inspect which mGear modules and versions are loaded in this Maya session",
+        "Import the exported mGear rig back into the scene and verify the control hierarchy"
+      ],
       "recovery": [
         {
           "on": "mGear is not importable in the running Maya interpreter",
@@ -51,10 +68,19 @@
     },
     {
       "name": "dcc-mcp-maya-advancedskeleton",
-      "description": "AdvancedSkeleton rigging for DCC-MCP — inspect templates, create or import FitSkeletons, and build or rebuild Maya rigs",
+      "description": "AdvancedSkeleton rigging for DCC-MCP \u2014 inspect templates, create or import FitSkeletons, and build or rebuild Maya rigs",
       "version": "0.1.1",
-      "dcc": ["maya"],
-      "tags": ["skills", "domain", "maya", "rigging", "advancedskeleton", "fitskeleton"],
+      "dcc": [
+        "maya"
+      ],
+      "tags": [
+        "skills",
+        "domain",
+        "maya",
+        "rigging",
+        "advancedskeleton",
+        "fitskeleton"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -62,14 +88,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton",
         "ref": "2e6a6dcd350a3e35d89b1a4c7870d2908103ea15",
-        "skillRoots": ["skill/maya-advancedskeleton"]
+        "skillRoots": [
+          "skill/maya-advancedskeleton"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-advancedskeleton#readme",
       "showcase": "docs/images/maya-advancedskeleton-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["List the AdvancedSkeleton templates available in this Maya session", "Create a FitSkeleton from the selected biped template and report the joints it placed", "Rebuild the existing AdvancedSkeleton rig after I move the FitSkeleton joints"],
+      "examplePrompts": [
+        "List the AdvancedSkeleton templates available in this Maya session",
+        "Create a FitSkeleton from the selected biped template and report the joints it placed",
+        "Rebuild the existing AdvancedSkeleton rig after I move the FitSkeleton joints"
+      ],
       "recovery": [
         {
           "on": "AdvancedSkeleton is not installed or not importable in Maya",
@@ -90,8 +122,21 @@
       "name": "dcc-mcp-maya-procedural-architecture",
       "description": "Generate six seeded Maya house styles with realistic or stylized Arnold materials, cancellable progress, and optional CC0 HDR lighting",
       "version": "1.1.0",
-      "dcc": ["maya"],
-      "tags": ["skills", "domain", "maya", "bifrost", "architecture", "procedural-modeling", "arnold", "pbr", "hdri", "stylized"],
+      "dcc": [
+        "maya"
+      ],
+      "tags": [
+        "skills",
+        "domain",
+        "maya",
+        "bifrost",
+        "architecture",
+        "procedural-modeling",
+        "arnold",
+        "pbr",
+        "hdri",
+        "stylized"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -99,18 +144,29 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture",
         "ref": "73938bbc7b21b2e6b7e5e5d79a5d44d75a106cf7",
-        "skillRoots": ["skill/maya-procedural-architecture"]
+        "skillRoots": [
+          "skill/maya-procedural-architecture"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "skills": ["maya-bifrost", "maya-materials", "maya-render", "ambientcg-assets"]
+        "skills": [
+          "maya-bifrost",
+          "maya-materials",
+          "maya-render",
+          "ambientcg-assets"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-mcp-maya-procedural-architecture#readme",
       "showcase": "docs/showcase/maya-bifrost-random-houses.gif",
-      "examplePrompts": ["Generate three seeded suburban house variants in Maya with Arnold materials and report the mesh counts", "Build one stylized cottage with a CC0 HDRI from ambientCG and frame it with the existing camera", "Cancel the running house generation and tell me what was already created"],
+      "examplePrompts": [
+        "Generate three seeded suburban house variants in Maya with Arnold materials and report the mesh counts",
+        "Build one stylized cottage with a CC0 HDRI from ambientCG and frame it with the existing camera",
+        "Cancel the running house generation and tell me what was already created"
+      ],
       "recovery": [
         {
           "on": "Bifrost or Arnold is unavailable in this Maya version",
@@ -131,8 +187,18 @@
       "name": "unity-asset-store",
       "description": "Plan official Unity Asset Store acquisition from a supplied link, guide manual download and import, and verify imported assets with typed Unity tools",
       "version": "0.1.0",
-      "dcc": ["unity"],
-      "tags": ["skills", "domain", "unity", "asset-store", "asset", "import", "workflow"],
+      "dcc": [
+        "unity"
+      ],
+      "tags": [
+        "skills",
+        "domain",
+        "unity",
+        "asset-store",
+        "asset",
+        "import",
+        "workflow"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.90",
@@ -140,7 +206,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-unity",
         "ref": "d047665b830f9c71debf3c8461a9050c5ebbeda6",
-        "skillRoots": ["skills/unity-asset-store"]
+        "skillRoots": [
+          "skills/unity-asset-store"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-unity/blob/d047665b830f9c71debf3c8461a9050c5ebbeda6/skills/unity-asset-store/SKILL.md",
       "policy": {
@@ -151,7 +219,7 @@
       "examplePrompts": [
         "Plan how to acquire Mech Combat Kit from this Unity Asset Store link and verify it after I import it",
         "Explain the official My Assets download and import steps for this Unity Asset Store package",
-        "解析这个 Unity Asset Store 链接，给出官方下载导入步骤，并在导入后检查资源"
+        "\u89e3\u6790\u8fd9\u4e2a Unity Asset Store \u94fe\u63a5\uff0c\u7ed9\u51fa\u5b98\u65b9\u4e0b\u8f7d\u5bfc\u5165\u6b65\u9aa4\uff0c\u5e76\u5728\u5bfc\u5165\u540e\u68c0\u67e5\u8d44\u6e90"
       ],
       "recovery": [
         {
@@ -173,8 +241,28 @@
       "name": "dcc-ui-qt-inspector",
       "description": "Read-only Qt inspection for DCC-MCP CUA and UI Control selector discovery",
       "version": "0.1.0",
-      "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "qt", "pyside", "pyqt", "inspection", "infrastructure"],
+      "dcc": [
+        "maya",
+        "houdini",
+        "nuke",
+        "substance",
+        "substance3d_designer",
+        "substance3d_painter",
+        "mari",
+        "katana"
+      ],
+      "tags": [
+        "skills",
+        "ui",
+        "ui-control",
+        "cua",
+        "dcc-cua",
+        "qt",
+        "pyside",
+        "pyqt",
+        "inspection",
+        "infrastructure"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.0",
@@ -182,14 +270,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-inspector",
         "ref": "bca538cb6ffb372025bbe400bed7ee61e60617b9",
-        "skillRoots": ["skill/qt-ui-inspector"]
+        "skillRoots": [
+          "skill/qt-ui-inspector"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-inspector#readme",
       "showcase": "docs/images/dcc-ui-qt-inspector-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Inspect the Qt widget tree of the running Houdini session and list every dialog title", "Find a stable selector for the render settings Apply button in this DCC", "Report which Qt widgets are currently visible under the main window"],
+      "examplePrompts": [
+        "Inspect the Qt widget tree of the running Houdini session and list every dialog title",
+        "Find a stable selector for the render settings Apply button in this DCC",
+        "Report which Qt widgets are currently visible under the main window"
+      ],
       "recovery": [
         {
           "on": "no Qt binding is available in the target DCC process",
@@ -206,8 +300,28 @@
       "name": "dcc-ui-qt-actions",
       "description": "Structured Qt actions for DCC-MCP CUA and UI Control workflows backed by dcc-cua",
       "version": "0.1.2",
-      "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "qt", "pyside", "pyqt", "automation", "infrastructure"],
+      "dcc": [
+        "maya",
+        "houdini",
+        "nuke",
+        "substance",
+        "substance3d_designer",
+        "substance3d_painter",
+        "mari",
+        "katana"
+      ],
+      "tags": [
+        "skills",
+        "ui",
+        "ui-control",
+        "cua",
+        "dcc-cua",
+        "qt",
+        "pyside",
+        "pyqt",
+        "automation",
+        "infrastructure"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.0",
@@ -215,14 +329,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-qt-actions",
         "ref": "9c16447100d2c5883883ec175a61e4bcd8839f0d",
-        "skillRoots": ["skill/qt-ui-actions"]
+        "skillRoots": [
+          "skill/qt-ui-actions"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-qt-actions#readme",
       "showcase": "docs/images/dcc-ui-qt-actions-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Click the Apply button in the Houdini render settings dialog and report the resulting widget state", "Set the frame range fields in the open Qt dialog and verify the values were accepted", "Drive the Nuke write node creation dialog through structured Qt actions"],
+      "examplePrompts": [
+        "Click the Apply button in the Houdini render settings dialog and report the resulting widget state",
+        "Set the frame range fields in the open Qt dialog and verify the values were accepted",
+        "Drive the Nuke write node creation dialog through structured Qt actions"
+      ],
       "recovery": [
         {
           "on": "the target selector no longer resolves in the live UI",
@@ -243,8 +363,28 @@
       "name": "dcc-ui-workflow-memory",
       "description": "Structured workflow memory for DCC-MCP CUA and UI Control automation backed by dcc-cua",
       "version": "0.1.1",
-      "dcc": ["maya", "houdini", "nuke", "substance", "substance3d_designer", "substance3d_painter", "mari", "katana"],
-      "tags": ["skills", "ui", "ui-control", "cua", "dcc-cua", "workflow", "memory", "automation", "selectors", "infrastructure"],
+      "dcc": [
+        "maya",
+        "houdini",
+        "nuke",
+        "substance",
+        "substance3d_designer",
+        "substance3d_painter",
+        "mari",
+        "katana"
+      ],
+      "tags": [
+        "skills",
+        "ui",
+        "ui-control",
+        "cua",
+        "dcc-cua",
+        "workflow",
+        "memory",
+        "automation",
+        "selectors",
+        "infrastructure"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.0",
@@ -252,14 +392,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ui-workflow-memory",
         "ref": "7b36e670eab1a0ee44b0996996f3fa72747acdfe",
-        "skillRoots": ["skill/ui-workflow-memory"]
+        "skillRoots": [
+          "skill/ui-workflow-memory"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ui-workflow-memory#readme",
       "showcase": "docs/images/dcc-ui-workflow-memory-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Record the Qt selector path for building a Nuke write node so later runs can reuse it", "Recall the stored workflow for publishing a Houdini render and list its verified steps", "Store this successful Qt action sequence as a reusable workflow for Substance Painter"],
+      "examplePrompts": [
+        "Record the Qt selector path for building a Nuke write node so later runs can reuse it",
+        "Recall the stored workflow for publishing a Houdini render and list its verified steps",
+        "Store this successful Qt action sequence as a reusable workflow for Substance Painter"
+      ],
       "recovery": [
         {
           "on": "no stored workflow matches the requested task",
@@ -278,10 +424,20 @@
     },
     {
       "name": "dcc-ai-hunyuan3d",
-      "description": "Tencent Cloud Hunyuan 3D generation for DCC-MCP — submit and query text/image-to-3D jobs",
+      "description": "Tencent Cloud Hunyuan 3D generation for DCC-MCP \u2014 submit and query text/image-to-3D jobs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["skills", "ai", "hunyuan", "3d-generation"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "skills",
+        "ai",
+        "hunyuan",
+        "3d-generation"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -289,7 +445,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d",
         "ref": "67154e0e372867c68bc4214db580c146f6bc8ffd",
-        "skillRoots": ["skill/hunyuan3d"]
+        "skillRoots": [
+          "skill/hunyuan3d"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hunyuan3d#readme",
       "showcase": "docs/images/dcc-ai-hunyuan3d-showcase.webp",
@@ -297,9 +455,15 @@
         "installation": "available"
       },
       "requires": {
-        "bins": ["tccli"]
+        "bins": [
+          "tccli"
+        ]
       },
-      "examplePrompts": ["Generate a 3D model of a wooden chair from this text prompt and download the result", "Check the status of my last Hunyuan 3D job and download it when it finishes", "Turn this concept image into a 3D mesh with Hunyuan and report the poly count"],
+      "examplePrompts": [
+        "Generate a 3D model of a wooden chair from this text prompt and download the result",
+        "Check the status of my last Hunyuan 3D job and download it when it finishes",
+        "Turn this concept image into a 3D mesh with Hunyuan and report the poly count"
+      ],
       "recovery": [
         {
           "on": "tccli is missing or Tencent Cloud credentials are not configured",
@@ -318,10 +482,20 @@
     },
     {
       "name": "dcc-ai-tripo3d",
-      "description": "Tripo 3D generation for DCC-MCP — create, inspect, and download text/image/multiview tasks",
+      "description": "Tripo 3D generation for DCC-MCP \u2014 create, inspect, and download text/image/multiview tasks",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["skills", "ai", "tripo", "3d-generation"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "skills",
+        "ai",
+        "tripo",
+        "3d-generation"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -329,7 +503,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-tripo3d",
         "ref": "cf7511dffd761786b4a77d04a2bc4f14c7b3f259",
-        "skillRoots": ["skill/tripo3d"]
+        "skillRoots": [
+          "skill/tripo3d"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-tripo3d#readme",
       "showcase": "docs/images/dcc-ai-tripo3d-showcase.webp",
@@ -337,9 +513,15 @@
         "installation": "available"
       },
       "requires": {
-        "env": ["TRIPO_API_KEY"]
+        "env": [
+          "TRIPO_API_KEY"
+        ]
       },
-      "examplePrompts": ["Generate a low-poly treasure chest with Tripo from this text prompt and download the GLB", "Check the status of my Tripo task and download it when it is done", "Build a 3D model from these four reference views with Tripo and report the result"],
+      "examplePrompts": [
+        "Generate a low-poly treasure chest with Tripo from this text prompt and download the GLB",
+        "Check the status of my Tripo task and download it when it is done",
+        "Build a 3D model from these four reference views with Tripo and report the result"
+      ],
       "recovery": [
         {
           "on": "TRIPO_API_KEY is unset or rejected",
@@ -360,8 +542,18 @@
       "name": "dcc-ai-hyper3d",
       "description": "Hyper3D Rodin generation, Agentic tasks, Bang remeshing, texture generation, status, balance, and asset downloads for any DCC-MCP host",
       "version": "0.1.2",
-      "dcc": ["any"],
-      "tags": ["skills", "domain", "ai", "hyper3d", "rodin", "3d-generation", "cross-dcc"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "skills",
+        "domain",
+        "ai",
+        "hyper3d",
+        "rodin",
+        "3d-generation",
+        "cross-dcc"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.44",
@@ -369,14 +561,18 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-hyper3d",
         "ref": "b8de82dd1ba4807d29ecf5933968a4d9b6039555",
-        "skillRoots": ["skill/hyper3d"]
+        "skillRoots": [
+          "skill/hyper3d"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-ai-hyper3d#readme",
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["HYPER3D_API_KEY"]
+        "env": [
+          "HYPER3D_API_KEY"
+        ]
       },
       "license": "MIT",
       "lifecycle": "experimental",
@@ -413,8 +609,20 @@
       "name": "dcc-asset-polyhaven",
       "description": "Browse and download CC0 assets from Poly Haven (models, HDRIs, textures)",
       "version": "0.1.2",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "photoshop"],
-      "tags": ["asset", "polyhaven", "cc0", "download", "domain"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "photoshop"
+      ],
+      "tags": [
+        "asset",
+        "polyhaven",
+        "cc0",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -423,14 +631,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-polyhaven",
         "ref": "916897d50455087a588c41cc91930c4fd625f32e",
-        "skillRoots": ["skill/polyhaven-assets"]
+        "skillRoots": [
+          "skill/polyhaven-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-polyhaven#readme",
       "showcase": "docs/images/polyhaven-barrel-01.jpg",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Find a CC0 4k wooden floor texture on Poly Haven and download the 2k variant", "Search Poly Haven for a studio HDRI and download the 1k EXR", "Download this Poly Haven model as glTF and report its file size and license"],
+      "examplePrompts": [
+        "Find a CC0 4k wooden floor texture on Poly Haven and download the 2k variant",
+        "Search Poly Haven for a studio HDRI and download the 1k EXR",
+        "Download this Poly Haven model as glTF and report its file size and license"
+      ],
       "recovery": [
         {
           "on": "the Poly Haven API is unreachable or rate limited",
@@ -451,8 +665,18 @@
       "name": "dcc-asset-godot-store",
       "description": "Search, inspect, and download reusable add-ons and projects from the Godot Asset Store",
       "version": "0.1.0",
-      "dcc": ["godot"],
-      "tags": ["asset", "godot", "asset-store", "addon", "project", "download", "domain"],
+      "dcc": [
+        "godot"
+      ],
+      "tags": [
+        "asset",
+        "godot",
+        "asset-store",
+        "addon",
+        "project",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -460,7 +684,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-godot-store",
         "ref": "3cbacf1c4641e02d1bd8898017a11db771f450c3",
-        "skillRoots": ["skill/godot-asset-store"]
+        "skillRoots": [
+          "skill/godot-asset-store"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-godot-store#readme",
       "showcase": "docs/images/dcc-asset-godot-store-showcase.webp",
@@ -468,11 +694,17 @@
         "installation": "available"
       },
       "requires": {
-        "skills": ["godot-assets"]
+        "skills": [
+          "godot-assets"
+        ]
       },
       "license": "MIT",
       "lifecycle": "experimental",
-      "examplePrompts": ["Search the Godot Asset Store for a terrain addon and download it into this project", "Inspect this Godot Asset Store addon and report its license and supported Godot version", "Download this Godot Asset Store project template and list its top-level files"],
+      "examplePrompts": [
+        "Search the Godot Asset Store for a terrain addon and download it into this project",
+        "Inspect this Godot Asset Store addon and report its license and supported Godot version",
+        "Download this Godot Asset Store project template and list its top-level files"
+      ],
       "recovery": [
         {
           "on": "the Godot Asset Store API is unreachable",
@@ -493,8 +725,18 @@
       "name": "dcc-asset-itchio",
       "description": "Browse itch.io game assets and download directly owned uploads with explicit license evidence",
       "version": "0.1.0",
-      "dcc": ["any"],
-      "tags": ["asset", "itchio", "game-assets", "owned", "download", "license", "domain"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "asset",
+        "itchio",
+        "game-assets",
+        "owned",
+        "download",
+        "license",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.91",
@@ -503,20 +745,30 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-itchio",
         "ref": "8560614de5ffafe84d862b6b1d012654bb94a692",
-        "skillRoots": ["skill/itchio-assets"]
+        "skillRoots": [
+          "skill/itchio-assets"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["BUTLER_API_KEY"],
-        "bins": ["butler"]
+        "env": [
+          "BUTLER_API_KEY"
+        ],
+        "bins": [
+          "butler"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
       "showcase": "docs/images/dcc-itchio-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["List the itch.io assets I own that match the term dungeon and download one", "Download this itch.io asset I own and report its license evidence", "Check which of my owned itch.io uploads are downloadable right now"],
+      "examplePrompts": [
+        "List the itch.io assets I own that match the term dungeon and download one",
+        "Download this itch.io asset I own and report its license evidence",
+        "Check which of my owned itch.io uploads are downloadable right now"
+      ],
       "recovery": [
         {
           "on": "BUTLER_API_KEY or the butler binary is missing",
@@ -537,8 +789,19 @@
       "name": "dcc-asset-poly-pizza",
       "description": "Search and download license-validated low-poly models from the Poly Pizza published API",
       "version": "0.1.0",
-      "dcc": ["any"],
-      "tags": ["asset", "poly-pizza", "low-poly", "3d-models", "cc0", "cc-by", "download", "domain"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "asset",
+        "poly-pizza",
+        "low-poly",
+        "3d-models",
+        "cc0",
+        "cc-by",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.90",
@@ -547,18 +810,26 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-poly-pizza",
         "ref": "898cbbdc7d11428b9eb846bea756795cc11119c5",
-        "skillRoots": ["skill/poly-pizza-assets"]
+        "skillRoots": [
+          "skill/poly-pizza-assets"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["POLY_PIZZA_API_KEY"]
+        "env": [
+          "POLY_PIZZA_API_KEY"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-poly-pizza#readme",
       "lifecycle": "experimental",
-      "examplePrompts": ["Search Poly Pizza for a low-poly tree and download the GLB", "Find a CC0 barrel model on Poly Pizza and report its license and poly count", "Download five Poly Pizza props for a tavern scene and list what was saved"],
+      "examplePrompts": [
+        "Search Poly Pizza for a low-poly tree and download the GLB",
+        "Find a CC0 barrel model on Poly Pizza and report its license and poly count",
+        "Download five Poly Pizza props for a tavern scene and list what was saved"
+      ],
       "recovery": [
         {
           "on": "POLY_PIZZA_API_KEY is unset or rejected",
@@ -579,8 +850,17 @@
       "name": "dcc-asset-blender-extensions",
       "description": "Search and download checksum-verified add-ons from the official Blender Extensions repository",
       "version": "0.1.0",
-      "dcc": ["blender"],
-      "tags": ["asset", "blender", "extensions", "addon", "download", "domain"],
+      "dcc": [
+        "blender"
+      ],
+      "tags": [
+        "asset",
+        "blender",
+        "extensions",
+        "addon",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -588,7 +868,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-blender-extensions",
         "ref": "503cdadef0238e827da01ede65618ee2c26601f5",
-        "skillRoots": ["skill/blender-extension-store"]
+        "skillRoots": [
+          "skill/blender-extension-store"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-blender-extensions#readme",
       "showcase": "docs/images/dcc-asset-blender-extensions-showcase.webp",
@@ -596,11 +878,17 @@
         "installation": "available"
       },
       "requires": {
-        "skills": ["blender-extensions"]
+        "skills": [
+          "blender-extensions"
+        ]
       },
       "license": "MIT",
       "lifecycle": "experimental",
-      "examplePrompts": ["Search Blender Extensions for a retopology addon and download the verified wheel", "Download this Blender extension and verify its checksum before I enable it", "Find a Blender extension for node presets and report its version and license"],
+      "examplePrompts": [
+        "Search Blender Extensions for a retopology addon and download the verified wheel",
+        "Download this Blender extension and verify its checksum before I enable it",
+        "Find a Blender extension for node presets and report its version and license"
+      ],
       "recovery": [
         {
           "on": "the Blender Extensions repository is unreachable",
@@ -621,8 +909,19 @@
       "name": "dcc-asset-ambientcg",
       "description": "Search and download free ambientCG materials, HDRIs, and models",
       "version": "0.2.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "ambientcg", "download", "pbr", "domain"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "ambientcg",
+        "download",
+        "pbr",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -631,14 +930,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-ambientcg",
         "ref": "207d608b5076a487572ac9c647a2f4f75a6ac64d",
-        "skillRoots": ["skill/ambientcg-assets"]
+        "skillRoots": [
+          "skill/ambientcg-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-ambientcg#readme",
       "showcase": "docs/images/dcc-asset-ambientcg-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download a CC0 2k concrete material set from ambientCG with all its maps", "Search ambientCG for a fabric material and download the 1k variant", "Get an ambientCG HDRI for outdoor lighting and report its resolution"],
+      "examplePrompts": [
+        "Download a CC0 2k concrete material set from ambientCG with all its maps",
+        "Search ambientCG for a fabric material and download the 1k variant",
+        "Get an ambientCG HDRI for outdoor lighting and report its resolution"
+      ],
       "recovery": [
         {
           "on": "ambientCG is unreachable or returns an error page",
@@ -659,8 +964,20 @@
       "name": "dcc-asset-nasa3d",
       "description": "Search and download free NASA 3D Resources files with NASA usage notices",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "nasa", "space", "download", "free", "domain"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "nasa",
+        "space",
+        "download",
+        "free",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -669,14 +986,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-nasa3d",
         "ref": "9724a757a5ae85313414b712e9c8f5ae1fc4ae91",
-        "skillRoots": ["skill/nasa3d-assets"]
+        "skillRoots": [
+          "skill/nasa3d-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-nasa3d#readme",
       "showcase": "docs/images/dcc-asset-nasa3d-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download the NASA Mars rover 3D model and report its usage notice", "Search NASA 3D Resources for a satellite model and download it", "List the formats published for this NASA 3D asset"],
+      "examplePrompts": [
+        "Download the NASA Mars rover 3D model and report its usage notice",
+        "Search NASA 3D Resources for a satellite model and download it",
+        "List the formats published for this NASA 3D asset"
+      ],
       "recovery": [
         {
           "on": "nasa3d.arc.nasa.gov is unreachable",
@@ -697,8 +1020,19 @@
       "name": "dcc-asset-smithsonian3d",
       "description": "Search and download Smithsonian Open Access CC0 3D files",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "smithsonian", "cc0", "download", "3d"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "smithsonian",
+        "cc0",
+        "download",
+        "3d"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -707,14 +1041,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d",
         "ref": "7bf1804a0246f980605ff1c0194d623c3cd06df4",
-        "skillRoots": ["skill/smithsonian3d-assets"]
+        "skillRoots": [
+          "skill/smithsonian3d-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-smithsonian3d#readme",
       "showcase": "docs/images/dcc-asset-smithsonian3d-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download this Smithsonian Open Access 3D scan as glTF and report its license", "Search the Smithsonian 3D collection for a historical aircraft model", "Check whether this Smithsonian asset has a CC0 download before I use it in a client project"],
+      "examplePrompts": [
+        "Download this Smithsonian Open Access 3D scan as glTF and report its license",
+        "Search the Smithsonian 3D collection for a historical aircraft model",
+        "Check whether this Smithsonian asset has a CC0 download before I use it in a client project"
+      ],
       "recovery": [
         {
           "on": "3d.si.edu is unreachable",
@@ -735,8 +1075,23 @@
       "name": "dcc-asset-kenney",
       "description": "Search and download CC0 Kenney game asset packs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "godot", "unreal", "unity", "zbrush"],
-      "tags": ["asset", "kenney", "cc0", "game-assets", "download"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "godot",
+        "unreal",
+        "unity",
+        "zbrush"
+      ],
+      "tags": [
+        "asset",
+        "kenney",
+        "cc0",
+        "game-assets",
+        "download"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -745,14 +1100,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-kenney",
         "ref": "8a4af6e2742c876763fac03bfa87562649c55dc0",
-        "skillRoots": ["skill/kenney-assets"]
+        "skillRoots": [
+          "skill/kenney-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-kenney#readme",
       "showcase": "docs/images/dcc-asset-kenney-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download the Kenney nature pack and list every model it contains", "Search Kenney packs for a dungeon tileset and download it", "Install the Kenney UI pack into this Godot project and report the import path"],
+      "examplePrompts": [
+        "Download the Kenney nature pack and list every model it contains",
+        "Search Kenney packs for a dungeon tileset and download it",
+        "Install the Kenney UI pack into this Godot project and report the import path"
+      ],
       "recovery": [
         {
           "on": "kenney.nl is unreachable or the pack page changed",
@@ -773,8 +1134,18 @@
       "name": "dcc-asset-quaternius",
       "description": "Search and inspect CC0 Quaternius game asset packs",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "quaternius", "cc0", "game-assets"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "quaternius",
+        "cc0",
+        "game-assets"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -783,14 +1154,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-quaternius",
         "ref": "3b28750af6f07b48e6532656ad62c3296064f6a6",
-        "skillRoots": ["skill/quaternius-assets"]
+        "skillRoots": [
+          "skill/quaternius-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-quaternius#readme",
       "showcase": "docs/images/dcc-asset-quaternius-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Search Quaternius for a CC0 animal pack and inspect what is inside", "List the models in this Quaternius pack with their formats and poly counts", "Find a CC0 vehicle model on Quaternius and report its download URL"],
+      "examplePrompts": [
+        "Search Quaternius for a CC0 animal pack and inspect what is inside",
+        "List the models in this Quaternius pack with their formats and poly counts",
+        "Find a CC0 vehicle model on Quaternius and report its download URL"
+      ],
       "recovery": [
         {
           "on": "quaternius.com is unreachable",
@@ -811,8 +1188,24 @@
       "name": "dcc-asset-pirate-nation",
       "description": "Search and download CC0 Pirate Nation game art, voxel models, cards, logos, and NFT assets",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "unity", "godot"],
-      "tags": ["asset", "pirate-nation", "cc0", "game-assets", "voxel", "gltf", "download"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "unity",
+        "godot"
+      ],
+      "tags": [
+        "asset",
+        "pirate-nation",
+        "cc0",
+        "game-assets",
+        "voxel",
+        "gltf",
+        "download"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -821,14 +1214,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-pirate-nation",
         "ref": "d6b0610f8715df9cf9d8e690063c3abfa2295d3c",
-        "skillRoots": ["skill/pirate-nation-assets"]
+        "skillRoots": [
+          "skill/pirate-nation-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-pirate-nation#readme",
       "showcase": "docs/images/pirate-nation-assets-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download the Pirate Nation voxel ship models and list what was saved", "Search Pirate Nation art for a tavern card and download the PNG", "Grab the CC0 Pirate Nation logo pack and report the license for each file"],
+      "examplePrompts": [
+        "Download the Pirate Nation voxel ship models and list what was saved",
+        "Search Pirate Nation art for a tavern card and download the PNG",
+        "Grab the CC0 Pirate Nation logo pack and report the license for each file"
+      ],
       "recovery": [
         {
           "on": "the Pirate Nation asset host is unreachable",
@@ -849,8 +1248,19 @@
       "name": "dcc-asset-objaverse",
       "description": "Browse Objaverse annotations and download Creative Commons GLB objects",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "objaverse", "huggingface", "creative-commons", "glb"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "objaverse",
+        "huggingface",
+        "creative-commons",
+        "glb"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -858,17 +1268,25 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-objaverse",
         "ref": "a621503818afc98a4c058992742689fa32c08d0f",
-        "skillRoots": ["skill/objaverse-assets"]
+        "skillRoots": [
+          "skill/objaverse-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-objaverse#readme",
       "showcase": "docs/images/dcc-asset-objaverse-showcase.webp",
       "requires": {
-        "python": ["objaverse"]
+        "python": [
+          "objaverse"
+        ]
       },
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Find Objaverse chairs with Creative Commons licenses and download one as GLB", "Inspect the annotations for this Objaverse object and report its license", "Download ten CC-licensed Objaverse mugs and list the saved files"],
+      "examplePrompts": [
+        "Find Objaverse chairs with Creative Commons licenses and download one as GLB",
+        "Inspect the annotations for this Objaverse object and report its license",
+        "Download ten CC-licensed Objaverse mugs and list the saved files"
+      ],
       "recovery": [
         {
           "on": "the objaverse Python package is missing or Hugging Face is unreachable",
@@ -889,8 +1307,19 @@
       "name": "dcc-asset-gltf-sample-assets",
       "description": "Search and download Khronos glTF Sample Assets for testing and validation",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "gltf", "khronos", "sample-assets", "download"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "gltf",
+        "khronos",
+        "sample-assets",
+        "download"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -898,14 +1327,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
         "ref": "c8e9dfe405ca284fc1979c4da87d8ff61477bbba",
-        "skillRoots": ["skill/gltf-sample-assets"]
+        "skillRoots": [
+          "skill/gltf-sample-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets#readme",
       "showcase": "docs/images/dcc-asset-gltf-sample-assets-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download the Khronos glTF DamagedHelmet sample and verify it loads in this DCC", "List the glTF Sample Assets that exercise KTX2 textures", "Download the glTF sample model suite for a regression pass and report the file count"],
+      "examplePrompts": [
+        "Download the Khronos glTF DamagedHelmet sample and verify it loads in this DCC",
+        "List the glTF Sample Assets that exercise KTX2 textures",
+        "Download the glTF sample model suite for a regression pass and report the file count"
+      ],
       "recovery": [
         {
           "on": "the Khronos sample repository is unreachable",
@@ -926,8 +1361,20 @@
       "name": "dcc-asset-sketchfab",
       "description": "Search and download downloadable Sketchfab models with attribution metadata",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "sketchfab", "creative-commons", "download", "gltf", "glb"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "sketchfab",
+        "creative-commons",
+        "download",
+        "gltf",
+        "glb"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -935,7 +1382,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-sketchfab",
         "ref": "b0e2c8ff19e7a234ce4076458a29574587ab0152",
-        "skillRoots": ["skill/sketchfab-assets"]
+        "skillRoots": [
+          "skill/sketchfab-assets"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-sketchfab#readme",
       "showcase": "docs/images/dcc-asset-sketchfab-showcase.webp",
@@ -943,9 +1392,15 @@
         "installation": "available"
       },
       "requires": {
-        "env": ["SKETCHFAB_TOKEN"]
+        "env": [
+          "SKETCHFAB_TOKEN"
+        ]
       },
-      "examplePrompts": ["Search Sketchfab for a downloadable CC-licensed cottage and download the glTF", "Report the attribution and license metadata for this Sketchfab model", "Download this Sketchfab model and save its attribution text next to the file"],
+      "examplePrompts": [
+        "Search Sketchfab for a downloadable CC-licensed cottage and download the glTF",
+        "Report the attribution and license metadata for this Sketchfab model",
+        "Download this Sketchfab model and save its attribution text next to the file"
+      ],
       "recovery": [
         {
           "on": "SKETCHFAB_TOKEN is unset or the API rejects it",
@@ -966,8 +1421,20 @@
       "name": "dcc-asset-google-scanned-objects",
       "description": "Search and download Google Scanned Objects from Gazebo Fuel",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["asset", "google", "scanned-objects", "gazebo", "cc-by", "obj"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "asset",
+        "google",
+        "scanned-objects",
+        "gazebo",
+        "cc-by",
+        "obj"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.18.0",
@@ -975,14 +1442,20 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects",
         "ref": "cfd44396b138722b7858d451acbadb1402982524",
-        "skillRoots": ["skill/google-scanned-objects"]
+        "skillRoots": [
+          "skill/google-scanned-objects"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-asset-google-scanned-objects#readme",
       "showcase": "docs/images/dcc-asset-google-scanned-objects-showcase.webp",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Download a Google Scanned Objects toy model and report its CC-BY attribution", "List the Google Scanned Objects categories available on Gazebo Fuel", "Download three scanned household objects and verify each OBJ and texture pair"],
+      "examplePrompts": [
+        "Download a Google Scanned Objects toy model and report its CC-BY attribution",
+        "List the Google Scanned Objects categories available on Gazebo Fuel",
+        "Download three scanned household objects and verify each OBJ and texture pair"
+      ],
       "recovery": [
         {
           "on": "Gazebo Fuel is unreachable or the collection moved",
@@ -1003,8 +1476,22 @@
       "name": "dcc-ai-openai-image",
       "description": "Generate and edit DCC texture source images with OpenAI and return validated AssetDescriptors",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "photoshop"],
-      "tags": ["ai", "openai", "image", "texture", "albedo", "asset-provider"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "photoshop"
+      ],
+      "tags": [
+        "ai",
+        "openai",
+        "image",
+        "texture",
+        "albedo",
+        "asset-provider"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1013,19 +1500,27 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-ai-openai-image",
         "ref": "0c2c2d47ebd20dd01ef61dc5d3280f339547d5e9",
-        "skillRoots": ["skill/openai-image-textures"]
+        "skillRoots": [
+          "skill/openai-image-textures"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["OPENAI_API_KEY"]
+        "env": [
+          "OPENAI_API_KEY"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-ai-openai-image#readme",
       "showcase": "docs/images/dcc-ai-openai-image-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Generate a seamless 2k rusty metal albedo texture and return its AssetDescriptor", "Edit this texture source image to remove the baked-in lighting and return the new descriptor", "Generate four stylized wood albedo variants for this prop and report their license metadata"],
+      "examplePrompts": [
+        "Generate a seamless 2k rusty metal albedo texture and return its AssetDescriptor",
+        "Edit this texture source image to remove the baked-in lighting and return the new descriptor",
+        "Generate four stylized wood albedo variants for this prop and report their license metadata"
+      ],
       "recovery": [
         {
           "on": "OPENAI_API_KEY is unset or the request is rejected",
@@ -1046,8 +1541,28 @@
       "name": "dcc-texture-pipeline",
       "description": "Inspect, color-convert, and optimize production textures with OpenImageIO and OpenColorIO",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "nuke", "katana", "mari", "substance", "substance3d_designer", "substance3d_painter"],
-      "tags": ["texture", "openimageio", "opencolorio", "ocio", "aces", "mipmap", "pipeline"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "nuke",
+        "katana",
+        "mari",
+        "substance",
+        "substance3d_designer",
+        "substance3d_painter"
+      ],
+      "tags": [
+        "texture",
+        "openimageio",
+        "opencolorio",
+        "ocio",
+        "aces",
+        "mipmap",
+        "pipeline"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1055,23 +1570,38 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-texture-pipeline",
         "ref": "7d8616b161e9a8197476364b1d86e7c5725c079b",
-        "skillRoots": ["skill/oiio-textures", "skill/ocio-color"]
+        "skillRoots": [
+          "skill/oiio-textures",
+          "skill/ocio-color"
+        ]
       },
       "package": {
         "format": "skill-bundle",
-        "skills": ["oiio-textures", "ocio-color"]
+        "skills": [
+          "oiio-textures",
+          "ocio-color"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "bins": ["iinfo", "maketx", "oiiotool", "ociocheck"]
+        "bins": [
+          "iinfo",
+          "maketx",
+          "oiiotool",
+          "ociocheck"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-texture-pipeline#readme",
       "showcase": "docs/images/dcc-texture-pipeline-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Convert this albedo PNG to a tiled, mipmapped .tx with ACEScg color management", "Inspect this texture and report resolution, bit depth, file size, and color space", "Validate that the OCIO config resolves and report the available color spaces"],
+      "examplePrompts": [
+        "Convert this albedo PNG to a tiled, mipmapped .tx with ACEScg color management",
+        "Inspect this texture and report resolution, bit depth, file size, and color space",
+        "Validate that the OCIO config resolves and report the available color spaces"
+      ],
       "recovery": [
         {
           "on": "OpenImageIO or OpenColorIO binaries are missing from PATH",
@@ -1092,8 +1622,22 @@
       "name": "dcc-materialx",
       "description": "Create, inspect, and validate portable MaterialX look-development documents",
       "version": "0.1.0",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "katana"],
-      "tags": ["materialx", "material", "lookdev", "standard-surface", "usd", "hydra"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "katana"
+      ],
+      "tags": [
+        "materialx",
+        "material",
+        "lookdev",
+        "standard-surface",
+        "usd",
+        "hydra"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1101,19 +1645,27 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-materialx",
         "ref": "f6c57565555c22520cb60552b82cee7cd021d115",
-        "skillRoots": ["skill/materialx-lookdev"]
+        "skillRoots": [
+          "skill/materialx-lookdev"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "python": ["MaterialX"]
+        "python": [
+          "MaterialX"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-materialx#readme",
       "showcase": "docs/images/dcc-materialx-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Create a MaterialX document for a standard-surface brushed metal and validate it against the shipped nodedefs", "Inspect this .mtlx file and list every node, input, and unresolved reference", "Convert the MaterialX look so it renders the same in Houdini Karma and Unreal"],
+      "examplePrompts": [
+        "Create a MaterialX document for a standard-surface brushed metal and validate it against the shipped nodedefs",
+        "Inspect this .mtlx file and list every node, input, and unresolved reference",
+        "Convert the MaterialX look so it renders the same in Houdini Karma and Unreal"
+      ],
       "recovery": [
         {
           "on": "the MaterialX Python package is missing or too old",
@@ -1134,8 +1686,26 @@
       "name": "dcc-lookdev-turntable",
       "description": "Build and verify one camera-facing PBR LookDev sequence with calibrated references and asset-aware HDR presets",
       "version": "0.4.2",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "marmoset", "substance3d_designer", "substance3d_painter"],
-      "tags": ["lookdev", "tt", "pbr", "turntable", "hdri", "color-management", "render", "domain"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "marmoset",
+        "substance3d_designer",
+        "substance3d_painter"
+      ],
+      "tags": [
+        "lookdev",
+        "tt",
+        "pbr",
+        "turntable",
+        "hdri",
+        "color-management",
+        "render",
+        "domain"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1143,7 +1713,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-lookdev",
         "ref": "c0c3f8e8d84c070168c55c702628e1673003c0c7",
-        "skillRoots": ["skill/lookdev-turntable"]
+        "skillRoots": [
+          "skill/lookdev-turntable"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1151,7 +1723,12 @@
       "license": "MIT-0",
       "docs": "https://github.com/dcc-mcp/dcc-lookdev#readme",
       "lifecycle": "experimental",
-      "examplePrompts": ["Render a 24-frame PBR turntable of the selected asset with a studio HDR and export it to /tmp/turntable.mp4", "Build a LookDev turntable for this material ball and verify the greyscale and color chart read correctly", "Re-run the turntable with a 4k resolution and report the calibration deltas", "Build a fixed-camera EXR lighting comparison sheet for this asset and report the sheet digest"],
+      "examplePrompts": [
+        "Render a 24-frame PBR turntable of the selected asset with a studio HDR and export it to /tmp/turntable.mp4",
+        "Build a LookDev turntable for this material ball and verify the greyscale and color chart read correctly",
+        "Re-run the turntable with a 4k resolution and report the calibration deltas",
+        "Build a fixed-camera EXR lighting comparison sheet for this asset and report the sheet digest"
+      ],
       "recovery": [
         {
           "on": "no renderable camera exists in the scene",
@@ -1172,8 +1749,22 @@
       "name": "dcc-modeling-spec",
       "description": "Define and validate staged cross-DCC modeling specifications, scene measurements, and bounded review artifacts",
       "version": "0.1.1",
-      "dcc": ["maya", "blender", "houdini", "3dsmax"],
-      "tags": ["modeling", "specification", "validation", "topology", "uv", "materials", "review", "domain"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax"
+      ],
+      "tags": [
+        "modeling",
+        "specification",
+        "validation",
+        "topology",
+        "uv",
+        "materials",
+        "review",
+        "domain"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1181,7 +1772,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-modeling-spec",
         "ref": "6f57f214f60139ae3802fb737f15b7713d5751c6",
-        "skillRoots": ["skill/modeling-spec"]
+        "skillRoots": [
+          "skill/modeling-spec"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1189,7 +1782,12 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-modeling-spec#readme",
       "lifecycle": "experimental",
-      "examplePrompts": ["Validate the current scene against the modeling spec and list every failing measurement", "Define a staged modeling spec for a hero prop with topology, UV, and material gates", "Measure the bounding box and poly count of the selected mesh and export a bounded review artifact", "Ingest this glTF asset with unit and normal normalization, then report every material mapping gap"],
+      "examplePrompts": [
+        "Validate the current scene against the modeling spec and list every failing measurement",
+        "Define a staged modeling spec for a hero prop with topology, UV, and material gates",
+        "Measure the bounding box and poly count of the selected mesh and export a bounded review artifact",
+        "Ingest this glTF asset with unit and normal normalization, then report every material mapping gap"
+      ],
       "recovery": [
         {
           "on": "no active spec matches the selected asset",
@@ -1210,8 +1808,23 @@
       "name": "dcc-pipeline-publish",
       "description": "Create verified publish manifests connecting DCC exports, OpenUSD, render farms, and ShotGrid/FPT",
       "version": "0.1.1",
-      "dcc": ["maya", "blender", "houdini", "3dsmax", "unreal", "nuke"],
-      "tags": ["publish", "shotgrid", "fpt", "openusd", "deadline", "render-farm", "pipeline"],
+      "dcc": [
+        "maya",
+        "blender",
+        "houdini",
+        "3dsmax",
+        "unreal",
+        "nuke"
+      ],
+      "tags": [
+        "publish",
+        "shotgrid",
+        "fpt",
+        "openusd",
+        "deadline",
+        "render-farm",
+        "pipeline"
+      ],
       "category": "Studio",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1219,19 +1832,30 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
         "ref": "02e22c9d22345f694320d3488c47b876df08d497",
-        "skillRoots": ["skill/pipeline-publish"]
+        "skillRoots": [
+          "skill/pipeline-publish"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "skills": ["openusd-validate", "shotgrid-crud", "shotgrid-batch"]
+        "skills": [
+          "openusd-validate",
+          "shotgrid-crud",
+          "shotgrid-batch"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish#readme",
       "showcase": "docs/images/dcc-pipeline-publish-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Build a publish manifest for this Maya asset export and validate its OpenUSD and ShotGrid references", "Verify every dependency in this publish manifest resolves before I submit it", "Generate the publish manifest for a Blender prop and list the farm-ready export paths", "Check whether this scene is ready for the render farm and write a scene QA report with a digest"],
+      "examplePrompts": [
+        "Build a publish manifest for this Maya asset export and validate its OpenUSD and ShotGrid references",
+        "Verify every dependency in this publish manifest resolves before I submit it",
+        "Generate the publish manifest for a Blender prop and list the farm-ready export paths",
+        "Check whether this scene is ready for the render farm and write a scene QA report with a digest"
+      ],
       "recovery": [
         {
           "on": "a required OpenUSD, ShotGrid, or farm skill is missing",
@@ -1252,8 +1876,21 @@
       "name": "dcc-game-release-package",
       "description": "Package prebuilt Unreal, Unity, and Godot Windows games with explicit license provenance as installers, SteamPipe previews, or WeGame preflight records",
       "version": "0.2.1",
-      "dcc": ["godot", "unreal", "unity"],
-      "tags": ["game", "release", "package", "installer", "steam", "wegame", "windows", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "unity"
+      ],
+      "tags": [
+        "game",
+        "release",
+        "package",
+        "installer",
+        "steam",
+        "wegame",
+        "windows",
+        "domain"
+      ],
       "category": "Studio",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1261,18 +1898,26 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
         "ref": "02e22c9d22345f694320d3488c47b876df08d497",
-        "skillRoots": ["skill/game-release-package"]
+        "skillRoots": [
+          "skill/game-release-package"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "bins": ["ISCC.exe"]
+        "bins": [
+          "ISCC.exe"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-release-package/SKILL.md",
       "lifecycle": "experimental",
-      "examplePrompts": ["Package this prebuilt Godot Windows build as an installer and report the license provenance", "Preview the SteamPipe upload for this Unreal build without pushing it", "Run the WeGame preflight check for this Unity build and list what would fail submission"],
+      "examplePrompts": [
+        "Package this prebuilt Godot Windows build as an installer and report the license provenance",
+        "Preview the SteamPipe upload for this Unreal build without pushing it",
+        "Run the WeGame preflight check for this Unity build and list what would fail submission"
+      ],
       "recovery": [
         {
           "on": "Inno Setup (ISCC.exe) is not installed or not on PATH",
@@ -1293,8 +1938,20 @@
       "name": "dcc-game-itchio-publish",
       "description": "Preview and publish packaged Godot, Unreal, and Unity games to exact itch.io channels with license and parent-build gates",
       "version": "0.1.0",
-      "dcc": ["godot", "unreal", "unity"],
-      "tags": ["game", "release", "publish", "itchio", "butler", "upload", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "unity"
+      ],
+      "tags": [
+        "game",
+        "release",
+        "publish",
+        "itchio",
+        "butler",
+        "upload",
+        "domain"
+      ],
       "category": "Studio",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.91",
@@ -1302,21 +1959,33 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-itchio",
         "ref": "8560614de5ffafe84d862b6b1d012654bb94a692",
-        "skillRoots": ["skill/itchio-publish"]
+        "skillRoots": [
+          "skill/itchio-publish"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["BUTLER_API_KEY"],
-        "bins": ["butler"],
-        "skills": ["game-release-package"]
+        "env": [
+          "BUTLER_API_KEY"
+        ],
+        "bins": [
+          "butler"
+        ],
+        "skills": [
+          "game-release-package"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-itchio#readme",
       "showcase": "docs/images/dcc-itchio-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Preview what this Godot build would push to itch.io without uploading anything", "Publish this packaged Unreal build to the windows channel on itch.io and report the upload result", "Check that the parent build exists and the license is declared before I publish to itch.io"],
+      "examplePrompts": [
+        "Preview what this Godot build would push to itch.io without uploading anything",
+        "Publish this packaged Unreal build to the windows channel on itch.io and report the upload result",
+        "Check that the parent build exists and the license is declared before I publish to itch.io"
+      ],
       "recovery": [
         {
           "on": "butler is missing or BUTLER_API_KEY is unset",
@@ -1337,8 +2006,19 @@
       "name": "dcc-game-runtime-acceptance",
       "description": "Launch prebuilt Unity, Unreal, and Godot games with bounded structured runtime acceptance and hash-bearing evidence",
       "version": "0.1.1",
-      "dcc": ["godot", "unreal", "unity"],
-      "tags": ["game", "runtime", "acceptance", "validation", "evidence", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "unity"
+      ],
+      "tags": [
+        "game",
+        "runtime",
+        "acceptance",
+        "validation",
+        "evidence",
+        "domain"
+      ],
       "category": "Studio",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.64",
@@ -1346,7 +2026,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
         "ref": "02e22c9d22345f694320d3488c47b876df08d497",
-        "skillRoots": ["skill/game-runtime-acceptance"]
+        "skillRoots": [
+          "skill/game-runtime-acceptance"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1354,7 +2036,11 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/ba45fcad6fc8db9413e81365573904da02857989/skill/game-runtime-acceptance/SKILL.md",
       "lifecycle": "experimental",
-      "examplePrompts": ["Launch this prebuilt Unity game, run the bounded acceptance checks, and report pass or fail with hashes", "Capture runtime acceptance evidence for this Godot build and save it next to the build", "Re-run acceptance on this Unreal build after a config change and diff the evidence"],
+      "examplePrompts": [
+        "Launch this prebuilt Unity game, run the bounded acceptance checks, and report pass or fail with hashes",
+        "Capture runtime acceptance evidence for this Godot build and save it next to the build",
+        "Re-run acceptance on this Unreal build after a config change and diff the evidence"
+      ],
       "recovery": [
         {
           "on": "the prebuilt executable is missing or fails to launch",
@@ -1375,8 +2061,20 @@
       "name": "dcc-game-pv-capture",
       "description": "Plan and preserve exact-window, hash-verified Unity, Unreal, and Godot gameplay shots for HyperFrames PV editing",
       "version": "0.1.0",
-      "dcc": ["godot", "unreal", "unity"],
-      "tags": ["game", "pv", "trailer", "capture", "recording", "evidence", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "unity"
+      ],
+      "tags": [
+        "game",
+        "pv",
+        "trailer",
+        "capture",
+        "recording",
+        "evidence",
+        "domain"
+      ],
       "category": "Studio",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.65",
@@ -1384,7 +2082,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-pipeline-publish",
         "ref": "02e22c9d22345f694320d3488c47b876df08d497",
-        "skillRoots": ["skill/game-pv-capture"]
+        "skillRoots": [
+          "skill/game-pv-capture"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1392,7 +2092,11 @@
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-pipeline-publish/blob/53bf8ae24da003b522ad91df3d03e2564f162727/skill/game-pv-capture/SKILL.md",
       "lifecycle": "experimental",
-      "examplePrompts": ["Plan an exact-window capture of this Godot game and report the resolved window rect", "Record 30 seconds of this Unreal build at 1080p with hash-verified output", "Re-capture this Unity gameplay segment with the same window geometry as the last take"],
+      "examplePrompts": [
+        "Plan an exact-window capture of this Godot game and report the resolved window rect",
+        "Record 30 seconds of this Unreal build at 1080p with hash-verified output",
+        "Re-capture this Unity gameplay segment with the same window geometry as the last take"
+      ],
       "recovery": [
         {
           "on": "the target window cannot be found or the exact window geometry cannot be locked",
@@ -1409,8 +2113,18 @@
       "name": "dcc-asset-pexels-video",
       "description": "Search and download free Pexels stock video with creator and license attribution",
       "version": "0.1.0",
-      "dcc": ["after-effects", "premiere"],
-      "tags": ["asset", "pexels", "video", "stock", "download", "domain"],
+      "dcc": [
+        "after-effects",
+        "premiere"
+      ],
+      "tags": [
+        "asset",
+        "pexels",
+        "video",
+        "stock",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1419,19 +2133,27 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
         "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
-        "skillRoots": ["skill/pexels-video-assets"]
+        "skillRoots": [
+          "skill/pexels-video-assets"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "env": ["PEXELS_API_KEY"]
+        "env": [
+          "PEXELS_API_KEY"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/pexels-video-assets-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Find free Pexels stock video of ocean waves and download the 1080p file", "Download this Pexels clip and write its creator attribution next to the file", "Search Pexels for vertical city footage and report the available resolutions"],
+      "examplePrompts": [
+        "Find free Pexels stock video of ocean waves and download the 1080p file",
+        "Download this Pexels clip and write its creator attribution next to the file",
+        "Search Pexels for vertical city footage and report the available resolutions"
+      ],
       "recovery": [
         {
           "on": "PEXELS_API_KEY is unset or rejected",
@@ -1452,8 +2174,21 @@
       "name": "dcc-asset-mixkit-free-media",
       "description": "Download Free License Mixkit stock video, music, sound effects, and explicit After Effects templates with license metadata",
       "version": "0.2.0",
-      "dcc": ["after-effects", "premiere"],
-      "tags": ["asset", "mixkit", "stock-video", "music", "sound-effects", "after-effects", "template", "download", "domain"],
+      "dcc": [
+        "after-effects",
+        "premiere"
+      ],
+      "tags": [
+        "asset",
+        "mixkit",
+        "stock-video",
+        "music",
+        "sound-effects",
+        "after-effects",
+        "template",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1462,7 +2197,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
         "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
-        "skillRoots": ["skill/mixkit-free-assets"]
+        "skillRoots": [
+          "skill/mixkit-free-assets"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1471,7 +2208,11 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/mixkit-free-assets-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Download a Free License Mixkit ambient track and report the license terms", "Find Mixkit sound effects for footsteps on gravel and download three", "Download this Mixkit After Effects template and list the files it contains"],
+      "examplePrompts": [
+        "Download a Free License Mixkit ambient track and report the license terms",
+        "Find Mixkit sound effects for footsteps on gravel and download three",
+        "Download this Mixkit After Effects template and list the files it contains"
+      ],
       "recovery": [
         {
           "on": "mixkit.co is unreachable or the page layout changed",
@@ -1492,8 +2233,24 @@
       "name": "dcc-asset-game-icons",
       "description": "Search and download CC BY 3.0 SVG icons for game HUD, inventory, and ability UI",
       "version": "0.1.0",
-      "dcc": ["godot", "unreal", "blender", "maya", "houdini", "3dsmax", "photoshop"],
-      "tags": ["asset", "game-icons", "game-ui", "svg", "cc-by", "download", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "blender",
+        "maya",
+        "houdini",
+        "3dsmax",
+        "photoshop"
+      ],
+      "tags": [
+        "asset",
+        "game-icons",
+        "game-ui",
+        "svg",
+        "cc-by",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1502,7 +2259,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
         "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
-        "skillRoots": ["skill/game-icons-assets"]
+        "skillRoots": [
+          "skill/game-icons-assets"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1511,7 +2270,11 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/game-icons-assets-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Download CC BY 3.0 game icons for health, mana, and stamina as SVG", "Search game-icons.net for sword icons and download five of them", "Download this icon set and write the CC BY 3.0 attribution into the target folder"],
+      "examplePrompts": [
+        "Download CC BY 3.0 game icons for health, mana, and stamina as SVG",
+        "Search game-icons.net for sword icons and download five of them",
+        "Download this icon set and write the CC BY 3.0 attribution into the target folder"
+      ],
       "recovery": [
         {
           "on": "game-icons.net is unreachable",
@@ -1532,8 +2295,24 @@
       "name": "dcc-asset-google-fonts",
       "description": "Search Google Fonts or download a verified keyless font with family and license metadata",
       "version": "0.2.0",
-      "dcc": ["godot", "unreal", "unity", "photoshop", "after-effects", "premiere"],
-      "tags": ["asset", "google-fonts", "font", "typography", "game-ui", "cjk", "download", "domain"],
+      "dcc": [
+        "godot",
+        "unreal",
+        "unity",
+        "photoshop",
+        "after-effects",
+        "premiere"
+      ],
+      "tags": [
+        "asset",
+        "google-fonts",
+        "font",
+        "typography",
+        "game-ui",
+        "cjk",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1542,7 +2321,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
         "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
-        "skillRoots": ["skill/google-font-assets"]
+        "skillRoots": [
+          "skill/google-font-assets"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1551,7 +2332,11 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/google-font-assets-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Download the Inter font family with its license and report the installed files", "Search Google Fonts for a CJK-capable sans-serif and download it", "Download this specific Google Fonts family and verify the file checksum"],
+      "examplePrompts": [
+        "Download the Inter font family with its license and report the installed files",
+        "Search Google Fonts for a CJK-capable sans-serif and download it",
+        "Download this specific Google Fonts family and verify the file checksum"
+      ],
       "recovery": [
         {
           "on": "the Google Fonts API is unreachable or the key is rejected",
@@ -1572,8 +2357,21 @@
       "name": "dcc-asset-openstreetmap-city",
       "description": "Download bounded OpenStreetMap buildings, roads, railways, water, and land use as attributed GeoJSON",
       "version": "0.1.0",
-      "dcc": ["houdini", "blender", "unreal"],
-      "tags": ["asset", "geospatial", "openstreetmap", "city", "pcg", "geojson", "download", "domain"],
+      "dcc": [
+        "houdini",
+        "blender",
+        "unreal"
+      ],
+      "tags": [
+        "asset",
+        "geospatial",
+        "openstreetmap",
+        "city",
+        "pcg",
+        "geojson",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1582,7 +2380,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
         "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
-        "skillRoots": ["skill/openstreetmap-city-data"]
+        "skillRoots": [
+          "skill/openstreetmap-city-data"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1591,7 +2391,11 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
       "showcase": "docs/images/openstreetmap-city-data-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Download buildings and roads for this bounding box from OpenStreetMap as GeoJSON", "Get land use and water polygons for this city block as attributed GeoJSON", "Export OpenStreetMap railways for this area and report the feature counts"],
+      "examplePrompts": [
+        "Download buildings and roads for this bounding box from OpenStreetMap as GeoJSON",
+        "Get land use and water polygons for this city block as attributed GeoJSON",
+        "Export OpenStreetMap railways for this area and report the feature counts"
+      ],
       "recovery": [
         {
           "on": "the Overpass API is unreachable or rate limited",
@@ -1612,8 +2416,21 @@
       "name": "dcc-asset-overture-city",
       "description": "Download bounded Overture Maps buildings, transportation, infrastructure, land cover, and water as licensed GeoJSON",
       "version": "0.1.0",
-      "dcc": ["houdini", "blender", "unreal"],
-      "tags": ["asset", "geospatial", "overture", "city", "pcg", "geojson", "download", "domain"],
+      "dcc": [
+        "houdini",
+        "blender",
+        "unreal"
+      ],
+      "tags": [
+        "asset",
+        "geospatial",
+        "overture",
+        "city",
+        "pcg",
+        "geojson",
+        "download",
+        "domain"
+      ],
       "category": "Asset Providers",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1622,19 +2439,27 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-geospatial",
         "ref": "b92ed445cd517b9255547b0e0c841666107e63ae",
-        "skillRoots": ["skill/overture-city-data"]
+        "skillRoots": [
+          "skill/overture-city-data"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "bins": ["overturemaps"]
+        "bins": [
+          "overturemaps"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-asset-geospatial#readme",
       "showcase": "docs/images/overture-city-data-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Download Overture Maps buildings for this bounding box as licensed GeoJSON", "Get Overture transportation and land cover layers for this city tile", "Export Overture water and infrastructure features for this area and report the counts"],
+      "examplePrompts": [
+        "Download Overture Maps buildings for this bounding box as licensed GeoJSON",
+        "Get Overture transportation and land cover layers for this city tile",
+        "Export Overture water and infrastructure features for this area and report the counts"
+      ],
       "recovery": [
         {
           "on": "the overturemaps CLI is missing or the release download fails",
@@ -1655,8 +2480,19 @@
       "name": "dcc-plugin-github-releases",
       "description": "Inspect licensed open-source GitHub projects and download release plugin packages with SHA-256 metadata",
       "version": "0.1.0",
-      "dcc": ["after-effects", "premiere"],
-      "tags": ["plugin", "github", "open-source", "release", "download", "security", "domain"],
+      "dcc": [
+        "after-effects",
+        "premiere"
+      ],
+      "tags": [
+        "plugin",
+        "github",
+        "open-source",
+        "release",
+        "download",
+        "security",
+        "domain"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.0",
@@ -1664,7 +2500,9 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-asset-free-media",
         "ref": "792a8e2d42f31bb1259ffb9d7cedac6f824fa4a8",
-        "skillRoots": ["skill/github-release-plugins"]
+        "skillRoots": [
+          "skill/github-release-plugins"
+        ]
       },
       "policy": {
         "installation": "available"
@@ -1673,7 +2511,11 @@
       "docs": "https://github.com/dcc-mcp/dcc-asset-free-media#readme",
       "showcase": "docs/images/github-release-plugins-showcase.webp",
       "lifecycle": "experimental",
-      "examplePrompts": ["Find the latest release of a licensed open-source After Effects plugin and report its download URL and SHA-256", "Check whether this GitHub project's license allows studio redistribution before I download it", "Download the pinned plugin release asset and verify its SHA-256 matches the manifest"],
+      "examplePrompts": [
+        "Find the latest release of a licensed open-source After Effects plugin and report its download URL and SHA-256",
+        "Check whether this GitHub project's license allows studio redistribution before I download it",
+        "Download the pinned plugin release asset and verify its SHA-256 matches the manifest"
+      ],
       "recovery": [
         {
           "on": "the rate limit blocks GitHub API access",
@@ -1694,8 +2536,17 @@
       "name": "dcc-mcp-cache-inspector",
       "description": "Host-neutral, bounded read-only inspection for SideFX .geo, .bgeo, and .bgeo.sc geometry caches",
       "version": "0.3.0",
-      "dcc": ["any"],
-      "tags": ["pipeline", "read-only", "houdini", "cache", "skills", "infrastructure"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "pipeline",
+        "read-only",
+        "houdini",
+        "cache",
+        "skills",
+        "infrastructure"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.4",
@@ -1703,19 +2554,27 @@
         "type": "git",
         "url": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector",
         "ref": "a5af985fdd5c2079a974a278514fcc6831ba91ba",
-        "skillRoots": ["skill/cache-inspection"]
+        "skillRoots": [
+          "skill/cache-inspection"
+        ]
       },
       "policy": {
         "installation": "available"
       },
       "requires": {
-        "python": ["blosc>=1.11.2,<2"]
+        "python": [
+          "blosc>=1.11.2,<2"
+        ]
       },
       "license": "MIT",
       "docs": "https://github.com/dcc-mcp/dcc-mcp-cache-inspector#readme",
       "showcase": "docs/images/cache-inspection-showcase.webp",
       "lifecycle": "active",
-      "examplePrompts": ["Inspect this Houdini .bgeo.sc cache and report the primitive and point counts per frame", "List the attributes stored in this geometry cache without loading the whole sequence", "Compare the attribute layout of two .geo frames and report what changed"],
+      "examplePrompts": [
+        "Inspect this Houdini .bgeo.sc cache and report the primitive and point counts per frame",
+        "List the attributes stored in this geometry cache without loading the whole sequence",
+        "Compare the attribute layout of two .geo frames and report what changed"
+      ],
       "recovery": [
         {
           "on": "the blosc dependency is missing or the cache uses an unsupported codec",
@@ -1736,8 +2595,17 @@
       "name": "marketplace-create-extension",
       "description": "Infrastructure skill - scaffold a new marketplace extension package (SKILL.md + tools.yaml + scripts/) with MIT-0 licensing",
       "version": "0.20.44",
-      "dcc": ["python"],
-      "tags": ["skills", "marketplace", "extension", "scaffolding", "authoring", "infrastructure"],
+      "dcc": [
+        "python"
+      ],
+      "tags": [
+        "skills",
+        "marketplace",
+        "extension",
+        "scaffolding",
+        "authoring",
+        "infrastructure"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.17.0",
@@ -1745,13 +2613,19 @@
         "type": "zip",
         "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/marketplace-create-extension-0.20.44.zip",
         "sha256": "591b90ee22d39e3d91b6deee7acb485c5f558404a74d0d7dab2b4b26da0c6823",
-        "skillRoots": ["skill/marketplace-create-extension"]
+        "skillRoots": [
+          "skill/marketplace-create-extension"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/marketplace-create-extension#readme",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Scaffold a new marketplace extension package for a Houdini skill with a SKILL.md and tools.yaml", "Create an MIT-0 licensed skill package skeleton I can publish to the marketplace", "Generate the scripts directory and tool declarations for a new marketplace extension"],
+      "examplePrompts": [
+        "Scaffold a new marketplace extension package for a Houdini skill with a SKILL.md and tools.yaml",
+        "Create an MIT-0 licensed skill package skeleton I can publish to the marketplace",
+        "Generate the scripts directory and tool declarations for a new marketplace extension"
+      ],
       "recovery": [
         {
           "on": "the target directory already holds an extension and scaffolding would overwrite it",
@@ -1768,8 +2642,17 @@
       "name": "marketplace-publish-extension",
       "description": "Infrastructure skill - publish or update an extension package in a marketplace catalog by upserting its SKILL.md frontmatter as a catalog entry",
       "version": "0.20.44",
-      "dcc": ["python"],
-      "tags": ["skills", "marketplace", "publishing", "catalog", "release", "infrastructure"],
+      "dcc": [
+        "python"
+      ],
+      "tags": [
+        "skills",
+        "marketplace",
+        "publishing",
+        "catalog",
+        "release",
+        "infrastructure"
+      ],
       "category": "Infrastructure",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.17.0",
@@ -1777,13 +2660,19 @@
         "type": "zip",
         "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/marketplace-publish-extension-0.20.44.zip",
         "sha256": "9b4324b3a3f032fd91d82daa8497b86d30f17044a657b4826a42f45e4d04a3d1",
-        "skillRoots": ["skill/marketplace-publish-extension"]
+        "skillRoots": [
+          "skill/marketplace-publish-extension"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/marketplace-publish-extension#readme",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Register my scaffolded extension in the target marketplace catalog", "Upsert this skill package's catalog entry and commit the marketplace.json change", "Update an existing marketplace extension entry after bumping its version"],
+      "examplePrompts": [
+        "Register my scaffolded extension in the target marketplace catalog",
+        "Upsert this skill package's catalog entry and commit the marketplace.json change",
+        "Update an existing marketplace extension entry after bumping its version"
+      ],
       "recovery": [
         {
           "on": "the catalog entry already exists and would be silently overwritten",
@@ -1800,8 +2689,18 @@
       "name": "mesh-ops",
       "description": "Cross-adapter polygon modeling recipe pack with structured RECIPES.yaml entries for primitives, hard-surface edits, topology cleanup, UVs, radial arraying, and material assignment",
       "version": "1.0.0",
-      "dcc": ["any"],
-      "tags": ["skills", "modeling", "mesh", "polygon", "topology", "recipe", "cross-dcc"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "skills",
+        "modeling",
+        "mesh",
+        "polygon",
+        "topology",
+        "recipe",
+        "cross-dcc"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.20.29",
@@ -1809,13 +2708,19 @@
         "type": "zip",
         "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/mesh-ops-1.0.0.zip",
         "sha256": "8dc89830e33667d7d3635c376f6d8a83c98dd0313ccc0d759e1327cc50302b05",
-        "skillRoots": ["skill/mesh-ops"]
+        "skillRoots": [
+          "skill/mesh-ops"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/mesh-ops#readme",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Look up the structured recipe for bevelling edge loops before dispatching the modeling tool", "Find the cross-DCC recipe for generating UVs on a hard-surface mesh", "Show the radial array recipe so I can reuse it in this DCC adapter"],
+      "examplePrompts": [
+        "Look up the structured recipe for bevelling edge loops before dispatching the modeling tool",
+        "Find the cross-DCC recipe for generating UVs on a hard-surface mesh",
+        "Show the radial array recipe so I can reuse it in this DCC adapter"
+      ],
       "recovery": [
         {
           "on": "no recipe matches the requested modeling operation",
@@ -1832,8 +2737,17 @@
       "name": "spatial-interchange",
       "description": "Plan deterministic coordinate-axis and unit conversions between DCCs, engines, and interchange formats from explicit right/up/forward axes and meters-per-unit values",
       "version": "1.0.0",
-      "dcc": ["any"],
-      "tags": ["skills", "pipeline", "interchange", "spatial", "units", "coordinates"],
+      "dcc": [
+        "any"
+      ],
+      "tags": [
+        "skills",
+        "pipeline",
+        "interchange",
+        "spatial",
+        "units",
+        "coordinates"
+      ],
       "category": "Skills",
       "maintainer": "dcc-mcp",
       "minCoreVersion": "0.19.91",
@@ -1841,13 +2755,19 @@
         "type": "zip",
         "url": "https://github.com/dcc-mcp/dcc-mcp-core/releases/download/v0.20.44/spatial-interchange-1.0.0.zip",
         "sha256": "f64e502e835c70a10c91107b99abccf49826767d0383e2eecafcc07a85fb301b",
-        "skillRoots": ["skill/spatial-interchange"]
+        "skillRoots": [
+          "skill/spatial-interchange"
+        ]
       },
       "docs": "https://github.com/dcc-mcp/dcc-mcp-core/tree/main/skills/spatial-interchange#readme",
       "policy": {
         "installation": "available"
       },
-      "examplePrompts": ["Plan the axis and unit conversion for exporting this Maya scene to Unreal", "Compute the meters-per-unit conversion between Blender and Houdini before import", "Show the handedness handling for a Z-up to Y-up coordinate conversion"],
+      "examplePrompts": [
+        "Plan the axis and unit conversion for exporting this Maya scene to Unreal",
+        "Compute the meters-per-unit conversion between Blender and Houdini before import",
+        "Show the handedness handling for a Z-up to Y-up coordinate conversion"
+      ],
       "recovery": [
         {
           "on": "the source or target axis convention is unknown",
@@ -1905,6 +2825,56 @@
         }
       ],
       "undo": "none"
+    },
+    {
+      "name": "veyrul-media-knowledge",
+      "description": "Find saved media workflows, reusable code and source-qualified references before choosing a production technique or diagnosing a media failure.",
+      "version": "0.1.0",
+      "dcc": [
+        "blender",
+        "maya",
+        "houdini"
+      ],
+      "tags": [
+        "media",
+        "workflow",
+        "research",
+        "references",
+        "domain"
+      ],
+      "category": "Skills",
+      "maintainer": "the-media-vampire",
+      "minCoreVersion": "0.20.53",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/the-media-vampire/veyrul-integrations",
+        "ref": "6db4564cdaf31690fe94656c4b5eecabb2caff0e",
+        "skillRoots": [
+          "integrations/dcc-mcp/skills/veyrul-media-knowledge"
+        ]
+      },
+      "policy": {
+        "installation": "available"
+      },
+      "lifecycle": "experimental",
+      "license": "MIT",
+      "examplePrompts": [
+        "Find a documented Blender workflow for quilted padding before editing the mesh.",
+        "Find saved FFmpeg guidance for retiming captions after cutting video clips.",
+        "Find source-qualified references for a media workflow under my tool and hardware constraints."
+      ],
+      "recovery": [
+        {
+          "on": "The public service is unavailable, rate limited or has no applicable evidence",
+          "next": "Continue with the host documentation and ordinary tools; do not repeat the same request."
+        },
+        {
+          "on": "The optional lookup package is no longer needed",
+          "next": "There is no scene edit to undo; remove the package with the supported marketplace uninstall command."
+        }
+      ],
+      "undo": "none",
+      "docs": "https://github.com/the-media-vampire/veyrul-integrations/tree/6db4564cdaf31690fe94656c4b5eecabb2caff0e/integrations/dcc-mcp/skills/veyrul-media-knowledge"
     }
   ]
 }
