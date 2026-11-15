@@ -2831,9 +2831,7 @@
       "description": "Find saved media workflows, reusable code and source-qualified references before choosing a production technique or diagnosing a media failure.",
       "version": "0.1.0",
       "dcc": [
-        "blender",
-        "maya",
-        "houdini"
+        "any"
       ],
       "tags": [
         "media",
